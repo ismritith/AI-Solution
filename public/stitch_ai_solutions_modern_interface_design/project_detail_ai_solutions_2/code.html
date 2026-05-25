@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Project Detail - AI-Solutions</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Geist:wght@600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-background": "#dae2fd",
+                    "tertiary": "#ffafd3",
+                    "on-error-container": "#ffdad6",
+                    "on-secondary-fixed-variant": "#004e5c",
+                    "surface-bright": "#31394d",
+                    "on-secondary": "#003640",
+                    "surface-variant": "#2d3449",
+                    "tertiary-container": "#ae397b",
+                    "surface-container-highest": "#2d3449",
+                    "on-surface": "#dae2fd",
+                    "surface-container": "#171f33",
+                    "on-primary-fixed-variant": "#5a00c6",
+                    "outline-variant": "#4a4455",
+                    "tertiary-fixed": "#ffd8e7",
+                    "background": "#0b1326",
+                    "surface-container-low": "#131b2e",
+                    "on-primary": "#3f008e",
+                    "tertiary-fixed-dim": "#ffafd3",
+                    "on-tertiary": "#620040",
+                    "error": "#ffb4ab",
+                    "secondary-fixed-dim": "#4cd7f6",
+                    "surface-dim": "#0b1326",
+                    "surface-container-high": "#222a3d",
+                    "surface": "#0b1326",
+                    "on-primary-container": "#ede0ff",
+                    "on-tertiary-container": "#ffdce9",
+                    "secondary-fixed": "#acedff",
+                    "inverse-on-surface": "#283044",
+                    "on-tertiary-fixed-variant": "#85145a",
+                    "surface-container-lowest": "#060e20",
+                    "on-secondary-container": "#00424e",
+                    "secondary": "#4cd7f6",
+                    "outline": "#958da1",
+                    "on-surface-variant": "#ccc3d8",
+                    "error-container": "#93000a",
+                    "primary-fixed": "#eaddff",
+                    "primary": "#d2bbff",
+                    "on-tertiary-fixed": "#3d0026",
+                    "inverse-primary": "#732ee4",
+                    "surface-tint": "#d2bbff",
+                    "primary-container": "#7c3aed",
+                    "on-primary-fixed": "#25005a",
+                    "on-secondary-fixed": "#001f26",
+                    "secondary-container": "#03b5d3",
+                    "inverse-surface": "#dae2fd",
+                    "on-error": "#690005",
+                    "primary-fixed-dim": "#d2bbff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "container-max": "1280px",
+                    "gutter": "24px",
+                    "margin-mobile": "20px",
+                    "section-gap": "120px",
+                    "base": "8px"
+            },
+            "fontFamily": {
+                    "body-base": ["Inter"],
+                    "headline-md": ["Geist"],
+                    "display-lg-mobile": ["Geist"],
+                    "display-lg": ["Geist"],
+                    "label-mono": ["JetBrains Mono"]
+            },
+            "fontSize": {
+                    "body-base": ["16px", {"lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400"}],
+                    "headline-md": ["32px", {"lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "display-lg-mobile": ["40px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "display-lg": ["64px", {"lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "700"}],
+                    "label-mono": ["12px", {"lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .glass-card {
+            background: rgba(30, 41, 59, 0.4);
+            backdrop-filter: blur(24px);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            border-left: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .action-glow:hover {
+            box-shadow: 0 0 30px rgba(210, 187, 255, 0.5);
+        }
+        .transition-standard {
+            transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        /* Custom Ambient Background */
+        .ambient-bg {
+            background-color: #060e20;
+            position: relative;
+            overflow: hidden;
+        }
+        .ambient-bg::before {
+            content: "";
+            position: fixed;
+            top: 20%;
+            right: -10%;
+            width: 70vw;
+            height: 70vw;
+            background: radial-gradient(circle, rgba(115, 46, 228, 0.15) 0%, transparent 70%);
+            z-index: 0;
+            pointer-events: none;
+        }
+        .ambient-bg::after {
+            content: "";
+            position: fixed;
+            bottom: 10%;
+            left: -15%;
+            width: 80vw;
+            height: 80vw;
+            background: radial-gradient(circle, rgba(255, 75, 58, 0.12) 0%, transparent 70%);
+            z-index: 0;
+            pointer-events: none;
+        }
+        .content-layer {
+            position: relative;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body class="ambient-bg text-on-background font-body-base overflow-x-hidden">
+<div class="content-layer">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 bg-background/60 backdrop-blur-2xl border-b border-white/5 shadow-sm">
+<div class="flex justify-between items-center max-w-container-max mx-auto px-gutter h-20">
+<div class="font-headline-md text-headline-md font-bold text-on-surface tracking-tighter">AI-Solutions</div>
+<nav class="hidden md:flex gap-8">
+<a class="text-on-surface-variant hover:text-on-surface transition-colors duration-200 font-label-mono text-label-mono" href="#">Solutions</a>
+<a class="text-primary font-semibold border-b-2 border-primary pb-1 font-label-mono text-label-mono" href="#">Gallery</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors duration-200 font-label-mono text-label-mono" href="#">Insights</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors duration-200 font-label-mono text-label-mono" href="#">Events</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors duration-200 font-label-mono text-label-mono" href="#">About</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="hidden lg:block text-on-surface-variant font-label-mono text-label-mono hover:text-primary transition-standard">Book Now</button>
+<button class="bg-primary-container text-on-primary-container px-6 py-2 rounded-lg font-label-mono text-label-mono action-glow scale-95 active:scale-90 transition-transform duration-200">Get Started</button>
+</div>
+</div>
+</header>
+<main class="pt-20">
+<!-- Hero Section -->
+<section class="relative h-[716px] w-full overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent z-10"></div>
+<img alt="Project Banner" class="w-full h-full object-cover grayscale-[0.2]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDuflqBOUEua_nt322D22lB9ouZuWSmcDeZhHbSZ00IHwVT0wK4CKzhheNKLpt103jkbKEeL_ErILOcerZCbutazt9wSpKcAommW_tQPPAPjKEnkqSmWkMAGeemkOsjbeES8LQNsnkhrQtJPjtikqGp_8gAr9OkTqbXK3SHddQi_HRAm3jCIMG5Nzr4LI25rHzubfG2pQINsWv8M7VS28Fin-qcjqy2rihEDA41gMFM7Xw2XNEMMiC02xWM_v14SY64pxmajKwAgNMi"/>
+<div class="absolute inset-0 z-20 flex flex-col justify-end max-w-container-max mx-auto px-gutter pb-16">
+<div class="space-y-4">
+<span class="inline-flex items-center px-3 py-1 bg-primary/10 border border-primary/20 text-primary font-label-mono text-label-mono rounded-full uppercase">Case Study: 2024</span>
+<h1 class="font-display-lg text-display-lg max-w-3xl leading-tight">SYNERGY-X: <span class="italic font-light text-secondary">NEURAL CORE</span></h1>
+<div class="flex gap-8 items-center pt-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-high border border-outline-variant flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-xl">admin_panel_settings</span>
+</div>
+<div>
+<p class="text-label-mono font-label-mono text-on-surface-variant opacity-60">Architect</p>
+<p class="text-body-base font-body-base font-bold">CORE_ADMIN</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-high border border-outline-variant flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-xl">calendar_today</span>
+</div>
+<div>
+<p class="text-label-mono font-label-mono text-on-surface-variant opacity-60">Deployed</p>
+<p class="text-body-base font-body-base font-bold">MAY 15, 2024</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Content Grid -->
+<section class="max-w-container-max mx-auto px-gutter py-section-gap grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Left Column: Details & Form -->
+<div class="lg:col-span-8 space-y-16">
+<!-- Description -->
+<div class="space-y-6">
+<h2 class="font-headline-md text-headline-md text-on-surface">Into the <span class="text-primary italic">Intelligence Gap</span></h2>
+<p class="text-body-base text-on-surface-variant max-w-2xl leading-relaxed">
+                        Synergy-X represents the pinnacle of autonomous orchestration. By leveraging multi-agent reinforcement learning, we've developed a system that not only predicts operational bottlenecks but proactively rewires infrastructure in real-time. This case study explores the architectural decisions behind our latest deployment for global logistics optimization.
+                    </p>
+<!-- Bento Tech Stack -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 pt-8">
+<div class="glass-card p-6 rounded-xl flex flex-col gap-2">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">neurology</span>
+<span class="text-label-mono font-label-mono text-secondary">Neural Fabric</span>
+</div>
+<div class="glass-card p-6 rounded-xl flex flex-col gap-2">
+<span class="material-symbols-outlined text-tertiary" style="font-variation-settings: 'FILL' 1;">terminal</span>
+<span class="text-label-mono font-label-mono text-tertiary">Rust Runtime</span>
+</div>
+<div class="glass-card p-6 rounded-xl flex flex-col gap-2">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">dataset</span>
+<span class="text-label-mono font-label-mono text-primary">Vector DB</span>
+</div>
+<div class="glass-card p-6 rounded-xl flex flex-col gap-2">
+<span class="material-symbols-outlined text-on-surface" style="font-variation-settings: 'FILL' 1;">lan</span>
+<span class="text-label-mono font-label-mono text-on-surface">Edge Sync</span>
+</div>
+</div>
+</div>
+<!-- Review Form -->
+<div class="glass-card p-8 rounded-2xl space-y-8 relative overflow-hidden">
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary/10 blur-[60px] rounded-full -mr-16 -mt-16"></div>
+<div class="space-y-2">
+<h3 class="font-headline-md text-headline-md text-on-surface">Submit Assessment</h3>
+<p class="text-body-base text-on-surface-variant opacity-70">Share your technical feedback with our engineering team.</p>
+</div>
+<form class="space-y-6">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="space-y-2">
+<label class="text-label-mono font-label-mono uppercase opacity-60">Full Identity</label>
+<input class="w-full bg-surface-container border-outline-variant rounded-lg px-4 py-3 focus:border-primary focus:ring-1 focus:ring-primary transition-standard text-on-surface" placeholder="Dr. Elena Vance" type="text"/>
+</div>
+<div class="space-y-2">
+<label class="text-label-mono font-label-mono uppercase opacity-60">Affiliation</label>
+<input class="w-full bg-surface-container border-outline-variant rounded-lg px-4 py-3 focus:border-primary focus:ring-1 focus:ring-primary transition-standard text-on-surface" placeholder="Black Mesa Research" type="email"/>
+</div>
+</div>
+<div class="space-y-2">
+<label class="text-label-mono font-label-mono uppercase opacity-60">Impact Rating</label>
+<div class="flex gap-4 text-secondary">
+<span class="material-symbols-outlined cursor-pointer hover:scale-110 transition-standard" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined cursor-pointer hover:scale-110 transition-standard" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined cursor-pointer hover:scale-110 transition-standard" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined cursor-pointer hover:scale-110 transition-standard" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined cursor-pointer hover:scale-110 transition-standard">star</span>
+</div>
+</div>
+<div class="space-y-2">
+<label class="text-label-mono font-label-mono uppercase opacity-60">Observation</label>
+<textarea class="w-full bg-surface-container border-outline-variant rounded-lg px-4 py-3 focus:border-primary focus:ring-1 focus:ring-primary transition-standard text-on-surface" placeholder="The neural fabric density is impressive, but latency on edge nodes could be optimized..." rows="4"></textarea>
+</div>
+<button class="w-full md:w-auto bg-primary-container text-on-primary-container px-12 py-4 rounded-xl font-label-mono text-label-mono font-bold tracking-widest transition-standard action-glow uppercase">Initialize Transmission</button>
+</form>
+</div>
+</div>
+<!-- Right Column: Feed & Sidebar -->
+<aside class="lg:col-span-4 space-y-8">
+<!-- Promo Card -->
+<div class="bg-gradient-to-br from-primary-container/20 to-secondary-container/20 p-8 rounded-2xl border border-white/5 space-y-6 relative group overflow-hidden">
+<div class="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+<h3 class="font-headline-md text-headline-md leading-tight text-on-surface">READY TO DEPLOY?</h3>
+<p class="text-body-base text-on-surface-variant/80">Experience the Synergy-X core on our Tier-1 private cloud cluster.</p>
+<button class="w-full bg-secondary text-on-secondary font-bold py-4 rounded-xl action-glow transition-standard font-label-mono">BOOK DEMO NOW</button>
+</div>
+<!-- Recent Feed -->
+<div class="space-y-6">
+<h3 class="text-label-mono font-label-mono uppercase tracking-[0.2em] text-on-surface-variant">Review Feed</h3>
+<div class="space-y-4">
+<!-- Review Item 1 -->
+<div class="glass-card p-6 rounded-xl border-l-4 border-l-primary space-y-4">
+<div class="flex justify-between items-start">
+<div>
+<h4 class="font-bold text-on-surface">Markus S.</h4>
+<p class="text-label-mono text-primary opacity-70">CTO, Zenith Logistics</p>
+</div>
+<div class="flex text-secondary text-sm">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</div>
+<p class="text-body-base text-on-surface-variant italic">"The automated load balancing saved us 40% in compute overhead within 48 hours. Absolute game changer."</p>
+</div>
+<!-- Review Item 2 -->
+<div class="glass-card p-6 rounded-xl border-l-4 border-l-secondary space-y-4">
+<div class="flex justify-between items-start">
+<div>
+<h4 class="font-bold text-on-surface">Sarah Chen</h4>
+<p class="text-label-mono text-secondary opacity-70">Lead Data Scientist</p>
+</div>
+<div class="flex text-secondary text-sm">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]">star</span>
+</div>
+</div>
+<p class="text-body-base text-on-surface-variant italic">"Latency on global nodes is slightly higher than expected, but the recovery protocols are flawless."</p>
+</div>
+<!-- Review Item 3 -->
+<div class="glass-card p-6 rounded-xl border-l-4 border-l-tertiary space-y-4">
+<div class="flex justify-between items-start">
+<div>
+<h4 class="font-bold text-on-surface">Julian Aris</h4>
+<p class="text-label-mono text-tertiary opacity-70">Infrastructure Arch</p>
+</div>
+<div class="flex text-secondary text-sm">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</div>
+<p class="text-body-base text-on-surface-variant italic">"Documentation is top-tier. Integration took less than a day. Highly recommended for heavy enterprise loads."</p>
+</div>
+</div>
+</div>
+<!-- Tags / Categories -->
+<div class="space-y-4">
+<h3 class="text-label-mono font-label-mono uppercase tracking-[0.2em] text-on-surface-variant">Classifications</h3>
+<div class="space-y-2">
+<div class="flex justify-between items-center glass-card p-4 rounded-lg group hover:border-primary transition-standard cursor-pointer">
+<span class="text-body-base">Autonomous Orchestration</span>
+<span class="text-label-mono bg-primary/20 text-primary px-2 py-0.5 rounded">12</span>
+</div>
+<div class="flex justify-between items-center glass-card p-4 rounded-lg group hover:border-secondary transition-standard cursor-pointer">
+<span class="text-body-base">Edge Computing</span>
+<span class="text-label-mono bg-secondary/20 text-secondary px-2 py-0.5 rounded">08</span>
+</div>
+<div class="flex justify-between items-center glass-card p-4 rounded-lg group hover:border-tertiary transition-standard cursor-pointer">
+<span class="text-body-base">Predictive Ops</span>
+<span class="text-label-mono bg-tertiary/20 text-tertiary px-2 py-0.5 rounded">05</span>
+</div>
+</div>
+</div>
+</aside>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest/80 backdrop-blur-md w-full rounded-t-xl border-t border-outline-variant mt-section-gap relative z-20">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter max-w-container-max mx-auto px-gutter py-section-gap">
+<div class="space-y-6">
+<div class="font-headline-md text-headline-md font-black text-on-surface">AI-Solutions</div>
+<p class="text-body-base text-on-surface-variant opacity-70 max-w-xs">
+                    Forged in the silicon valleys of the digital frontier, we provide the instruments for your cognitive evolution.
+                </p>
+</div>
+<div class="space-y-4">
+<h4 class="text-label-mono font-label-mono uppercase text-tertiary">The Stack</h4>
+<ul class="space-y-2">
+<li><a class="text-on-surface-variant hover:text-primary transition-colors underline-offset-4 hover:underline" href="#">Neural Networks</a></li>
+<li><a class="text-on-surface-variant hover:text-primary transition-colors underline-offset-4 hover:underline" href="#">Distributed Nodes</a></li>
+<li><a class="text-on-surface-variant hover:text-primary transition-colors underline-offset-4 hover:underline" href="#">Quantum Core</a></li>
+<li><a class="text-on-surface-variant hover:text-primary transition-colors underline-offset-4 hover:underline" href="#">Security Shield</a></li>
+</ul>
+</div>
+<div class="space-y-4">
+<h4 class="text-label-mono font-label-mono uppercase text-tertiary">Quick Links</h4>
+<ul class="space-y-2">
+<li><a class="text-on-surface-variant hover:text-primary transition-colors underline-offset-4 hover:underline" href="#">About Us</a></li>
+<li><a class="text-on-surface-variant hover:text-primary transition-colors underline-offset-4 hover:underline" href="#">Career Hub</a></li>
+<li><a class="text-on-surface-variant hover:text-primary transition-colors underline-offset-4 hover:underline" href="#">API Docs</a></li>
+<li><a class="text-on-surface-variant hover:text-primary transition-colors underline-offset-4 hover:underline" href="#">Privacy Logic</a></li>
+</ul>
+</div>
+<div class="space-y-6">
+<h4 class="text-label-mono font-label-mono uppercase text-tertiary">Terminal Access</h4>
+<div class="flex gap-2">
+<input class="w-full bg-surface-container border-outline-variant rounded-lg px-4 py-2 text-on-surface focus:border-primary focus:ring-1 focus:ring-primary" placeholder="system@domain.io" type="email"/>
+<button class="bg-secondary text-on-secondary p-2 rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined">send</span>
+</button>
+</div>
+<div class="flex gap-4">
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer transition-standard">public</span>
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer transition-standard">hub</span>
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer transition-standard">code</span>
+</div>
+</div>
+</div>
+<div class="max-w-container-max mx-auto px-gutter pb-8 flex flex-col md:flex-row justify-between items-center border-t border-outline-variant/30 pt-8 opacity-60">
+<p class="text-label-mono font-label-mono">© 2024 AI-Solutions. EMPOWERING THE FUTURE THROUGH ADVANCED INTELLIGENCE.</p>
+<div class="flex gap-6 mt-4 md:mt-0">
+<span class="text-label-mono">POWERED BY AX-CORE</span>
+</div>
+</div>
+</footer>
+</div>
+</body></html>
