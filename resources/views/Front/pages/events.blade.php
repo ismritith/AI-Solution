@@ -28,130 +28,106 @@
 
 <!-- Events Grid Section -->
 <section class="py-10 max-w-container-max mx-auto px-gutter">
+    @php
+        $featuredEvent = $events->first();
+        $remainingEvents = $events->slice(1);
+    @endphp
+
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
         
-        <!-- Featured Event 1: AI Global Summit -->
-        <div class="glass-card rounded-3xl p-8 md:p-10 flex flex-col justify-between group border-secondary/20 hover:border-secondary/50 relative overflow-hidden md:col-span-2" data-aos="fade-up">
-            <div class="absolute -top-24 -left-24 w-64 h-64 bg-secondary/10 rounded-full filter blur-3xl pointer-events-none"></div>
-            
-            <div class="space-y-6 relative z-10">
-                <div class="flex flex-wrap items-center justify-between gap-4">
-                    <div class="flex items-center gap-2 text-accent font-mono text-xs font-bold">
-                        <span class="material-symbols-outlined text-base">event</span>
-                        FEATURED SUMMIT
+        <!-- Featured Event -->
+        @if($featuredEvent)
+            <div class="glass-card rounded-3xl p-8 md:p-10 flex flex-col justify-between group border-secondary/20 hover:border-secondary/50 relative overflow-hidden md:col-span-2" data-aos="fade-up">
+                <div class="absolute -top-24 -left-24 w-64 h-64 bg-secondary/10 rounded-full filter blur-3xl pointer-events-none"></div>
+                
+                <div class="space-y-6 relative z-10">
+                    <div class="flex flex-wrap items-center justify-between gap-4">
+                        <div class="flex items-center gap-2 text-accent font-mono text-xs font-bold">
+                            <span class="material-symbols-outlined text-base">event</span>
+                            {{ strtoupper($featuredEvent->status_badge) }}
+                        </div>
+                        <a href="/register_form?id={{ $featuredEvent->id }}" class="inline-flex items-center justify-center font-body text-sm font-bold text-white btn-gradient px-6 py-2.5 rounded-xl">
+                            Register Now
+                        </a>
                     </div>
-                    <span class="px-3 py-1 bg-green-500/10 text-green-400 font-mono text-[10px] font-bold uppercase rounded-full border border-green-500/20">Registrations Open</span>
+                    
+                    <h2 class="font-display text-3xl md:text-4xl font-extrabold text-white leading-tight hover:underline">
+                        <a href="/event1?id={{ $featuredEvent->id }}">{{ $featuredEvent->title }}</a>
+                    </h2>
+                    
+                    <div class="font-body text-base text-on-surface-variant max-w-3xl leading-relaxed">
+                        {!! strip_tags($featuredEvent->description) !!}
+                    </div>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 max-w-2xl">
+                        <div class="p-4 bg-white/5 rounded-2xl border border-white/5 font-mono text-xs">
+                            <span class="text-on-surface-variant block mb-1">LOCATION:</span>
+                            <span class="text-white font-bold">{{ $featuredEvent->location }}</span>
+                        </div>
+                        <div class="p-4 bg-white/5 rounded-2xl border border-white/5 font-mono text-xs">
+                            <span class="text-on-surface-variant block mb-1">DATE & TIME:</span>
+                            <span class="text-white font-bold">{{ $featuredEvent->date_text }}</span>
+                        </div>
+                        <div class="p-4 bg-white/5 rounded-2xl border border-white/5 font-mono text-xs">
+                            <span class="text-on-surface-variant block mb-1">CAPACITY LIMIT:</span>
+                            <span class="text-white font-bold">{{ $featuredEvent->capacity }}</span>
+                        </div>
+                    </div>
                 </div>
                 
-                <h2 class="font-display text-3xl md:text-4xl font-extrabold text-white leading-tight">
-                    AI Global Summit 2026
-                </h2>
-                
-                <p class="font-body text-base text-on-surface-variant max-w-3xl leading-relaxed">
-                    Our flagship annual conference assembling thousands of enterprise heads and developer architects. Dive deep into multi-agent systems, secure localized large models, and the upcoming frameworks for self-healing automations.
-                </p>
-                
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 max-w-2xl">
-                    <div class="p-4 bg-white/5 rounded-2xl border border-white/5 font-mono text-xs">
-                        <span class="text-on-surface-variant block mb-1">LOCATION:</span>
-                        <span class="text-white font-bold">SF, California</span>
-                    </div>
-                    <div class="p-4 bg-white/5 rounded-2xl border border-white/5 font-mono text-xs">
-                        <span class="text-on-surface-variant block mb-1">DATE:</span>
-                        <span class="text-white font-bold">Oct 12 - 14, 2026</span>
-                    </div>
-                    <div class="p-4 bg-white/5 rounded-2xl border border-white/5 font-mono text-xs">
-                        <span class="text-on-surface-variant block mb-1">CAPACITY:</span>
-                        <span class="text-white font-bold">2,500 Nodes</span>
-                    </div>
+                <div class="mt-10 pt-6 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center gap-4 relative z-10">
+                    <div class="font-mono text-sm text-on-surface-variant">Ticket Tier Pricing: <strong class="text-white">{{ $featuredEvent->ticket_price }}</strong></div>
+                    <a href="/event1?id={{ $featuredEvent->id }}" class="btn-gradient text-white font-bold px-8 py-3.5 rounded-xl text-sm shadow-md shadow-secondary/15 flex items-center gap-1.5">
+                        Reserve Pass <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                    </a>
                 </div>
             </div>
-            
-            <div class="mt-10 pt-6 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center gap-4 relative z-10">
-                <div class="font-mono text-sm text-on-surface-variant">Ticket Tier: Early Developer ($299)</div>
-                <a href="/contact" class="btn-gradient text-white font-bold px-8 py-3.5 rounded-xl text-sm shadow-md shadow-secondary/15">
-                    Reserve Attendance Pass
-                </a>
+        @else
+            <div class="md:col-span-2 glass-card rounded-3xl p-10 text-center text-on-surface-variant italic">
+                No events currently scheduled.
             </div>
-        </div>
+        @endif
         
-        <!-- Event 2: Hackathon -->
-        <div class="glass-card rounded-3xl p-8 flex flex-col justify-between group border-accent/20 hover:border-accent/50" data-aos="fade-up" data-aos-delay="100">
-            <div class="space-y-6">
-                <div class="flex items-center justify-between gap-4">
-                    <div class="flex items-center gap-2 text-accent font-mono text-xs font-bold">
-                        <span class="material-symbols-outlined text-base">code</span>
-                        VIRTUAL HACKATHON
+        <!-- Remaining Scheduled Events Grid -->
+        @foreach($remainingEvents as $event)
+            <div class="glass-card rounded-3xl p-8 flex flex-col justify-between group border-accent/20 hover:border-accent/50" data-aos="fade-up">
+                <div class="space-y-6">
+                    <div class="flex items-center justify-between gap-4">
+                        <div class="flex items-center gap-2 text-accent font-mono text-xs font-bold">
+                            <span class="material-symbols-outlined text-base">calendar_today</span>
+                            {{ strtoupper($event->status_badge) }}
+                        </div>
+                        <span class="px-2.5 py-0.5 bg-accent/20 text-accent font-mono text-[10px] uppercase rounded-full font-bold">{{ $event->ticket_price }}</span>
                     </div>
-                    <span class="px-2.5 py-0.5 bg-accent/20 text-accent font-mono text-[10px] uppercase rounded-full font-bold">Live Stream</span>
-                </div>
-                
-                <h3 class="font-display text-2xl font-extrabold text-white">
-                    Autonomous Agents Hackathon
-                </h3>
-                
-                <p class="font-body text-sm text-on-surface-variant leading-relaxed">
-                    Build, test, and deploy collaborative multi-agent micro-networks in a 48-hour competitive sandbox environment. $50,000 in API credits and hardware prizes.
-                </p>
-                
-                <div class="p-4 bg-white/5 rounded-2xl border border-white/5 space-y-2 font-mono text-xs">
-                    <div class="flex justify-between">
-                        <span class="text-on-surface-variant">DATE:</span>
-                        <span class="text-white">Nov 18 - 20, 2026</span>
+                    
+                    <h3 class="font-display text-2xl font-extrabold text-white hover:underline">
+                        <a href="/event1?id={{ $event->id }}">{{ $event->title }}</a>
+                    </h3>
+                    
+                    <div class="font-body text-sm text-on-surface-variant leading-relaxed line-clamp-3">
+                        {!! strip_tags($event->description) !!}
                     </div>
-                    <div class="flex justify-between">
-                        <span class="text-on-surface-variant">PRIZE POOL:</span>
-                        <span class="text-white">$50k Total</span>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="mt-8 pt-6 border-t border-white/5 flex justify-between items-center">
-                <span class="font-mono text-xs text-on-surface-variant">Virtual Event</span>
-                <a href="/contact" class="btn-gradient text-white px-5 py-2.5 rounded-xl text-xs font-bold shadow-md shadow-secondary/10">
-                    Register Team
-                </a>
-            </div>
-        </div>
-        
-        <!-- Event 3: Webinar -->
-        <div class="glass-card rounded-3xl p-8 flex flex-col justify-between group border-secondary/20 hover:border-secondary/50" data-aos="fade-up" data-aos-delay="200">
-            <div class="space-y-6">
-                <div class="flex items-center justify-between gap-4">
-                    <div class="flex items-center gap-2 text-secondary font-mono text-xs font-bold">
-                        <span class="material-symbols-outlined text-base">videocam</span>
-                        ONLINE WEBINAR
-                    </div>
-                    <span class="px-2.5 py-0.5 bg-secondary/20 text-secondary font-mono text-[10px] uppercase rounded-full font-bold">Upcoming</span>
-                </div>
-                
-                <h3 class="font-display text-2xl font-extrabold text-white">
-                    Predictive Analytics Masterclass
-                </h3>
-                
-                <p class="font-body text-sm text-on-surface-variant leading-relaxed">
-                    Learn to implement structural anomalies monitoring, mathematical forecast models, and self-healing transaction setups directly into Laravel.
-                </p>
-                
-                <div class="p-4 bg-white/5 rounded-2xl border border-white/5 space-y-2 font-mono text-xs">
-                    <div class="flex justify-between">
-                        <span class="text-on-surface-variant">DATE:</span>
-                        <span class="text-white">Dec 04, 2026</span>
-                    </div>
-                    <div class="flex justify-between">
-                        <span class="text-on-surface-variant">TIME:</span>
-                        <span class="text-white">10:00 AM PST</span>
+                    
+                    <div class="p-4 bg-white/5 rounded-2xl border border-white/5 space-y-2 font-mono text-xs">
+                        <div class="flex justify-between">
+                            <span class="text-on-surface-variant">DATE:</span>
+                            <span class="text-white">{{ $event->date_text }}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-on-surface-variant">LOCATION:</span>
+                            <span class="text-white">{{ $event->location }}</span>
+                        </div>
                     </div>
                 </div>
+                
+                <div class="mt-8 pt-6 border-t border-white/5 flex justify-between items-center">
+                    <span class="font-mono text-xs text-on-surface-variant">{{ $event->capacity }}</span>
+                    <a href="/event1?id={{ $event->id }}" class="btn-gradient text-white px-5 py-2.5 rounded-xl text-xs font-bold shadow-md shadow-secondary/10 flex items-center gap-1">
+                        Register Node <span class="material-symbols-outlined text-xs">arrow_forward</span>
+                    </a>
+                </div>
             </div>
-            
-            <div class="mt-8 pt-6 border-t border-white/5 flex justify-between items-center">
-                <span class="font-mono text-xs text-on-surface-variant">Free Entry</span>
-                <a href="/contact" class="btn-gradient text-white px-5 py-2.5 rounded-xl text-xs font-bold shadow-md shadow-secondary/10">
-                    Get Free Pass
-                </a>
-            </div>
-        </div>
+        @endforeach
         
     </div>
 </section>

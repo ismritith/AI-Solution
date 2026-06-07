@@ -124,75 +124,84 @@
 
         <!-- Bento Layout -->
         <div class="grid grid-cols-1 md:grid-cols-6 gap-6">
-            <!-- Box 1: Analytics -->
-            <div class="md:col-span-3 glass-card rounded-3xl p-8 flex flex-col justify-between group" data-aos="fade-up" data-aos-delay="100">
-                <div class="space-y-6">
-                    <div class="w-14 h-14 rounded-2xl bg-secondary/10 flex items-center justify-center group-hover:scale-110 transition-transform">
-                        <span class="material-symbols-outlined text-secondary text-3xl">insights</span>
+            @forelse($services as $index => $service)
+                @if($index == 2)
+                    <!-- Special large box for 3rd service -->
+                    <div class="md:col-span-6 glass-card rounded-3xl p-8 flex flex-col md:flex-row items-center gap-10 group" data-aos="fade-up" data-aos-delay="300">
+                        <div class="flex-1 space-y-6">
+                            <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-secondary to-accent flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg shadow-secondary/20 text-white">
+                                <span class="material-symbols-outlined text-white text-3xl">{{ $service->icon ?? 'neurology' }}</span>
+                            </div>
+                            <h3 class="font-display text-2xl md:text-3xl font-extrabold text-white">{{ $service->title }}</h3>
+                            <p class="font-body text-sm text-on-surface-variant leading-relaxed">
+                                {!! strip_tags($service->description) !!}
+                            </p>
+                            @if($service->tags)
+                                <div class="flex flex-wrap gap-2">
+                                    @foreach(explode(',', $service->tags) as $tag)
+                                        <span class="px-2.5 py-0.5 rounded bg-white/5 border border-white/10 text-[10px] text-on-surface-variant font-mono uppercase tracking-wider">{{ trim($tag) }}</span>
+                                    @endforeach
+                                </div>
+                            @endif
+                            <div>
+                                <a href="/services" class="inline-flex items-center gap-2 text-secondary font-body text-sm font-semibold hover:text-white transition-colors">
+                                    Explore all services <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="w-full md:w-2/5 bg-[#05020c] rounded-2xl p-6 border border-white/5 font-mono text-xs space-y-2 text-on-surface-variant relative overflow-hidden">
+                            <div class="flex gap-1.5 pb-4 border-b border-white/5">
+                                <span class="w-2.5 h-2.5 rounded-full bg-red-500/80"></span>
+                                <span class="w-2.5 h-2.5 rounded-full bg-yellow-500/80"></span>
+                                <span class="w-2.5 h-2.5 rounded-full bg-green-500/80"></span>
+                            </div>
+                            <p class="text-secondary"><span class="text-white">// Telemetry Active</span></p>
+                            <p><span class="text-accent">metric:</span> <span class="text-yellow-400">"{{ $service->metric_subtitle ?? 'Verified' }}"</span></p>
+                            <p class="text-green-400"><span class="text-on-surface-variant">>></span> NODE INTEGRITY: OPTIMAL</p>
+                        </div>
                     </div>
-                    <h3 class="font-display text-2xl md:text-3xl font-extrabold text-white">Advanced Analytics</h3>
-                    <p class="font-body text-sm text-on-surface-variant leading-relaxed">
-                        Transform complex enterprise datasets into actionable strategies using customized mathematical predictive neural models.
-                    </p>
-                </div>
-                <div class="mt-8">
-                    <a href="/about#analytics" class="flex items-center gap-2 text-secondary font-body text-sm font-semibold hover:text-white transition-colors">
-                        Learn more <span class="material-symbols-outlined text-sm">arrow_forward</span>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Box 2: Automations -->
-            <div class="md:col-span-3 glass-card rounded-3xl p-8 flex flex-col justify-between group" data-aos="fade-up" data-aos-delay="200">
-                <div class="space-y-6">
-                    <div class="w-14 h-14 rounded-2xl bg-accent/10 flex items-center justify-center group-hover:scale-110 transition-transform">
-                        <span class="material-symbols-outlined text-accent text-3xl">settings_suggest</span>
+                @else
+                    <div class="md:col-span-3 glass-card rounded-3xl p-8 flex flex-col justify-between group" data-aos="fade-up" data-aos-delay="100">
+                        <div class="space-y-6">
+                            <div class="w-14 h-14 rounded-2xl {{ $index == 1 ? 'bg-accent/10 text-accent' : 'bg-secondary/10 text-secondary' }} flex items-center justify-center group-hover:scale-110 transition-transform">
+                                <span class="material-symbols-outlined text-3xl">{{ $service->icon ?? 'insights' }}</span>
+                            </div>
+                            <h3 class="font-display text-2xl md:text-3xl font-extrabold text-white">{{ $service->title }}</h3>
+                            <p class="font-body text-sm text-on-surface-variant leading-relaxed">
+                                {!! strip_tags($service->description) !!}
+                            </p>
+                            @if($service->tags)
+                                <div class="flex flex-wrap gap-2">
+                                    @foreach(explode(',', $service->tags) as $tag)
+                                        <span class="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-[10px] text-on-surface-variant font-mono uppercase">{{ trim($tag) }}</span>
+                                    @endforeach
+                                </div>
+                            @endif
+                        </div>
+                        <div class="mt-8">
+                            <a href="/services" class="flex items-center gap-2 text-secondary font-body text-sm font-semibold hover:text-white transition-colors">
+                                Explore <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                            </a>
+                        </div>
                     </div>
-                    <h3 class="font-display text-2xl md:text-3xl font-extrabold text-white">Process Automations</h3>
-                    <p class="font-body text-sm text-on-surface-variant leading-relaxed">
-                        Eliminate manual bottlenecks and orchestrate seamless pipelines across your complete tech stack with 24/7 self-healing flows.
-                    </p>
-                </div>
-                <div class="mt-8">
-                    <a href="/about#automation" class="flex items-center gap-2 text-accent font-body text-sm font-semibold hover:text-white transition-colors">
-                        Explore documentation <span class="material-symbols-outlined text-sm">arrow_forward</span>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Box 3: AI Agents -->
-            <div class="md:col-span-6 glass-card rounded-3xl p-8 flex flex-col md:flex-row items-center gap-10 group" data-aos="fade-up" data-aos-delay="300">
-                <div class="flex-1 space-y-6">
-                    <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-secondary to-accent flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg shadow-secondary/20">
-                        <span class="material-symbols-outlined text-white text-3xl">smart_toy</span>
+                @endif
+            @empty
+                <!-- Fallback defaults if empty database -->
+                <div class="md:col-span-3 glass-card rounded-3xl p-8 flex flex-col justify-between group">
+                    <div class="space-y-6">
+                        <div class="w-14 h-14 rounded-2xl bg-secondary/10 flex items-center justify-center text-secondary">
+                            <span class="material-symbols-outlined text-3xl">insights</span>
+                        </div>
+                        <h3 class="font-display text-2xl md:text-3xl font-extrabold text-white">Advanced Analytics</h3>
+                        <p class="font-body text-sm text-on-surface-variant leading-relaxed">
+                            Transform complex enterprise datasets into actionable strategies using customized mathematical predictive neural models.
+                        </p>
                     </div>
-                    <h3 class="font-display text-2xl md:text-3xl font-extrabold text-white">Autonomous AI Agents</h3>
-                    <p class="font-body text-sm text-on-surface-variant leading-relaxed">
-                        Deploy independent digital workforces capable of managing support cases, coordinating project timelines, and synchronizing code repositories with total safety boundaries.
-                    </p>
-                    <div>
-                        <a href="/about#agents" class="inline-flex items-center gap-2 text-secondary font-body text-sm font-semibold hover:text-white transition-colors">
-                            Explore agent deployment rules <span class="material-symbols-outlined text-sm">arrow_forward</span>
-                        </a>
+                    <div class="mt-8">
+                        <a href="/services" class="flex items-center gap-2 text-secondary font-body text-sm font-semibold hover:text-white transition-colors">Learn more</a>
                     </div>
                 </div>
-                <!-- Interactive Code snippet window -->
-                <div class="w-full md:w-2/5 bg-[#05020c] rounded-2xl p-6 border border-white/5 font-mono text-xs space-y-2 text-on-surface-variant relative overflow-hidden">
-                    <div class="flex gap-1.5 pb-4 border-b border-white/5">
-                        <span class="w-2.5 h-2.5 rounded-full bg-red-500/80"></span>
-                        <span class="w-2.5 h-2.5 rounded-full bg-yellow-500/80"></span>
-                        <span class="w-2.5 h-2.5 rounded-full bg-green-500/80"></span>
-                    </div>
-                    <p class="text-secondary"><span class="text-white">// Initialize Autonomous Agent v2.5</span></p>
-                    <p><span class="text-accent">const</span> agent = <span class="text-white">new</span> <span class="text-yellow-400">Agent</span>({</p>
-                    <p class="pl-4">id: <span class="text-green-400">"agent-bi-nexus"</span>,</p>
-                    <p class="pl-4">actions: [<span class="text-green-400">"ANALYZE"</span>, <span class="text-green-400">"AUTOMATE"</span>],</p>
-                    <p class="pl-4">bounds: <span class="text-white">"SOC2-Enforced"</span></p>
-                    <p>});</p>
-                    <p class="pt-2 text-white">await agent.deploy();</p>
-                    <p class="text-green-400"><span class="text-on-surface-variant">>></span> STATUS: ACTIVE [OPTIMIZING...]</p>
-                </div>
-            </div>
+            @endforelse
         </div>
     </div>
 </section>
@@ -218,89 +227,124 @@
         <!-- 3 Column Hub Grid -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <!-- Article Column 1 -->
-            <article class="glass-card rounded-3xl overflow-hidden group flex flex-col justify-between" data-aos="fade-up" data-aos-delay="100">
-                <div>
-                    <div class="aspect-video overflow-hidden relative">
-                        <img alt="Robotic interface with neon lights" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 grayscale group-hover:grayscale-0" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBGU57Vz2J3LaXXeMyGipWXQZyfDWF0dAvXordkx1_GO6am9ePSF2gCuN67_Fg-tUYT747cJaSzW6nZXQb03gSQfwgmA6kyVelhlU3EBbL2OG_IL8hVH-OS-ixm1GW66dT0mDoNFfBdWht3uBEpTU_h2EpX77cn0snU07QpodjciyHLHuMyJaDjEurMH0_Xu1ERdi_LNV_PPF9vM4qc26kUv2BKCYFt01AaplrVr6IY5mWOnpcPIDPTqcHLVMrLpOUbOZA4wuokJHDs"/>
-                    </div>
-                    <div class="p-8 space-y-4">
-                        <div class="flex items-center gap-3">
-                            <span class="px-2.5 py-0.5 bg-secondary/20 text-secondary font-mono text-[10px] uppercase rounded-full font-bold">Research</span>
-                            <span class="text-on-surface-variant font-mono text-[10px]">5 MIN READ</span>
+            @if(isset($posts[0]))
+                <article class="glass-card rounded-3xl overflow-hidden group flex flex-col justify-between" data-aos="fade-up" data-aos-delay="100">
+                    <div>
+                        <div class="aspect-video overflow-hidden relative">
+                            <img alt="{{ $posts[0]->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 grayscale group-hover:grayscale-0" src="{{ asset($posts[0]->banner_image) }}"/>
                         </div>
-                        <h4 class="font-display text-xl font-bold text-white group-hover:text-secondary transition-colors line-clamp-2">
-                            The Future of Large Language Models in Enterprise
-                        </h4>
-                        <p class="font-body text-sm text-on-surface-variant line-clamp-3 leading-relaxed">
-                            How generative AI architectures are reshaping search, structured storage, and the way corporate entities coordinate internal files.
-                        </p>
+                        <div class="p-8 space-y-4">
+                            <div class="flex items-center gap-3">
+                                <span class="px-2.5 py-0.5 bg-secondary/20 text-secondary font-mono text-[10px] uppercase rounded-full font-bold">{{ $posts[0]->category }}</span>
+                                <span class="text-on-surface-variant font-mono text-[10px]">{{ $posts[0]->reading_time }} MIN READ</span>
+                            </div>
+                            <h4 class="font-display text-xl font-bold text-white group-hover:text-secondary transition-colors line-clamp-2">
+                                {{ $posts[0]->title }}
+                            </h4>
+                            <p class="font-body text-sm text-on-surface-variant line-clamp-3 leading-relaxed">
+                                {{ $posts[0]->excerpt }}
+                            </p>
+                        </div>
                     </div>
-                </div>
-                <div class="px-8 pb-8 pt-2">
-                    <a href="/insights" class="flex items-center gap-2 text-secondary font-body text-sm font-bold hover:text-white transition-colors">
-                        Read Insights <span class="material-symbols-outlined text-sm">arrow_forward</span>
-                    </a>
-                </div>
-            </article>
+                    <div class="px-8 pb-8 pt-2">
+                        <a href="/insights1?id={{ $posts[0]->id }}" class="flex items-center gap-2 text-secondary font-body text-sm font-bold hover:text-white transition-colors">
+                            Read Insights <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                        </a>
+                    </div>
+                </article>
+            @else
+                <article class="glass-card rounded-3xl overflow-hidden group flex flex-col justify-between">
+                    <div>
+                        <div class="aspect-video overflow-hidden relative bg-[#131b2e] flex items-center justify-center">
+                            <span class="material-symbols-outlined text-4xl text-on-surface-variant">article</span>
+                        </div>
+                        <div class="p-8 space-y-4">
+                            <h4 class="font-display text-xl font-bold text-white">Future of LLMs in Enterprise</h4>
+                            <p class="text-sm text-on-surface-variant">Deploy custom enterprise solutions to scale data orchestration pipelines.</p>
+                        </div>
+                    </div>
+                </article>
+            @endif
 
             <!-- Event Card Column 2 -->
-            <div class="glass-card rounded-3xl p-8 flex flex-col justify-between border-secondary/20 hover:border-secondary/50 group" data-aos="fade-up" data-aos-delay="200">
-                <div class="space-y-6">
-                    <div class="flex items-center gap-2 text-accent font-mono text-xs font-bold">
-                        <span class="material-symbols-outlined text-base">event</span>
-                        UPCOMING EVENT
+            @if($featuredEvent)
+                <div class="glass-card rounded-3xl p-8 flex flex-col justify-between border-secondary/20 hover:border-secondary/50 group" data-aos="fade-up" data-aos-delay="200">
+                    <div class="space-y-6">
+                        <div class="flex items-center gap-2 text-accent font-mono text-xs font-bold">
+                            <span class="material-symbols-outlined text-base">event</span>
+                            {{ strtoupper($featuredEvent->status_badge) }}
+                        </div>
+                        <h4 class="font-display text-2xl font-extrabold text-white leading-tight">
+                            {{ $featuredEvent->title }}
+                        </h4>
+                        <p class="font-body text-sm text-on-surface-variant leading-relaxed line-clamp-3">
+                            {!! strip_tags($featuredEvent->description) !!}
+                        </p>
+                        
+                        <div class="p-4 bg-white/5 rounded-2xl border border-white/5 space-y-2 font-mono text-xs">
+                            <div class="flex justify-between">
+                                <span class="text-on-surface-variant">LOC:</span>
+                                <span class="text-white">{{ $featuredEvent->location }}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-on-surface-variant">DATE:</span>
+                                <span class="text-white">{{ $featuredEvent->date_text }}</span>
+                            </div>
+                        </div>
                     </div>
-                    <h4 class="font-display text-2xl font-extrabold text-white leading-tight">
-                        AI Global Summit 2026
-                    </h4>
-                    <p class="font-body text-sm text-on-surface-variant leading-relaxed">
-                        Join our engineering leaders and architectural partners live in San Francisco for the largest autonomous intelligence integration summit of the year.
-                    </p>
-                    
-                    <div class="p-4 bg-white/5 rounded-2xl border border-white/5 space-y-2 font-mono text-xs">
-                        <div class="flex justify-between">
-                            <span class="text-on-surface-variant">LOC:</span>
-                            <span class="text-white">SF, California</span>
-                        </div>
-                        <div class="flex justify-between">
-                            <span class="text-on-surface-variant">DATE:</span>
-                            <span class="text-white">Oct 12 - 14</span>
-                        </div>
+                    <div class="mt-8 flex items-center justify-between">
+                        <div class="font-mono text-sm text-on-surface">{{ $featuredEvent->ticket_price }}</div>
+                        <a href="/event1?id={{ $featuredEvent->id }}" class="btn-gradient px-5 py-2.5 rounded-xl text-xs font-bold text-white shadow-md shadow-secondary/10">
+                            Register Node
+                        </a>
                     </div>
                 </div>
-                <div class="mt-8 flex items-center justify-between">
-                    <div class="font-mono text-sm text-on-surface">Oct 12-14</div>
-                    <a href="/events" class="btn-gradient px-5 py-2.5 rounded-xl text-xs font-bold text-white shadow-md shadow-secondary/10">
-                        Register Node
-                    </a>
+            @else
+                <div class="glass-card rounded-3xl p-8 flex flex-col justify-between">
+                    <h4 class="text-white font-bold text-lg">AI Global Summit</h4>
+                    <p class="text-sm text-on-surface-variant">Summit schedule will post shortly.</p>
                 </div>
-            </div>
+            @endif
 
             <!-- Article Column 3 -->
-            <article class="glass-card rounded-3xl overflow-hidden group flex flex-col justify-between" data-aos="fade-up" data-aos-delay="300">
-                <div>
-                    <div class="aspect-video overflow-hidden relative">
-                        <img alt="Advanced dashboard displaying graphics" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 grayscale group-hover:grayscale-0" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDHlAKJ3-A7dfy5T1cMk4umgXvv4z1Et3nwekH110hoPwHRU0fkMT4Q9xYAJ1CM2xhz7C8q9DP7fbpgd9yK5IMOZn-7dy7ePyqIVGaOwK0-TMFkvGZKQlzgLbW6cX1Ix3Gc95iVZa9JayGYvYGIW_Vhvm1EfDw-miffqhdnzYX4tVYc9D82pxg9Ce2rOJFCGU_Liv2xO8a0hgeqcyhzBAOEIOSsGglScDIwEuMdTVofkjNcsuxhukekHLzv4tqvoOeOU2rhdTUkRlpx"/>
-                    </div>
-                    <div class="p-8 space-y-4">
-                        <div class="flex items-center gap-3">
-                            <span class="px-2.5 py-0.5 bg-accent/20 text-accent font-mono text-[10px] uppercase rounded-full font-bold">Cybersecurity</span>
-                            <span class="text-on-surface-variant font-mono text-[10px]">8 MIN READ</span>
+            @if(isset($posts[1]))
+                <article class="glass-card rounded-3xl overflow-hidden group flex flex-col justify-between" data-aos="fade-up" data-aos-delay="300">
+                    <div>
+                        <div class="aspect-video overflow-hidden relative">
+                            <img alt="{{ $posts[1]->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 grayscale group-hover:grayscale-0" src="{{ asset($posts[1]->banner_image) }}"/>
                         </div>
-                        <h4 class="font-display text-xl font-bold text-white group-hover:text-secondary transition-colors line-clamp-2">
-                            Securing the Perimeter: AI in Cybersecurity
-                        </h4>
-                        <p class="font-body text-sm text-on-surface-variant line-clamp-3 leading-relaxed">
-                            Defend your data boundaries against modern multi-agent threat layers using secure localized neural firewall orchestrations.
-                        </p>
+                        <div class="p-8 space-y-4">
+                            <div class="flex items-center gap-3">
+                                <span class="px-2.5 py-0.5 bg-accent/20 text-accent font-mono text-[10px] uppercase rounded-full font-bold">{{ $posts[1]->category }}</span>
+                                <span class="text-on-surface-variant font-mono text-[10px]">{{ $posts[1]->reading_time }} MIN READ</span>
+                            </div>
+                            <h4 class="font-display text-xl font-bold text-white group-hover:text-secondary transition-colors line-clamp-2">
+                                {{ $posts[1]->title }}
+                            </h4>
+                            <p class="font-body text-sm text-on-surface-variant line-clamp-3 leading-relaxed">
+                                {{ $posts[1]->excerpt }}
+                            </p>
+                        </div>
                     </div>
-                </div>
-                <div class="px-8 pb-8 pt-2">
-                    <a href="/insights" class="flex items-center gap-2 text-secondary font-body text-sm font-bold hover:text-white transition-colors">
-                        Read Insights <span class="material-symbols-outlined text-sm">arrow_forward</span>
-                    </a>
-                </div>
-            </article>
+                    <div class="px-8 pb-8 pt-2">
+                        <a href="/insights1?id={{ $posts[1]->id }}" class="flex items-center gap-2 text-secondary font-body text-sm font-bold hover:text-white transition-colors">
+                            Read Insights <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                        </a>
+                    </div>
+                </article>
+            @else
+                <article class="glass-card rounded-3xl overflow-hidden group flex flex-col justify-between">
+                    <div>
+                        <div class="aspect-video overflow-hidden relative bg-[#131b2e] flex items-center justify-center">
+                            <span class="material-symbols-outlined text-4xl text-on-surface-variant">article</span>
+                        </div>
+                        <div class="p-8 space-y-4">
+                            <h4 class="font-display text-xl font-bold text-white">Securing the Perimeter</h4>
+                            <p class="text-sm text-on-surface-variant">Defend multi-agent threat grids with secure neural firewalls.</p>
+                        </div>
+                    </div>
+                </article>
+            @endif
         </div>
     </div>
 </section>
@@ -314,62 +358,35 @@
         
         <!-- Horizontally scrollable slider (premium responsive layout) -->
         <div class="flex flex-nowrap gap-8 overflow-x-auto pb-10 snap-x no-scrollbar" data-aos="fade-up" data-aos-delay="200">
-            <!-- Card 1 -->
-            <div class="min-w-[300px] md:min-w-[450px] glass-card p-8 md:p-10 rounded-3xl snap-center relative flex flex-col justify-between">
-                <span class="material-symbols-outlined text-secondary/15 text-8xl absolute top-6 right-6 font-bold select-none pointer-events-none">format_quote</span>
-                
-                <p class="font-body text-on-surface-variant italic text-base leading-relaxed mb-8 relative z-10">
-                    "The neural model integration was entirely seamless. AI-Solutions supplied the predictive pipelines our team required to cut operational overheads by 30% inside six months."
-                </p>
+            @forelse($testimonials as $testimonial)
+                <div class="min-w-[300px] md:min-w-[450px] glass-card p-8 md:p-10 rounded-3xl snap-center relative flex flex-col justify-between">
+                    <span class="material-symbols-outlined text-secondary/15 text-8xl absolute top-6 right-6 font-bold select-none pointer-events-none">format_quote</span>
+                    
+                    <p class="font-body text-on-surface-variant italic text-base leading-relaxed mb-8 relative z-10">
+                        "{!! strip_tags($testimonial->quote_text) !!}"
+                    </p>
 
-                <div class="flex items-center gap-4 relative z-10">
-                    <div class="w-14 h-14 rounded-full bg-secondary/20 overflow-hidden border border-white/10 shrink-0">
-                        <img alt="David Chen - CTO" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBz7-yEq7pFp26a9Lg3IDcQM80IMHuSh6nbRlvrqKnNL4ypaqRiXTQ0qHwjn5Fn194nTcPdHHJp4_7cCYpd7qR3qL0DXViR8e_V7OCIRIwzj1RyOaBEO_Fj1F1FJ00vWnb-TRBOY9f2HxPZwN3DY6YH2g_0gdk1tzUo5h_YdU2CZQ2YdnxH8vl6R2bLW1TAo93mo8s8vn_7V6Oci4Hbwbkz1QfEMqZ982s_QIW_m7Zou87YqtmR3JF5p7g9CMJaxmiO0lIrELqHklwX"/>
-                    </div>
-                    <div>
-                        <div class="font-display text-base font-bold text-white">David Chen</div>
-                        <div class="font-mono text-xs text-on-surface-variant">CTO, NexaTech</div>
+                    <div class="flex items-center gap-4 relative z-10">
+                        <div class="w-14 h-14 rounded-full bg-secondary/20 overflow-hidden border border-white/10 shrink-0">
+                            <img alt="{{ $testimonial->client_name }}" class="w-full h-full object-cover" src="{{ asset($testimonial->client_avatar) }}"/>
+                        </div>
+                        <div>
+                            <div class="font-display text-base font-bold text-white flex items-center gap-1.5">
+                                {{ $testimonial->client_name }}
+                                @if($testimonial->is_verified)
+                                    <span class="material-symbols-outlined text-emerald-400 text-xs font-bold" title="Verified Customer">check_circle</span>
+                                @endif
+                            </div>
+                            <div class="font-mono text-xs text-on-surface-variant">{{ $testimonial->client_role }}</div>
+                            <div class="text-[10px] text-amber-400 mt-1 font-label-mono">{{ str_repeat('★', $testimonial->rating) }}</div>
+                        </div>
                     </div>
                 </div>
-            </div>
-
-            <!-- Card 2 -->
-            <div class="min-w-[300px] md:min-w-[450px] glass-card p-8 md:p-10 rounded-3xl snap-center relative flex flex-col justify-between">
-                <span class="material-symbols-outlined text-accent/15 text-8xl absolute top-6 right-6 font-bold select-none pointer-events-none">format_quote</span>
-                
-                <p class="font-body text-on-surface-variant italic text-base leading-relaxed mb-8 relative z-10">
-                    "Deploying their Autonomous AI Agents completely upgraded our operations. It's like operating an expert engineering team that never sleeps and persistently evolves."
-                </p>
-
-                <div class="flex items-center gap-4 relative z-10">
-                    <div class="w-14 h-14 rounded-full bg-accent/20 overflow-hidden border border-white/10 shrink-0">
-                        <img alt="Sarah Jenkins - Product Lead" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDgCPQro8a46iFh_bARl24pQyyUZeO7Vysm6eCazhhvV5v2v-pHdTdSpoYpi9e1t9pMm-yYXd0-ykmor9_keSw4C7ihThP6X31qEGXqMadlOavlIALJYg3XuMIosHCcN5kOdiNTyLfueBJ3AiY50HLZMtXzLRPnGZPqXFTkE9ZK0XybXfHvkO3rwvKvmLpeRSIDzQlaiua-V-qIVzcIirfXGAPl7Td5RwRGxr6MWrW_TbvQtnnzDnzLFwjHxbfVdhyB4iU91CEpRYD0"/>
-                    </div>
-                    <div>
-                        <div class="font-display text-base font-bold text-white">Sarah Jenkins</div>
-                        <div class="font-mono text-xs text-on-surface-variant">Product Head, Flow.ai</div>
-                    </div>
+            @empty
+                <div class="min-w-[300px] md:min-w-[450px] glass-card p-8 md:p-10 rounded-3xl">
+                    <p class="text-sm text-on-surface-variant">Testimonials will be synced shortly.</p>
                 </div>
-            </div>
-
-            <!-- Card 3 -->
-            <div class="min-w-[300px] md:min-w-[450px] glass-card p-8 md:p-10 rounded-3xl snap-center relative flex flex-col justify-between">
-                <span class="material-symbols-outlined text-secondary/15 text-8xl absolute top-6 right-6 font-bold select-none pointer-events-none">format_quote</span>
-                
-                <p class="font-body text-on-surface-variant italic text-base leading-relaxed mb-8 relative z-10">
-                    "Hands down the most sophisticated system diagnostics and dashboard in the industry. The real-time optimization nodes and agent control are simply peerless."
-                </p>
-
-                <div class="flex items-center gap-4 relative z-10">
-                    <div class="w-14 h-14 rounded-full bg-secondary/20 overflow-hidden border border-white/10 shrink-0">
-                        <img alt="Marcus Thorne - Innovation Lead" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC1fCQxy959b1jjJj_shqFBcH7frgzdu7dhGLDCJnSmyZgHFQD5ZDcEY1HDBr0GWcpCUbuovjeA3hS6-dH9qnZ4UEhnt4olCXh1oALHsvpsYZrAbKCyW4Q6pWz2LVaYYIGcXqbCGyaq2Tbf7Nj8pCVey9e1hx6jhKMklYi7KwIgFt05ujjudHRq9oS_qDY7iGaJndGut7UUvFkfqxpDEvftdf61MJSbKN3DPIWt1gcY-soivaQcCY157cPnrmU1RLvXAy83nLGQMF2I"/>
-                    </div>
-                    <div>
-                        <div class="font-display text-base font-bold text-white">Marcus Thorne</div>
-                        <div class="font-mono text-xs text-on-surface-variant">Innovation Lead, Global Inc.</div>
-                    </div>
-                </div>
-            </div>
+            @endforelse
         </div>
     </div>
 </section>
@@ -385,7 +402,7 @@
                     Ready to Evolve?
                 </h2>
                 <p class="font-body text-base md:text-lg text-on-surface-variant leading-relaxed">
-                    Join 2,000+ industry pioneers receiving our weekly deep neural briefs on structural automations.
+                    Join 2,000+ industry pioneers receiving our weekly briefs on enterprise intelligence.
                 </p>
                 
                 <form action="#" class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto pt-2">
