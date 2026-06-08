@@ -1,138 +1,14 @@
-<!DOCTYPE html>
-<html class="dark" lang="en">
-<head>
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>AI-Solutions | Projects &amp; Testimonials</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=Inter:wght@100..900&amp;family=JetBrains+Mono:wght@100..800&amp;display=swap" rel="stylesheet"/>
-    <script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    "colors": {
-                        "on-primary-fixed": "#310049",
-                        "on-secondary-container": "#ffa8a3",
-                        "on-secondary": "#68000c",
-                        "on-tertiary-fixed": "#001f26",
-                        "inverse-surface": "#dbe2fd",
-                        "surface-container": "#171f33",
-                        "error": "#ffb4ab",
-                        "tertiary-fixed": "#acedff",
-                        "background": "#0b1326",
-                        "error-container": "#93000a",
-                        "secondary-fixed-dim": "#ffb3ae",
-                        "on-error": "#690005",
-                        "surface-container-low": "#131b2e",
-                        "surface-dim": "#0b1326",
-                        "inverse-on-surface": "#283044",
-                        "on-tertiary": "#003640",
-                        "tertiary-container": "#008298",
-                        "on-surface": "#dbe2fd",
-                        "on-tertiary-fixed-variant": "#004e5c",
-                        "surface-container-lowest": "#060d20",
-                        "outline": "#9c8ba0",
-                        "on-background": "#dbe2fd",
-                        "surface-variant": "#2d3449",
-                        "primary": "#e8b3ff",
-                        "on-primary-container": "#0d0018",
-                        "on-secondary-fixed-variant": "#930015",
-                        "tertiary": "#4cd7f6",
-                        "secondary": "#ffb3ae",
-                        "on-surface-variant": "#d3c0d7",
-                        "secondary-fixed": "#ffdad7",
-                        "surface-bright": "#31394e",
-                        "primary-fixed-dim": "#e8b3ff",
-                        "on-primary-fixed-variant": "#7200a3",
-                        "primary-container": "#b721ff",
-                        "surface-container-high": "#222a3e",
-                        "surface": "#0b1326",
-                        "inverse-primary": "#9600d5",
-                        "on-error-container": "#ffdad6",
-                        "on-secondary-fixed": "#410004",
-                        "surface-tint": "#e8b3ff",
-                        "primary-fixed": "#f6d9ff",
-                        "tertiary-fixed-dim": "#4cd7f6",
-                        "secondary-container": "#a00118",
-                        "on-primary": "#500075",
-                        "on-tertiary-container": "#ffffff",
-                        "outline-variant": "#504255",
-                        "surface-container-highest": "#2d3449"
-                    },
-                    "borderRadius": {
-                        "DEFAULT": "0.25rem",
-                        "lg": "0.5rem",
-                        "xl": "0.75rem",
-                        "full": "9999px"
-                    },
-                    "spacing": {
-                        "margin-mobile": "16px",
-                        "margin-desktop": "64px",
-                        "container-max": "1440px",
-                        "unit": "4px",
-                        "gutter": "24px"
-                    },
-                    "fontFamily": {
-                        "display-lg": ["Geist"],
-                        "display-lg-mobile": ["Geist"],
-                        "label-caps": ["Inter"],
-                        "body-md": ["Inter"],
-                        "body-lg": ["Inter"],
-                        "headline-md": ["Geist"],
-                        "label-mono": ["JetBrains Mono"]
-                    },
-                    "fontSize": {
-                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
-                        "display-lg-mobile": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
-                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.08em", "fontWeight": "700"}],
-                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
-                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
-                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
-                        "label-mono": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "500"}]
-                    }
-                },
-            },
-        }
-    </script>
-    <style>
-        body {
-            background-color: #060813;
-            color: #dbe2fd;
-            overflow-x: hidden;
-        }
-        .glass-card {
-            background: rgba(11, 19, 38, 0.4);
-            backdrop-filter: blur(24px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-        }
-        .text-gradient {
-            background: linear-gradient(135deg, #ff71b2 0%, #4cd7f6 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .radial-glow-main {
-            background: radial-gradient(circle at 50% 50%, rgba(183, 33, 255, 0.15) 0%, transparent 80%);
-        }
-        .btn-gradient {
-            background: linear-gradient(135deg, #d81b60 0%, #9c27b0 100%);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .btn-gradient:hover {
-            opacity: 0.9;
-            transform: translateY(-1px);
-        }
-        .nav-link-active {
-            color: #ff71b2;
-            border-bottom: 2px solid #ff71b2;
-        }
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-    </style>
-</head>
+@extends('Front.layouts.app')
+
+@section('title', 'Visual Neural Gallery | AI-Solutions')
+
+@section('content')
+<!-- Glowing background blur blobs -->
+<div class="bg-glow-main top-[10%] left-[10%] opacity-55"></div>
+<div class="bg-glow-secondary top-[60%] right-[10%] opacity-40"></div>
+
+
+
 <body class="font-body-md text-body-md antialiased selection:bg-primary/30">
     <!-- Atmospheric Background -->
     <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
@@ -141,24 +17,6 @@
         <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-[0.03]"></div>
     </div>
 
-    <!-- Navigation -->
-    <nav class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-desktop py-4 max-w-container-max mx-auto bg-background/40 backdrop-blur-3xl border-b border-white/5">
-        <div class="flex items-center gap-3">
-            <a href="/" class="flex items-center gap-3">
-                <div class="w-10 h-10 bg-gradient-to-br from-[#ff71b2] to-[#9c27b0] rounded-lg flex items-center justify-center text-white font-bold text-xl">A</div>
-                <div class="font-display-lg text-2xl font-bold text-on-surface tracking-tighter">AI-Solutions</div>
-            </a>
-        </div>
-        <div class="hidden md:flex items-center space-x-10">
-            <a class="nav-link-active pb-1 font-body-md text-sm uppercase tracking-widest font-semibold" href="/projects">Projects</a>
-            <a class="text-on-surface-variant/80 font-body-md text-sm uppercase tracking-widest font-semibold hover:text-white transition-colors" href="/services">Services</a>
-            <a class="text-on-surface-variant/80 font-body-md text-sm uppercase tracking-widest font-semibold hover:text-white transition-colors" href="/insights">Insights</a>
-            <a class="text-on-surface-variant/80 font-body-md text-sm uppercase tracking-widest font-semibold hover:text-white transition-colors" href="/contact">Inquiries</a>
-        </div>
-        <div class="flex items-center space-x-4">
-            <a href="/contact" class="px-6 py-2 rounded-lg font-body-md text-sm font-semibold text-on-surface border border-white/10 hover:bg-white/5 transition-all">Get Started</a>
-        </div>
-    </nav>
 
     <!-- Main Content -->
     <main class="relative z-10 pt-40 pb-24 max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
@@ -436,23 +294,7 @@
         </section>
     </main>
 
-    <!-- Footer -->
-    <footer class="w-full px-margin-desktop py-16 max-w-container-max mx-auto border-t border-white/5 bg-[#060813]">
-        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-12">
-            <div class="flex flex-col gap-6">
-                <div class="flex items-center gap-3">
-                    <div class="w-8 h-8 bg-gradient-to-br from-[#ff71b2] to-[#9c27b0] rounded-lg flex items-center justify-center text-white font-bold text-lg">A</div>
-                    <div class="font-display-lg text-2xl font-bold text-on-surface tracking-tighter">AI-Solutions</div>
-                </div>
-                <div class="font-label-mono text-[11px] text-tertiary flex items-center gap-2">
-                    <span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span> System Status: Operational.
-                </div>
-            </div>
-            <div class="text-on-surface-variant/40 font-body-md text-sm">
-                © 2026 AI-Solutions. All Rights Reserved.
-            </div>
-        </div>
-    </footer>
+@endsection
 
     <script>
         // Micro-interactions and glow following effect
