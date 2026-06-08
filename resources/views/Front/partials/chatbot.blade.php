@@ -71,9 +71,8 @@
                 <!-- Initial greeting -->
                 <div class="flex flex-col items-start gap-1 max-w-[85%] self-start" id="lumina-greeting">
                     <div class="bg-white/5 border border-white/5 p-3.5 rounded-2xl rounded-tl-none">
-                        <p class="text-sm text-on-background leading-relaxed">Hello! I'm Lumina, your AI navigator. 👋 How can I help you explore AI Solutions today?</p>
+                        <p class="text-sm text-on-background leading-relaxed">Hello! I'm Zora, your AI navigator. 👋 How can I help you explore AI Solutions today?</p>
                     </div>
-                    <span class="font-mono text-[9px] text-on-surface-variant/60 ml-2 mt-0.5">Just now</span>
                 </div>
             </div>
 
@@ -105,7 +104,7 @@
                         <span class="material-symbols-outlined text-[20px]">send</span>
                     </button>
                 </div>
-                <p class="text-[10px] text-on-surface-variant/40 mt-2 text-center">Lumina only answers questions about AI Solutions</p>
+                <p class="text-[10px] text-on-surface-variant/40 mt-2 text-center">Zora only answers questions about AI Solutions</p>
             </div>
         </div>
     </div>

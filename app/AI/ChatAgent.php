@@ -21,7 +21,7 @@ class ChatAgent extends Agent
     {
         return new Gemini(
             key: env('GEMINI_API_KEY'),
-            model: 'gemini-3.5-flash'
+            model: 'gemini-2.0-flash'
         );
     }
 
