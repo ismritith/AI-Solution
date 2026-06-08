@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\InquiryController;
 use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\TestimonialController;
+use App\Http\Controllers\ChatbotController;
 use App\Http\Controllers\Front\PageController;
 use Illuminate\Support\Facades\Route;
 
@@ -50,6 +51,9 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin.timeout'])->g
     Route::resource('testimonials', TestimonialController::class);
 });
 
+Route::post('/chatbot/stream', [ChatbotController::class, 'stream'])
+    ->name('chatbot.stream')
+    ->middleware('web');
 
 Route::get('/test-clean', function () {
     return clean('<script>alert("test")</script><p>Hello</p>');

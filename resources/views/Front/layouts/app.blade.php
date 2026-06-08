@@ -295,6 +295,7 @@
             delay: 100
         });
     </script>
+    @include('Front.partials.chatbot')
     @yield('scripts')
 </body>
 </html>
