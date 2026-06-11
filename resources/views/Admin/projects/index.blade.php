@@ -54,10 +54,16 @@
                         </td>
                         <td class="py-4 px-4 text-right">
                             <div class="flex items-center justify-end gap-3">
+                                <a href="{{ route('admin.projects.show', $project) }}" class="text-primary hover:text-purple-300 font-medium text-xs flex items-center gap-0.5">
+                                    <span class="material-symbols-outlined text-sm">visibility</span> View
+                                </a>
+                                <a href="{{ route('projects.detail', ['id' => $project->id]) }}" target="_blank" class="text-accent hover:text-pink-300 font-medium text-xs flex items-center gap-0.5">
+                                    <span class="material-symbols-outlined text-sm">open_in_new</span> Preview
+                                </a>
                                 <a href="{{ route('admin.projects.edit', $project) }}" class="text-primary hover:text-purple-300 font-medium text-xs flex items-center gap-0.5">
                                     <span class="material-symbols-outlined text-sm">edit</span> Edit
                                 </a>
-                                <form action="{{ route('admin.projects.destroy', $project) }}" method="POST" onsubmit="return confirm('Purge this project permanently?')">
+                                <form action="{{ route('admin.projects.destroy', $project) }}" method="POST" onsubmit="return confirm('Purge this project permanently?')" class="inline">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="text-error hover:text-red-300 font-medium text-xs flex items-center gap-0.5">

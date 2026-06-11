@@ -19,9 +19,10 @@
             theme: {
                 extend: {
                     colors: {
-                        "primary": "#080313",      // Deep space black-purple background
+                        "primary": "#d2bbff",      // Light lavender for active items/text
+                        "primary-container": "#7c3aed", // Brand violet container
                         "secondary": "#a510b4",    // Brand purple
-                        "accent": "#ff2e93",       // Vibrant hot-pink/magenta (matches second screenshot glow)
+                        "accent": "#ff2e93",       // Vibrant hot-pink/magenta
                         "surface-dark": "#0c061a", // Deep card base
                         "on-background": "#f1eaff",
                         "on-surface": "#eadaff",
@@ -155,6 +156,76 @@
             -ms-overflow-style: none;
             scrollbar-width: none;
         }
+
+        /* Premium dark-mode inputs global style */
+        input[type="text"],
+        input[type="number"],
+        input[type="email"],
+        input[type="password"],
+        input[type="file"],
+        select,
+        textarea {
+            background-color: rgba(23, 15, 45, 0.5) !important;
+            border: 1px solid rgba(210, 187, 255, 0.15) !important;
+            color: #f1eaff !important;
+            border-radius: 0.75rem !important;
+            transition: all 0.3s ease !important;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="password"]:focus,
+        input[type="number"]:focus,
+        input[type="url"]:focus,
+        input[type="file"]:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #ff2e93 !important;
+            box-shadow: 0 0 12px rgba(255, 46, 147, 0.3) !important;
+            outline: none !important;
+        }
+
+        /* Autofill Styling */
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover, 
+        input:-webkit-autofill:focus {
+            -webkit-text-fill-color: #f1eaff !important;
+            -webkit-box-shadow: 0 0 0px 1000px rgba(12, 6, 26, 0.95) inset !important;
+            transition: background-color 5000s ease-in-out 0s !important;
+        }
+
+        /* Quill Editor Custom Theme Overrides */
+        .ql-toolbar.ql-snow {
+            background-color: rgba(23, 15, 45, 0.6) !important;
+            border: 1px solid rgba(210, 187, 255, 0.15) !important;
+            border-top-left-radius: 0.75rem !important;
+            border-top-right-radius: 0.75rem !important;
+        }
+        .ql-container.ql-snow {
+            background-color: rgba(23, 15, 45, 0.4) !important;
+            border: 1px solid rgba(210, 187, 255, 0.15) !important;
+            border-bottom-left-radius: 0.75rem !important;
+            border-bottom-right-radius: 0.75rem !important;
+            color: #f1eaff !important;
+            font-family: 'Inter', sans-serif !important;
+            font-size: 0.875rem !important;
+        }
+        .ql-editor {
+            min-height: 200px !important;
+        }
+        .ql-snow .ql-stroke {
+            stroke: #a79cb5 !important;
+        }
+        .ql-snow .ql-fill {
+            fill: #a79cb5 !important;
+        }
+        .ql-snow .ql-picker {
+            color: #a79cb5 !important;
+        }
+        .ql-snow .ql-picker-options {
+            background-color: #0c061a !important;
+            border-color: rgba(210, 187, 255, 0.15) !important;
+        }
     </style>
     
     @yield('styles')
@@ -169,44 +240,49 @@
         </div>
         <nav class="flex-1 space-y-1 px-4 overflow-y-auto">
             <!-- Analytics -->
-            <a class="flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 group {{ request()->routeIs('admin.dashboard') ? 'text-primary font-bold bg-primary-container/10 border-r-2 border-primary' : 'text-on-surface-variant hover:bg-white/5' }}" href="{{ route('admin.dashboard') }}">
-                <span class="material-symbols-outlined group-hover:text-primary">monitoring</span>
+            <a class="flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 group {{ request()->routeIs('admin.dashboard*') ? 'bg-gradient-to-r from-secondary/20 to-accent/10 border-r-4 border-accent text-white font-bold shadow-[0_0_15px_rgba(165,16,180,0.15)]' : 'text-on-surface-variant hover:bg-white/5' }}" href="{{ route('admin.dashboard') }}">
+                <span class="material-symbols-outlined {{ request()->routeIs('admin.dashboard*') ? 'text-accent' : 'text-on-surface-variant group-hover:text-accent' }}">monitoring</span>
                 <span class="font-body-base text-body-base">Analytics</span>
             </a>
             <!-- Inquiries -->
-            <a class="flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 group {{ request()->routeIs('admin.inquiries') ? 'text-primary font-bold bg-primary-container/10 border-r-2 border-primary' : 'text-on-surface-variant hover:bg-white/5' }}" href="{{ route('admin.inquiries') }}">
-                <span class="material-symbols-outlined group-hover:text-primary">chat_bubble</span>
+            <a class="flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 group {{ request()->routeIs('admin.inquiries*') ? 'bg-gradient-to-r from-secondary/20 to-accent/10 border-r-4 border-accent text-white font-bold shadow-[0_0_15px_rgba(165,16,180,0.15)]' : 'text-on-surface-variant hover:bg-white/5' }}" href="{{ route('admin.inquiries') }}">
+                <span class="material-symbols-outlined {{ request()->routeIs('admin.inquiries*') ? 'text-accent' : 'text-on-surface-variant group-hover:text-accent' }}">chat_bubble</span>
                 <span class="font-body-base text-body-base">Inquiries</span>
             </a>
             <!-- Gallery -->
-            <a class="flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 group {{ request()->routeIs('admin.gallery.*') ? 'text-primary font-bold bg-primary-container/10 border-r-2 border-primary' : 'text-on-surface-variant hover:bg-white/5' }}" href="{{ route('admin.gallery.index') }}">
-                <span class="material-symbols-outlined group-hover:text-primary">collections</span>
+            <a class="flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 group {{ request()->routeIs('admin.gallery.*') ? 'bg-gradient-to-r from-secondary/20 to-accent/10 border-r-4 border-accent text-white font-bold shadow-[0_0_15px_rgba(165,16,180,0.15)]' : 'text-on-surface-variant hover:bg-white/5' }}" href="{{ route('admin.gallery.index') }}">
+                <span class="material-symbols-outlined {{ request()->routeIs('admin.gallery.*') ? 'text-accent' : 'text-on-surface-variant group-hover:text-accent' }}">collections</span>
                 <span class="font-body-base text-body-base">Gallery</span>
             </a>
             <!-- Blogs -->
-            <a class="flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 group {{ request()->routeIs('admin.blogs.*') ? 'text-primary font-bold bg-primary-container/10 border-r-2 border-primary' : 'text-on-surface-variant hover:bg-white/5' }}" href="{{ route('admin.blogs.index') }}">
-                <span class="material-symbols-outlined group-hover:text-primary">edit_note</span>
+            <a class="flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 group {{ request()->routeIs('admin.blogs.*') ? 'bg-gradient-to-r from-secondary/20 to-accent/10 border-r-4 border-accent text-white font-bold shadow-[0_0_15px_rgba(165,16,180,0.15)]' : 'text-on-surface-variant hover:bg-white/5' }}" href="{{ route('admin.blogs.index') }}">
+                <span class="material-symbols-outlined {{ request()->routeIs('admin.blogs.*') ? 'text-accent' : 'text-on-surface-variant group-hover:text-accent' }}">edit_note</span>
                 <span class="font-body-base text-body-base">Blogs</span>
             </a>
             <!-- Services -->
-            <a class="flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 group {{ request()->routeIs('admin.services.*') ? 'text-primary font-bold bg-primary-container/10 border-r-2 border-primary' : 'text-on-surface-variant hover:bg-white/5' }}" href="{{ route('admin.services.index') }}">
-                <span class="material-symbols-outlined group-hover:text-primary">settings_applications</span>
+            <a class="flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 group {{ request()->routeIs('admin.services.*') ? 'bg-gradient-to-r from-secondary/20 to-accent/10 border-r-4 border-accent text-white font-bold shadow-[0_0_15px_rgba(165,16,180,0.15)]' : 'text-on-surface-variant hover:bg-white/5' }}" href="{{ route('admin.services.index') }}">
+                <span class="material-symbols-outlined {{ request()->routeIs('admin.services.*') ? 'text-accent' : 'text-on-surface-variant group-hover:text-accent' }}">settings_applications</span>
                 <span class="font-body-base text-body-base">Services</span>
             </a>
             <!-- Events -->
-            <a class="flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 group {{ request()->routeIs('admin.events.*') ? 'text-primary font-bold bg-primary-container/10 border-r-2 border-primary' : 'text-on-surface-variant hover:bg-white/5' }}" href="{{ route('admin.events.index') }}">
-                <span class="material-symbols-outlined group-hover:text-primary">event</span>
+            <a class="flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 group {{ request()->routeIs('admin.events.*') ? 'bg-gradient-to-r from-secondary/20 to-accent/10 border-r-4 border-accent text-white font-bold shadow-[0_0_15px_rgba(165,16,180,0.15)]' : 'text-on-surface-variant hover:bg-white/5' }}" href="{{ route('admin.events.index') }}">
+                <span class="material-symbols-outlined {{ request()->routeIs('admin.events.*') ? 'text-accent' : 'text-on-surface-variant group-hover:text-accent' }}">event</span>
                 <span class="font-body-base text-body-base">Events</span>
             </a>
             <!-- Projects -->
-            <a class="flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 group {{ request()->routeIs('admin.projects.*') ? 'text-primary font-bold bg-primary-container/10 border-r-2 border-primary' : 'text-on-surface-variant hover:bg-white/5' }}" href="{{ route('admin.projects.index') }}">
-                <span class="material-symbols-outlined group-hover:text-primary">folder_special</span>
+            <a class="flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 group {{ request()->routeIs('admin.projects.*') ? 'bg-gradient-to-r from-secondary/20 to-accent/10 border-r-4 border-accent text-white font-bold shadow-[0_0_15px_rgba(165,16,180,0.15)]' : 'text-on-surface-variant hover:bg-white/5' }}" href="{{ route('admin.projects.index') }}">
+                <span class="material-symbols-outlined {{ request()->routeIs('admin.projects.*') ? 'text-accent' : 'text-on-surface-variant group-hover:text-accent' }}">folder_special</span>
                 <span class="font-body-base text-body-base">Projects</span>
             </a>
             <!-- Testimonials -->
-            <a class="flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 group {{ request()->routeIs('admin.testimonials.*') ? 'text-primary font-bold bg-primary-container/10 border-r-2 border-primary' : 'text-on-surface-variant hover:bg-white/5' }}" href="{{ route('admin.testimonials.index') }}">
-                <span class="material-symbols-outlined group-hover:text-primary">rate_review</span>
+            <a class="flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 group {{ request()->routeIs('admin.testimonials.*') ? 'bg-gradient-to-r from-secondary/20 to-accent/10 border-r-4 border-accent text-white font-bold shadow-[0_0_15px_rgba(165,16,180,0.15)]' : 'text-on-surface-variant hover:bg-white/5' }}" href="{{ route('admin.testimonials.index') }}">
+                <span class="material-symbols-outlined {{ request()->routeIs('admin.testimonials.*') ? 'text-accent' : 'text-on-surface-variant group-hover:text-accent' }}">rate_review</span>
                 <span class="font-body-base text-body-base">Feedback</span>
+            </a>
+            <!-- Registrations -->
+            <a class="flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 group {{ request()->routeIs('admin.registrations.*') ? 'bg-gradient-to-r from-secondary/20 to-accent/10 border-r-4 border-accent text-white font-bold shadow-[0_0_15px_rgba(165,16,180,0.15)]' : 'text-on-surface-variant hover:bg-white/5' }}" href="{{ route('admin.registrations.index') }}">
+                <span class="material-symbols-outlined {{ request()->routeIs('admin.registrations.*') ? 'text-accent' : 'text-on-surface-variant group-hover:text-accent' }}">how_to_reg</span>
+                <span class="font-body-base text-body-base">Registrations</span>
             </a>
         </nav>
         <div class="mt-auto px-4 space-y-1 pb-6">

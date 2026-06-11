@@ -101,7 +101,7 @@
                     @foreach($post->technical_metrics as $metric)
                         <div class="grid grid-cols-3 gap-4 metric-row">
                             <input type="text" name="metric_lbl[]" value="{{ $metric['label'] ?? '' }}" placeholder="Metric Label" class="bg-surface-container border border-white/10 rounded-xl px-4 py-2.5 text-sm text-on-surface">
-                            <input type="text" name="metric_val[]" value="{{ $metric['value'] ?? '' }}" placeholder="Metric Value" class="bg-surface-container border border-white/10 rounded-xl px-4 py-2.5 text-sm text-on-surface">
+                            <input type="text" name="metric_val[]" value="{{ $metric['val'] ?? '' }}" placeholder="Metric Value" class="bg-surface-container border border-white/10 rounded-xl px-4 py-2.5 text-sm text-on-surface">
                             <select name="metric_icon[]" class="bg-surface-container border border-white/10 rounded-xl px-4 py-2.5 text-sm text-on-surface">
                                 <option value="bolt" {{ ($metric['icon'] ?? '') === 'bolt' ? 'selected' : '' }}>Bolt Icon</option>
                                 <option value="speed" {{ ($metric['icon'] ?? '') === 'speed' ? 'selected' : '' }}>Speed Icon</option>

@@ -40,13 +40,18 @@
                             {{ $inquiry->created_at->format('Y-m-d H:i') }}
                         </td>
                         <td class="py-4 px-4 text-right">
-                            <form action="{{ route('admin.inquiries.destroy', $inquiry) }}" method="POST" onsubmit="return confirm('Purge this inquiry payload?')">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="text-error hover:text-red-300 font-medium text-xs flex items-center justify-end gap-1 ml-auto">
-                                    <span class="material-symbols-outlined text-sm">delete</span> Purge
-                                </button>
-                            </form>
+                            <div class="flex items-center justify-end gap-3">
+                                <a href="{{ route('admin.inquiries.show', $inquiry) }}" class="text-primary hover:text-purple-300 font-medium text-xs flex items-center gap-0.5">
+                                    <span class="material-symbols-outlined text-sm">visibility</span> View
+                                </a>
+                                <form action="{{ route('admin.inquiries.destroy', $inquiry) }}" method="POST" onsubmit="return confirm('Purge this inquiry payload?')" class="inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="text-error hover:text-red-300 font-medium text-xs flex items-center gap-0.5">
+                                        <span class="material-symbols-outlined text-sm">delete</span> Purge
+                                    </button>
+                                </form>
+                            </div>
                         </td>
                     </tr>
                 @empty

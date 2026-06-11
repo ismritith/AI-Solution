@@ -40,6 +40,11 @@ class ServiceController extends Controller
         return redirect()->route('admin.services.index')->with('success', 'Core service node established.');
     }
 
+    public function show(Service $service)
+    {
+        return view('admin.services.show', compact('service'));
+    }
+
     public function edit(Service $service)
     {
         return view('admin.services.edit', compact('service'));
@@ -67,10 +72,10 @@ class ServiceController extends Controller
 
     public function destroy(Service $service)
     {
-    $service->delete();
+        $service->delete();
 
-    return redirect()
-        ->route('admin.services.index')
-        ->with('success', 'Service capability deleted successfully.');
-}
+        return redirect()
+            ->route('admin.services.index')
+            ->with('success', 'Service capability deleted successfully.');
+    }
 }

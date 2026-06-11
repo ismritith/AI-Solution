@@ -29,6 +29,11 @@ class InquiryController extends Controller
         return redirect()->back()->with('success', 'Your message payload has been successfully transmitted.');
     }
 
+    public function show(Inquiry $inquiry)
+    {
+        return view('admin.inquiries.show', compact('inquiry'));
+    }
+
     public function destroy(Inquiry $inquiry)
     {
         $inquiry->delete();

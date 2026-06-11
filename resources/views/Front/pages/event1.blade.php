@@ -91,7 +91,7 @@
             </section>
         @endif
 
-        <!-- Agenda Section -->
+        <!-- Agenda Section-->
         @if($event->agenda && is_array($event->agenda))
             <section class="py-16 bg-[#05020c]/60">
                 <div class="max-w-container-max mx-auto px-gutter">

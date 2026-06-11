@@ -4,11 +4,11 @@ namespace App\AI;
 
 use Illuminate\Support\Facades\DB;
 use NeuronAI\Agent\Agent;
+use NeuronAI\Agent\SystemPrompt;
 use NeuronAI\Chat\History\ChatHistoryInterface;
 use NeuronAI\Chat\History\SQLChatHistory;
 use NeuronAI\Providers\AIProviderInterface;
 use NeuronAI\Providers\Gemini\Gemini;
-use NeuronAI\Agent\SystemPrompt;
 
 class ChatAgent extends Agent
 {

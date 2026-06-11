@@ -91,6 +91,11 @@ class EventController extends Controller
         return redirect()->route('admin.events.index')->with('success', 'Global summit event configured successfully.');
     }
 
+    public function show(Event $event)
+    {
+        return view('admin.events.show', compact('event'));
+    }
+
     public function edit(Event $event)
     {
         return view('admin.events.edit', compact('event'));

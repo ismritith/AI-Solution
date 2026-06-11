@@ -46,6 +46,11 @@ class TestimonialController extends Controller
         return redirect()->route('admin.testimonials.index')->with('success', 'Customer feedback logged successfully.');
     }
 
+    public function show(Testimonial $testimonial)
+    {
+        return view('admin.testimonials.show', compact('testimonial'));
+    }
+
     public function edit(Testimonial $testimonial)
     {
         return view('admin.testimonials.edit', compact('testimonial'));

@@ -12,12 +12,12 @@ class RegistrationController extends Controller
     {
         $registrations = Registration::latest()->paginate(10);
 
-        return view('admin.registrations.index', compact('registrations'));
+        return view('admin.registration.index', compact('registrations'));
     }
 
     public function create()
     {
-        return view('admin.registrations.create');
+        return view('admin.registration.create');
     }
 
     public function store(Request $request)
@@ -40,9 +40,14 @@ class RegistrationController extends Controller
             ->with('success', 'Registration created successfully.');
     }
 
+    public function show(Registration $registration)
+    {
+        return view('admin.registration.show', compact('registration'));
+    }
+
     public function edit(Registration $registration)
     {
-        return view('admin.registrations.edit', compact('registration'));
+        return view('admin.registration.edit', compact('registration'));
     }
 
     public function update(Request $request, Registration $registration)

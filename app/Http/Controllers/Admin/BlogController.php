@@ -52,7 +52,7 @@ class BlogController extends Controller
                 if (! empty($lbl)) {
                     $metrics[] = [
                         'label' => $lbl,
-                        'value' => $vals[$index] ?? '',
+                        'val' => $vals[$index] ?? '',
                         'icon' => $icons[$index] ?? 'bolt',
                     ];
                 }
@@ -70,6 +70,13 @@ class BlogController extends Controller
         BlogPost::create($validated);
 
         return redirect()->route('admin.blogs.index')->with('success', 'Intelligence article dispatched successfully.');
+    }
+
+    public function show(BlogPost $blog)
+    {
+        $post = $blog;
+
+        return view('admin.blogs.show', compact('post'));
     }
 
     public function edit(BlogPost $blog)
@@ -113,7 +120,7 @@ class BlogController extends Controller
                 if (! empty($lbl)) {
                     $metrics[] = [
                         'label' => $lbl,
-                        'value' => $vals[$index] ?? '',
+                        'val' => $vals[$index] ?? '',
                         'icon' => $icons[$index] ?? 'bolt',
                     ];
                 }

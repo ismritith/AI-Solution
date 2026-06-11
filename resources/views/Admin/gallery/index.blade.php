@@ -60,10 +60,13 @@
                         </td>
                         <td class="py-4 px-4 text-right">
                             <div class="flex items-center justify-end gap-3">
+                                <a href="{{ route('admin.gallery.show', $asset) }}" class="text-primary hover:text-purple-300 font-medium text-xs flex items-center gap-0.5">
+                                    <span class="material-symbols-outlined text-sm">visibility</span> View
+                                </a>
                                 <a href="{{ route('admin.gallery.edit', $asset) }}" class="text-primary hover:text-purple-300 font-medium text-xs flex items-center gap-0.5">
                                     <span class="material-symbols-outlined text-sm">edit</span> Edit
                                 </a>
-                                <form action="{{ route('admin.gallery.destroy', $asset) }}" method="POST" onsubmit="return confirm('Dismantle this gallery node permanently?')">
+                                <form action="{{ route('admin.gallery.destroy', $asset) }}" method="POST" onsubmit="return confirm('Dismantle this gallery node permanently?')" class="inline">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="text-error hover:text-red-300 font-medium text-xs flex items-center gap-0.5">

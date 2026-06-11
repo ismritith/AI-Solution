@@ -60,10 +60,13 @@
                         </td>
                         <td class="py-4 px-4 text-right">
                             <div class="flex items-center justify-end gap-3">
+                                <a href="{{ route('admin.services.show', $service) }}" class="text-primary hover:text-purple-300 font-medium text-xs flex items-center gap-0.5">
+                                    <span class="material-symbols-outlined text-sm">visibility</span> View
+                                </a>
                                 <a href="{{ route('admin.services.edit', $service) }}" class="text-primary hover:text-purple-300 font-medium text-xs flex items-center gap-0.5">
                                     <span class="material-symbols-outlined text-sm">edit</span> Edit
                                 </a>
-                                <form action="{{ route('admin.services.destroy', $service) }}" method="POST" onsubmit="return confirm('Dismantle this core capability?')">
+                                <form action="{{ route('admin.services.destroy', $service) }}" method="POST" onsubmit="return confirm('Dismantle this core capability?')" class="inline">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="text-error hover:text-red-300 font-medium text-xs flex items-center gap-0.5">

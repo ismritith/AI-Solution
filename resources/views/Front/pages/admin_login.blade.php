@@ -10,7 +10,7 @@
 <style>
         body {
             background-color: #0b1326;
-            overflow: hidden;
+            overflow-y: auto;
         }
         .glass-card {
             background: rgba(23, 31, 51, 0.6);
@@ -166,7 +166,7 @@
         }
     </script>
 </head>
-<body class="font-body-base text-on-surface min-h-screen flex flex-col items-center justify-center p-gutter relative overflow-hidden">
+<body class="font-body-base text-on-surface min-h-screen flex flex-col items-center justify-center p-4 md:p-gutter relative overflow-y-auto">
 <!-- Background Elements -->
 <div class="atmospheric-glow glow-1"></div>
 <div class="atmospheric-glow glow-2"></div>
@@ -176,14 +176,14 @@
 </div>
 <div class="w-full max-w-lg flex flex-col items-center z-10">
 <!-- Top Branding -->
-<header class="mb-10 text-center animate-fade-in">
-<div class="flex flex-col items-center justify-center space-y-3 mb-4">
-<div class="p-4 rounded-2xl bg-gradient-to-br from-primary/20 to-secondary/10 border border-primary/20 backdrop-blur-md mb-2">
-<span class="material-symbols-outlined text-primary text-5xl leading-none" data-weight="fill">hub</span>
+<header class="mb-8 text-center animate-fade-in">
+<div class="flex items-center justify-center space-x-3 mb-3">
+<div class="p-2.5 rounded-xl bg-gradient-to-br from-primary/20 to-secondary/10 border border-primary/20 backdrop-blur-md">
+<span class="material-symbols-outlined text-primary text-3xl leading-none" data-weight="fill">hub</span>
 </div>
-<h1 class="font-display-lg text-4xl text-on-surface tracking-tight">AI-Solutions</h1>
+<h1 class="font-display-lg text-3xl md:text-4xl text-on-surface tracking-tight">AI-Solutions</h1>
 </div>
-<p class="text-on-surface-variant font-label-mono text-xs tracking-[0.3em] opacity-60 uppercase">System Administration Node V4.2</p>
+<p class="text-on-surface-variant font-label-mono text-[10px] tracking-[0.3em] opacity-60 uppercase">System Administration Node V4.2</p>
 </header>
 <!-- Main Secure Gateway -->
 <main class="w-full relative group">
@@ -268,7 +268,7 @@
 <!-- Submit Action -->
 <div class="pt-2">
 <button type="submit" class="shimmer-button w-full py-5 bg-gradient-to-r from-primary-container to-secondary-container text-on-primary-container font-headline-md font-bold rounded-xl shadow-[0_10px_30px_-10px_rgba(124,58,237,0.4)] hover:shadow-primary-container/40 transition-all active:scale-[0.98] flex items-center justify-center space-x-3 group/btn">
-<span class="tracking-widest">INITIALIZE SESSION</span>
+<span class="tracking-widest">LOG IN / INITIALIZE SESSION</span>
 <span class="material-symbols-outlined group-hover/btn:rotate-12 transition-transform duration-300">bolt</span>
 </button>
 </div>

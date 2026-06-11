@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\EventController;
 use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\InquiryController;
 use App\Http\Controllers\Admin\ProjectController;
+use App\Http\Controllers\Admin\RegistrationController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\ChatbotController;
@@ -41,6 +42,7 @@ Route::post('/contact/submit', [InquiryController::class, 'store'])->name('conta
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin.timeout'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/inquiries', [InquiryController::class, 'index'])->name('inquiries');
+    Route::get('/inquiries/{inquiry}', [InquiryController::class, 'show'])->name('inquiries.show');
     Route::delete('/inquiries/{inquiry}', [InquiryController::class, 'destroy'])->name('inquiries.destroy');
 
     Route::resource('gallery', GalleryController::class);
@@ -49,6 +51,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin.timeout'])->g
     Route::resource('events', EventController::class);
     Route::resource('projects', ProjectController::class);
     Route::resource('testimonials', TestimonialController::class);
+    Route::resource('registrations', RegistrationController::class);
 });
 
 Route::post('/chatbot/stream', [ChatbotController::class, 'stream'])

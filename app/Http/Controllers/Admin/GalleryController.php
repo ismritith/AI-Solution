@@ -47,6 +47,13 @@ class GalleryController extends Controller
         return redirect()->route('admin.gallery.index')->with('success', 'Gallery asset initialized successfully.');
     }
 
+    public function show(GalleryAsset $gallery)
+    {
+        $asset = $gallery;
+
+        return view('admin.gallery.show', compact('asset'));
+    }
+
     public function edit(GalleryAsset $gallery)
     {
         $asset = $gallery;

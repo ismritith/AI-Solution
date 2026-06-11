@@ -56,10 +56,16 @@
                         </td>
                         <td class="py-4 px-4 text-right">
                             <div class="flex items-center justify-end gap-3">
+                                <a href="{{ route('admin.events.show', $event) }}" class="text-primary hover:text-purple-300 font-medium text-xs flex items-center gap-0.5">
+                                    <span class="material-symbols-outlined text-sm">visibility</span> View
+                                </a>
+                                <a href="{{ route('events.detail', ['id' => $event->id]) }}" target="_blank" class="text-accent hover:text-pink-300 font-medium text-xs flex items-center gap-0.5">
+                                    <span class="material-symbols-outlined text-sm">open_in_new</span> Preview
+                                </a>
                                 <a href="{{ route('admin.events.edit', $event) }}" class="text-primary hover:text-purple-300 font-medium text-xs flex items-center gap-0.5">
                                     <span class="material-symbols-outlined text-sm">edit</span> Edit
                                 </a>
-                                <form action="{{ route('admin.events.destroy', $event) }}" method="POST" onsubmit="return confirm('Purge this event from index permanently?')">
+                                <form action="{{ route('admin.events.destroy', $event) }}" method="POST" onsubmit="return confirm('Purge this event from index permanently?')" class="inline">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="text-error hover:text-red-300 font-medium text-xs flex items-center gap-0.5">

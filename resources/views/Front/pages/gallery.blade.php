@@ -46,21 +46,24 @@
                         @if($asset->media_type === 'image')
                             <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="{{ $imageUrl }}" alt="{{ $asset->title }}"/>
                         @else
-                            <!-- Video Fallback Frame with elegant overlay -->
-                            <div class="w-full h-full bg-[#131b2e] flex items-center justify-center relative">
-                                <span class="material-symbols-outlined text-secondary text-6xl opacity-45">play_circle</span>
+                            <!-- Video Thumbnail / Fallback Frame -->
+                            <div class="w-full h-full bg-gradient-to-br from-[#120626] to-[#05020c] flex items-center justify-center relative cursor-pointer group-hover:scale-105 transition-transform duration-700" onclick="openVideoModal('{{ $imageUrl }}', '{{ addslashes($asset->title) }}')">
+                                <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(255,46,147,0.15)_0%,_transparent_70%)]"></div>
+                                <div class="w-20 h-20 rounded-full bg-secondary/20 border border-secondary/40 flex items-center justify-center text-secondary group-hover:bg-secondary group-hover:text-white group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(165,16,180,0.6)] transition-all duration-300">
+                                    <span class="material-symbols-outlined text-5xl leading-none pl-1">play_arrow</span>
+                                </div>
                             </div>
                         @endif
-                        <div class="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent"></div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent pointer-events-none"></div>
                     </div>
                     
-                    <div class="relative z-10 p-8 space-y-3 opacity-90 group-hover:opacity-100 transition-opacity">
+                    <div class="relative z-10 p-8 space-y-3 opacity-90 group-hover:opacity-100 transition-opacity pointer-events-none">
                         <span class="font-mono text-xs text-secondary uppercase font-bold tracking-widest">{{ $asset->category }}</span>
                         <h3 class="font-display text-2xl md:text-3xl font-extrabold text-white">
                             @if($asset->media_type === 'video')
-                                <a href="{{ $imageUrl }}" target="_blank" class="hover:underline flex items-center gap-1.5">
-                                    {{ $asset->title }} <span class="material-symbols-outlined text-sm text-secondary">open_in_new</span>
-                                </a>
+                                <span class="hover:underline flex items-center gap-1.5 cursor-pointer pointer-events-auto" onclick="openVideoModal('{{ $imageUrl }}', '{{ addslashes($asset->title) }}')">
+                                    {{ $asset->title }} <span class="material-symbols-outlined text-sm text-secondary">smart_display</span>
+                                </span>
                             @else
                                 {{ $asset->title }}
                             @endif
@@ -77,20 +80,24 @@
                         @if($asset->media_type === 'image')
                             <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="{{ $imageUrl }}" alt="{{ $asset->title }}"/>
                         @else
-                            <div class="w-full h-full bg-[#131b2e] flex items-center justify-center relative">
-                                <span class="material-symbols-outlined text-secondary text-5xl opacity-45">play_circle</span>
+                            <!-- Video Thumbnail / Fallback Frame -->
+                            <div class="w-full h-full bg-gradient-to-br from-[#120626] to-[#05020c] flex items-center justify-center relative cursor-pointer group-hover:scale-105 transition-transform duration-700" onclick="openVideoModal('{{ $imageUrl }}', '{{ addslashes($asset->title) }}')">
+                                <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(255,46,147,0.15)_0%,_transparent_70%)]"></div>
+                                <div class="w-14 h-14 rounded-full bg-secondary/20 border border-secondary/40 flex items-center justify-center text-secondary group-hover:bg-secondary group-hover:text-white group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(165,16,180,0.6)] transition-all duration-300">
+                                    <span class="material-symbols-outlined text-3xl leading-none pl-1">play_arrow</span>
+                                </div>
                             </div>
                         @endif
-                        <div class="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent"></div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent pointer-events-none"></div>
                     </div>
                     
-                    <div class="relative z-10 p-6 space-y-1">
+                    <div class="relative z-10 p-6 space-y-1 pointer-events-none">
                         <span class="font-mono text-[10px] text-accent uppercase font-bold tracking-widest">{{ $asset->category }}</span>
                         <h4 class="text-white font-display font-bold text-lg">
                             @if($asset->media_type === 'video')
-                                <a href="{{ $imageUrl }}" target="_blank" class="hover:underline flex items-center gap-1">
-                                    {{ $asset->title }} <span class="material-symbols-outlined text-xs">open_in_new</span>
-                                </a>
+                                <span class="hover:underline flex items-center gap-1 cursor-pointer pointer-events-auto" onclick="openVideoModal('{{ $imageUrl }}', '{{ addslashes($asset->title) }}')">
+                                    {{ $asset->title }} <span class="material-symbols-outlined text-xs">smart_display</span>
+                                </span>
                             @else
                                 {{ $asset->title }}
                             @endif
@@ -135,4 +142,76 @@
         </div>
     </div>
 </section>
+
+<!-- Glassmorphic Video Lightbox Modal -->
+<div id="videoModal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-[#05020c]/90 backdrop-blur-md p-4 transition-all duration-300 opacity-0">
+    <div class="absolute inset-0" onclick="closeVideoModal()"></div>
+    <div class="relative w-full max-w-4xl glass-card rounded-3xl overflow-hidden border border-white/10 z-10 transform scale-95 transition-all duration-300">
+        <!-- Header -->
+        <div class="flex items-center justify-between p-4 bg-white/5 border-b border-white/5">
+            <h4 id="videoModalTitle" class="text-white font-display font-bold text-lg">Video Preview</h4>
+            <button onclick="closeVideoModal()" class="text-on-surface-variant hover:text-white transition-colors flex items-center justify-center w-8 h-8 rounded-full bg-white/5 hover:bg-white/10">
+                <span class="material-symbols-outlined text-xl">close</span>
+            </button>
+        </div>
+        <!-- Aspect ratio container -->
+        <div class="relative w-full aspect-video bg-black flex items-center justify-center">
+            <div id="videoContainer" class="w-full h-full"></div>
+        </div>
+    </div>
+</div>
+@endsection
+
+@section('scripts')
+<script>
+    function openVideoModal(url, title) {
+        const modal = document.getElementById('videoModal');
+        const modalTitle = document.getElementById('videoModalTitle');
+        const container = document.getElementById('videoContainer');
+        
+        modalTitle.textContent = title || 'Video Node Registry';
+        container.innerHTML = '';
+        
+        let html = '';
+        // Check if it is a YouTube URL
+        if (url.includes('youtube.com') || url.includes('youtu.be')) {
+            // Ensure URL is using embed format
+            let embedUrl = url;
+            if (url.includes('watch?v=')) {
+                const videoId = url.split('v=')[1].split('&')[0];
+                embedUrl = `https://www.youtube.com/embed/${videoId}`;
+            } else if (url.includes('youtu.be/')) {
+                const videoId = url.split('youtu.be/')[1].split('?')[0];
+                embedUrl = `https://www.youtube.com/embed/${videoId}`;
+            }
+            html = `<iframe class="w-full h-full" src="${embedUrl}?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+        } else {
+            // Local video file
+            html = `<video class="w-full h-full" controls autoplay><source src="${url}" type="video/mp4">Your browser does not support the video tag.</video>`;
+        }
+        
+        container.innerHTML = html;
+        modal.classList.remove('hidden');
+        // Trigger reflow for animation
+        setTimeout(() => {
+            modal.classList.add('opacity-100');
+            modal.querySelector('.transform').classList.remove('scale-95');
+            modal.querySelector('.transform').classList.add('scale-100');
+        }, 10);
+    }
+
+    function closeVideoModal() {
+        const modal = document.getElementById('videoModal');
+        const container = document.getElementById('videoContainer');
+        
+        modal.classList.remove('opacity-100');
+        modal.querySelector('.transform').classList.add('scale-95');
+        modal.querySelector('.transform').classList.remove('scale-100');
+        
+        setTimeout(() => {
+            modal.classList.add('hidden');
+            container.innerHTML = '';
+        }, 300);
+    }
+</script>
 @endsection
