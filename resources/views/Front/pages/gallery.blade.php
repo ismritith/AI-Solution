@@ -30,94 +30,180 @@
     </div>
 </section>
 
-<!-- Gallery Bento Grid Section -->
-<section class="py-10 max-w-container-max mx-auto px-gutter">
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-        @forelse($assets as $asset)
-            @php
-                $isLarge = $asset->is_featured;
-                $imageUrl = $asset->upload_method === 'upload' ? asset('storage/' . $asset->file_path) : $asset->external_url;
-            @endphp
+<!-- Images Section -->
+<section class="py-12 max-w-container-max mx-auto px-gutter">
+    <div class="flex items-center gap-6 mb-8" data-aos="fade-right">
+        <div>
+            <h2 class="font-display text-3xl font-extrabold text-white">Neural Image Gallery</h2>
+            <p class="text-xs text-on-surface-variant mt-1">Curated high-resolution generative meshes and system architectures</p>
+        </div>
+        <div class="h-px bg-white/10 flex-grow"></div>
+    </div>
 
-            @if($isLarge)
-                <!-- Large Featured Item -->
-                <div class="md:col-span-2 md:row-span-2 relative group overflow-hidden rounded-3xl glass-card flex flex-col justify-end min-h-[400px]" data-aos="fade-up">
-                    <div class="absolute inset-0 z-0 overflow-hidden">
-                        @if($asset->media_type === 'image')
-                            <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="{{ $imageUrl }}" alt="{{ $asset->title }}"/>
-                        @else
-                            <!-- Video Thumbnail / Fallback Frame -->
-                            <div class="w-full h-full bg-gradient-to-br from-[#120626] to-[#05020c] flex items-center justify-center relative cursor-pointer group-hover:scale-105 transition-transform duration-700" onclick="openVideoModal('{{ $imageUrl }}', '{{ addslashes($asset->title) }}')">
-                                <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(255,46,147,0.15)_0%,_transparent_70%)]"></div>
-                                <div class="w-20 h-20 rounded-full bg-secondary/20 border border-secondary/40 flex items-center justify-center text-secondary group-hover:bg-secondary group-hover:text-white group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(165,16,180,0.6)] transition-all duration-300">
-                                    <span class="material-symbols-outlined text-5xl leading-none pl-1">play_arrow</span>
-                                </div>
-                            </div>
-                        @endif
-                        <div class="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent pointer-events-none"></div>
-                    </div>
-                    
-                    <div class="relative z-10 p-8 space-y-3 opacity-90 group-hover:opacity-100 transition-opacity pointer-events-none">
-                        <span class="font-mono text-xs text-secondary uppercase font-bold tracking-widest">{{ $asset->category }}</span>
-                        <h3 class="font-display text-2xl md:text-3xl font-extrabold text-white">
-                            @if($asset->media_type === 'video')
-                                <span class="hover:underline flex items-center gap-1.5 cursor-pointer pointer-events-auto" onclick="openVideoModal('{{ $imageUrl }}', '{{ addslashes($asset->title) }}')">
-                                    {{ $asset->title }} <span class="material-symbols-outlined text-sm text-secondary">smart_display</span>
-                                </span>
-                            @else
-                                {{ $asset->title }}
-                            @endif
-                        </h3>
-                        <div class="font-body text-xs text-on-surface-variant max-w-md leading-relaxed hidden sm:block">
-                            {!! $asset->description !!}
-                        </div>
+    {{-- Image Category Filter Pills --}}
+    @if($imageCategories->isNotEmpty())
+        <div class="flex flex-wrap gap-2 mb-8">
+            <a href="{{ request()->fullUrlWithQuery(['img_cat' => null, 'img_page' => null]) }}"
+               class="px-4 py-1.5 rounded-full text-xs font-mono font-bold uppercase tracking-widest transition-all border
+                      {{ !$imgCatFilter ? 'bg-secondary text-white border-secondary shadow-lg shadow-secondary/30' : 'border-white/10 text-on-surface-variant hover:border-secondary/40 hover:text-white' }}">
+                All
+            </a>
+            @foreach($imageCategories as $cat)
+                <a href="{{ request()->fullUrlWithQuery(['img_cat' => $cat, 'img_page' => null]) }}"
+                   class="px-4 py-1.5 rounded-full text-xs font-mono font-bold uppercase tracking-widest transition-all border
+                          {{ $imgCatFilter === $cat ? 'bg-secondary text-white border-secondary shadow-lg shadow-secondary/30' : 'border-white/10 text-on-surface-variant hover:border-secondary/40 hover:text-white' }}">
+                    {{ $cat }}
+                </a>
+            @endforeach
+        </div>
+    @endif
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        @forelse($images as $image)
+            @php
+                $imageUrl = $image->upload_method === 'upload' ? asset('storage/' . $image->file_path) : $image->external_url;
+            @endphp
+            <div class="relative group overflow-hidden rounded-2xl glass-card h-80 flex flex-col justify-end" data-aos="fade-up">
+                <div class="absolute inset-0 z-0 overflow-hidden">
+                    <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="{{ $imageUrl }}" alt="{{ $image->title }}"/>
+                    <div class="absolute inset-0 bg-gradient-to-t from-primary via-primary/40 to-transparent pointer-events-none"></div>
+                </div>
+                
+                <div class="relative z-10 p-6 space-y-1 pointer-events-none">
+                    <span class="font-mono text-[10px] text-secondary uppercase font-bold tracking-widest">{{ $image->category }}</span>
+                    <h4 class="text-white font-display font-bold text-lg">{{ $image->title }}</h4>
+                    <div class="text-[11px] text-on-surface-variant leading-relaxed line-clamp-2 mt-1">
+                        {!! strip_tags($image->description) !!}
                     </div>
                 </div>
-            @else
-                <!-- Normal Item -->
-                <div class="relative group overflow-hidden rounded-3xl glass-card h-80 flex flex-col justify-end" data-aos="fade-up">
-                    <div class="absolute inset-0 z-0 overflow-hidden">
-                        @if($asset->media_type === 'image')
-                            <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="{{ $imageUrl }}" alt="{{ $asset->title }}"/>
-                        @else
-                            <!-- Video Thumbnail / Fallback Frame -->
-                            <div class="w-full h-full bg-gradient-to-br from-[#120626] to-[#05020c] flex items-center justify-center relative cursor-pointer group-hover:scale-105 transition-transform duration-700" onclick="openVideoModal('{{ $imageUrl }}', '{{ addslashes($asset->title) }}')">
-                                <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(255,46,147,0.15)_0%,_transparent_70%)]"></div>
-                                <div class="w-14 h-14 rounded-full bg-secondary/20 border border-secondary/40 flex items-center justify-center text-secondary group-hover:bg-secondary group-hover:text-white group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(165,16,180,0.6)] transition-all duration-300">
-                                    <span class="material-symbols-outlined text-3xl leading-none pl-1">play_arrow</span>
-                                </div>
-                            </div>
-                        @endif
-                        <div class="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent pointer-events-none"></div>
-                    </div>
-                    
-                    <div class="relative z-10 p-6 space-y-1 pointer-events-none">
-                        <span class="font-mono text-[10px] text-accent uppercase font-bold tracking-widest">{{ $asset->category }}</span>
-                        <h4 class="text-white font-display font-bold text-lg">
-                            @if($asset->media_type === 'video')
-                                <span class="hover:underline flex items-center gap-1 cursor-pointer pointer-events-auto" onclick="openVideoModal('{{ $imageUrl }}', '{{ addslashes($asset->title) }}')">
-                                    {{ $asset->title }} <span class="material-symbols-outlined text-xs">smart_display</span>
-                                </span>
-                            @else
-                                {{ $asset->title }}
-                            @endif
-                        </h4>
-                    </div>
-                </div>
-            @endif
+            </div>
         @empty
-            <!-- Fallback Static Grid if empty database -->
-            <div class="md:col-span-2 md:row-span-2 relative group overflow-hidden rounded-3xl glass-card flex flex-col justify-end min-h-[400px]">
-                <div class="absolute inset-0 z-0 overflow-hidden bg-[#131b2e] flex items-center justify-center">
-                    <span class="material-symbols-outlined text-4xl text-on-surface-variant">collections</span>
-                </div>
-                <div class="relative z-10 p-8">
-                    <h3 class="font-display text-2xl font-extrabold text-white">Visual Neural Nodes</h3>
-                    <p class="text-xs text-on-surface-variant mt-2">Active showroom assets will synchronize shortly.</p>
-                </div>
+            <div class="col-span-full py-12 flex flex-col items-center justify-center text-center text-on-surface-variant border border-dashed border-white/10 rounded-2xl">
+                <span class="material-symbols-outlined text-4xl text-on-surface-variant/40 mb-2">image</span>
+                <p class="text-sm">{{ $imgCatFilter ? "No images found in \"$imgCatFilter\" category." : 'No image assets registered yet.' }}</p>
             </div>
         @endforelse
     </div>
+
+    @if($images->hasPages())
+        <div class="mt-10 flex justify-center">
+            <div class="flex items-center gap-2 flex-wrap">
+                {{-- Previous --}}
+                @if($images->onFirstPage())
+                    <span class="px-4 py-2 rounded-xl bg-white/5 text-on-surface-variant/40 text-sm font-mono cursor-not-allowed">← Prev</span>
+                @else
+                    <a href="{{ $images->previousPageUrl() }}" class="px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-on-surface-variant hover:text-white hover:bg-white/10 text-sm font-mono transition-all">← Prev</a>
+                @endif
+
+                {{-- Pages --}}
+                @foreach($images->getUrlRange(1, $images->lastPage()) as $page => $url)
+                    <a href="{{ $url }}" class="w-9 h-9 flex items-center justify-center rounded-xl text-sm font-mono transition-all
+                        {{ $page == $images->currentPage() ? 'bg-secondary text-white shadow-lg shadow-secondary/30' : 'bg-white/5 border border-white/10 text-on-surface-variant hover:bg-white/10 hover:text-white' }}">
+                        {{ $page }}
+                    </a>
+                @endforeach
+
+                {{-- Next --}}
+                @if($images->hasMorePages())
+                    <a href="{{ $images->nextPageUrl() }}" class="px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-on-surface-variant hover:text-white hover:bg-white/10 text-sm font-mono transition-all">Next →</a>
+                @else
+                    <span class="px-4 py-2 rounded-xl bg-white/5 text-on-surface-variant/40 text-sm font-mono cursor-not-allowed">Next →</span>
+                @endif
+            </div>
+        </div>
+    @endif
+</section>
+
+<!-- Videos Section -->
+<section class="py-12 max-w-container-max mx-auto px-gutter">
+    <div class="flex items-center gap-6 mb-8" data-aos="fade-right">
+        <div>
+            <h2 class="font-display text-3xl font-extrabold text-white">Neural Video Showcase</h2>
+            <p class="text-xs text-on-surface-variant mt-1">Dynamic recordings, interactive telemetry demos, and explainer nodes</p>
+        </div>
+        <div class="h-px bg-white/10 flex-grow"></div>
+    </div>
+
+    {{-- Video Category Filter Pills --}}
+    @if($videoCategories->isNotEmpty())
+        <div class="flex flex-wrap gap-2 mb-8">
+            <a href="{{ request()->fullUrlWithQuery(['vid_cat' => null, 'vid_page' => null]) }}"
+               class="px-4 py-1.5 rounded-full text-xs font-mono font-bold uppercase tracking-widest transition-all border
+                      {{ !$vidCatFilter ? 'bg-accent text-white border-accent shadow-lg shadow-accent/30' : 'border-white/10 text-on-surface-variant hover:border-accent/40 hover:text-white' }}">
+                All
+            </a>
+            @foreach($videoCategories as $cat)
+                <a href="{{ request()->fullUrlWithQuery(['vid_cat' => $cat, 'vid_page' => null]) }}"
+                   class="px-4 py-1.5 rounded-full text-xs font-mono font-bold uppercase tracking-widest transition-all border
+                          {{ $vidCatFilter === $cat ? 'bg-accent text-white border-accent shadow-lg shadow-accent/30' : 'border-white/10 text-on-surface-variant hover:border-accent/40 hover:text-white' }}">
+                    {{ $cat }}
+                </a>
+            @endforeach
+        </div>
+    @endif
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+        @forelse($videos as $video)
+            @php
+                $videoUrl = $video->upload_method === 'upload' ? asset('storage/' . $video->file_path) : $video->external_url;
+            @endphp
+            <div class="relative group overflow-hidden rounded-2xl glass-card flex flex-col justify-end min-h-[260px] cursor-pointer" data-aos="fade-up" onclick="openVideoModal('{{ $videoUrl }}', '{{ addslashes($video->title) }}')">
+                <div class="absolute inset-0 z-0 overflow-hidden bg-gradient-to-br from-[#120626] to-[#05020c]">
+                    <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(165,16,180,0.15)_0%,_transparent_70%)]"></div>
+                    
+                    <!-- Play Overlay Button -->
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div class="w-16 h-16 rounded-full bg-secondary/20 border border-secondary/40 flex items-center justify-center text-secondary group-hover:bg-secondary group-hover:text-white group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(165,16,180,0.6)] transition-all duration-300">
+                            <span class="material-symbols-outlined text-4xl leading-none pl-1">play_arrow</span>
+                        </div>
+                    </div>
+                    
+                    <div class="absolute inset-0 bg-gradient-to-t from-primary via-primary/50 to-transparent pointer-events-none"></div>
+                </div>
+                
+                <div class="relative z-10 p-6 space-y-1 pointer-events-none">
+                    <span class="font-mono text-[10px] text-accent uppercase font-bold tracking-widest">{{ $video->category }}</span>
+                    <h4 class="text-white font-display font-bold text-lg flex items-center gap-1.5">
+                        {{ $video->title }}
+                        <span class="material-symbols-outlined text-sm text-accent">smart_display</span>
+                    </h4>
+                    <div class="text-[11px] text-on-surface-variant leading-relaxed line-clamp-2 mt-1">
+                        {!! strip_tags($video->description) !!}
+                    </div>
+                </div>
+            </div>
+        @empty
+            <div class="col-span-full py-12 flex flex-col items-center justify-center text-center text-on-surface-variant border border-dashed border-white/10 rounded-2xl">
+                <span class="material-symbols-outlined text-4xl text-on-surface-variant/40 mb-2">smart_display</span>
+                <p class="text-sm">{{ $vidCatFilter ? "No videos found in \"$vidCatFilter\" category." : 'No video assets registered yet.' }}</p>
+            </div>
+        @endforelse
+    </div>
+
+    @if($videos->hasPages())
+        <div class="mt-10 flex justify-center">
+            <div class="flex items-center gap-2 flex-wrap">
+                @if($videos->onFirstPage())
+                    <span class="px-4 py-2 rounded-xl bg-white/5 text-on-surface-variant/40 text-sm font-mono cursor-not-allowed">← Prev</span>
+                @else
+                    <a href="{{ $videos->previousPageUrl() }}" class="px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-on-surface-variant hover:text-white hover:bg-white/10 text-sm font-mono transition-all">← Prev</a>
+                @endif
+
+                @foreach($videos->getUrlRange(1, $videos->lastPage()) as $page => $url)
+                    <a href="{{ $url }}" class="w-9 h-9 flex items-center justify-center rounded-xl text-sm font-mono transition-all
+                        {{ $page == $videos->currentPage() ? 'bg-accent text-white shadow-lg shadow-accent/30' : 'bg-white/5 border border-white/10 text-on-surface-variant hover:bg-white/10 hover:text-white' }}">
+                        {{ $page }}
+                    </a>
+                @endforeach
+
+                @if($videos->hasMorePages())
+                    <a href="{{ $videos->nextPageUrl() }}" class="px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-on-surface-variant hover:text-white hover:bg-white/10 text-sm font-mono transition-all">Next →</a>
+                @else
+                    <span class="px-4 py-2 rounded-xl bg-white/5 text-on-surface-variant/40 text-sm font-mono cursor-not-allowed">Next →</span>
+                @endif
+            </div>
+        </div>
+    @endif
 </section>
 
 <!-- CTA Waitlist early access Section -->

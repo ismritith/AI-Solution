@@ -23,6 +23,8 @@ class DatabaseSeeder extends Seeder
             EventSeeder::class,
             GalleryAssetSeeder::class,
             InquirySeeder::class,
+            ProjectReviewSeeder::class,
+            RegistrationSeeder::class,
         ]);
     }
 }

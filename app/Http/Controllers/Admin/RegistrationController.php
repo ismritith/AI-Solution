@@ -78,4 +78,22 @@ class RegistrationController extends Controller
             ->route('admin.registrations.index')
             ->with('success', 'Registration deleted successfully.');
     }
+
+    public function publicStore(Request $request)
+    {
+        $validated = $request->validate([
+            'registration_type' => 'required|in:team,individual',
+            'team_name' => 'nullable|string|max:255',
+            'full_name' => 'nullable|string|max:255',
+            'email' => 'required|email|max:255',
+            'event_name' => 'required|string|max:255',
+            'team_size' => 'nullable|integer|min:1|max:20',
+            'pass_type' => 'nullable|string|max:255',
+            'members' => 'nullable|array',
+        ]);
+
+        Registration::create($validated);
+
+        return redirect()->back()->with('success', 'Your registration has been successfully submitted.');
+    }
 }

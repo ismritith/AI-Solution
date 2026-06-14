@@ -29,13 +29,13 @@
 <!-- Events Grid Section -->
 <section class="py-10 max-w-container-max mx-auto px-gutter">
     @php
-        $featuredEvent = $events->first();
+        $featuredEvent   = $events->first();
         $remainingEvents = $events->slice(1);
     @endphp
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
         
-        <!-- Featured Event -->
+        <!-- Featured Event (first item on current page) -->
         @if($featuredEvent)
             <div class="glass-card rounded-3xl p-8 md:p-10 flex flex-col justify-between group border-secondary/20 hover:border-secondary/50 relative overflow-hidden md:col-span-2" data-aos="fade-up">
                 <div class="absolute -top-24 -left-24 w-64 h-64 bg-secondary/10 rounded-full filter blur-3xl pointer-events-none"></div>
@@ -88,7 +88,7 @@
             </div>
         @endif
         
-        <!-- Remaining Scheduled Events Grid -->
+        <!-- Remaining Events Grid -->
         @foreach($remainingEvents as $event)
             <div class="glass-card rounded-3xl p-8 flex flex-col justify-between group border-accent/20 hover:border-accent/50" data-aos="fade-up">
                 <div class="space-y-6">
@@ -130,6 +130,32 @@
         @endforeach
         
     </div>
+
+    {{-- Custom Paginator --}}
+    @if($events->hasPages())
+        <div class="mt-12 flex justify-center">
+            <div class="flex items-center gap-2 flex-wrap">
+                @if($events->onFirstPage())
+                    <span class="px-4 py-2 rounded-xl bg-white/5 text-on-surface-variant/40 text-sm font-mono cursor-not-allowed">← Prev</span>
+                @else
+                    <a href="{{ $events->previousPageUrl() }}" class="px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-on-surface-variant hover:text-white hover:bg-white/10 text-sm font-mono transition-all">← Prev</a>
+                @endif
+
+                @foreach($events->getUrlRange(1, $events->lastPage()) as $page => $url)
+                    <a href="{{ $url }}" class="w-9 h-9 flex items-center justify-center rounded-xl text-sm font-mono transition-all
+                        {{ $page == $events->currentPage() ? 'bg-secondary text-white shadow-lg shadow-secondary/30' : 'bg-white/5 border border-white/10 text-on-surface-variant hover:bg-white/10 hover:text-white' }}">
+                        {{ $page }}
+                    </a>
+                @endforeach
+
+                @if($events->hasMorePages())
+                    <a href="{{ $events->nextPageUrl() }}" class="px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-on-surface-variant hover:text-white hover:bg-white/10 text-sm font-mono transition-all">Next →</a>
+                @else
+                    <span class="px-4 py-2 rounded-xl bg-white/5 text-on-surface-variant/40 text-sm font-mono cursor-not-allowed">Next →</span>
+                @endif
+            </div>
+        </div>
+    @endif
 </section>
 
 <!-- Newsletter / CTA section -->

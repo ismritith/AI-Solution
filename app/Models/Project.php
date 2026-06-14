@@ -30,4 +30,14 @@ class Project extends Model
     protected $casts = [
         'rating' => 'decimal:2',
     ];
+
+    public function reviews()
+    {
+        return $this->hasMany(ProjectReview::class);
+    }
+
+    public function approvedReviews()
+    {
+        return $this->hasMany(ProjectReview::class)->where('status', 'approved');
+    }
 }

@@ -206,8 +206,134 @@
     </div>
 </section>
 
-<!-- Insights & Events (Intelligence Hub) Featured grid -->
-<section class="py-20 md:py-28 bg-[#05020c]/60 relative border-y border-white/5">
+<!-- Latest Projects Section -->
+<section class="py-20 md:py-28 relative overflow-hidden bg-[#05020c]/40 border-t border-white/5">
+    <div class="max-w-container-max mx-auto px-gutter">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-16 gap-6">
+            <div class="space-y-4" data-aos="fade-right">
+                <div class="inline-flex items-center gap-2 px-3 py-1 bg-secondary/15 border border-secondary/30 rounded-full">
+                    <span class="font-mono text-xs text-on-surface uppercase tracking-widest">Case Studies</span>
+                </div>
+                <h2 class="font-display text-4xl md:text-5xl font-extrabold text-white">Latest Deployments</h2>
+                <p class="font-body text-base text-on-surface-variant">Explore our recently finalized neural networks and automated client ecosystems.</p>
+            </div>
+            <div data-aos="fade-left">
+                <a href="/projects" class="btn-gradient text-white text-sm font-bold px-6 py-3 rounded-xl inline-flex items-center gap-2 shadow-lg shadow-secondary/15">
+                    Browse All Projects <span class="material-symbols-outlined text-sm">arrow_outward</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            @forelse($projects as $project)
+                <div class="glass-card rounded-3xl p-6 flex flex-col group h-full relative z-10 hover:border-primary/30 transition-all duration-300" data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}">
+                    @if($project->cover_image)
+                        <div class="rounded-2xl overflow-hidden mb-6 h-48 border border-white/10 relative">
+                            <img alt="{{ $project->title }}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="{{ asset($project->cover_image) }}"/>
+                            <div class="absolute top-4 left-4">
+                                <span class="bg-[#1a0b26]/80 backdrop-blur-md px-3 py-1.5 rounded-full font-label-mono text-[9px] text-tertiary border border-tertiary/20 uppercase font-bold">{{ $project->sector }}</span>
+                            </div>
+                        </div>
+                    @else
+                        <div class="rounded-2xl overflow-hidden mb-6 h-48 border border-white/10 bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center text-white relative">
+                            <span class="material-symbols-outlined text-5xl opacity-20">folder_special</span>
+                            <div class="absolute top-4 left-4">
+                                <span class="bg-[#1a0b26]/80 backdrop-blur-md px-3 py-1.5 rounded-full font-label-mono text-[9px] text-tertiary border border-tertiary/20 uppercase font-bold">{{ $project->sector }}</span>
+                            </div>
+                        </div>
+                    @endif
+                    <div class="flex-grow space-y-4">
+                        <h3 class="font-display text-xl font-bold text-white hover:text-secondary transition-colors">
+                            <a href="/projects1?id={{ $project->id }}">{{ $project->title }}</a>
+                        </h3>
+                        <div class="text-on-surface-variant/80 text-xs leading-relaxed line-clamp-3">
+                            {!! strip_tags($project->description) !!}
+                        </div>
+                    </div>
+                    <div class="mt-6 pt-6 border-t border-white/5 flex justify-between items-center">
+                        <div class="text-primary font-bold text-xs tracking-wide">{{ $project->footer_stat }}</div>
+                        <a href="/projects1?id={{ $project->id }}" class="text-on-surface-variant hover:text-white transition-colors flex items-center gap-1.5 group/btn font-semibold text-xs">
+                            View Specs <span class="material-symbols-outlined text-[16px] group-hover/btn:translate-x-1 transition-transform">arrow_forward</span>
+                        </a>
+                    </div>
+                </div>
+            @empty
+                <div class="col-span-3 text-center text-on-surface-variant italic py-10">
+                    No projects deployed.
+                </div>
+            @endforelse
+        </div>
+    </div>
+</section>
+
+<!-- Upcoming Events Section -->
+<section class="py-20 md:py-28 relative overflow-hidden bg-[#080313] border-t border-white/5">
+    <div class="max-w-container-max mx-auto px-gutter">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-16 gap-6">
+            <div class="space-y-4" data-aos="fade-right">
+                <div class="inline-flex items-center gap-2 px-3 py-1 bg-secondary/15 border border-secondary/30 rounded-full">
+                    <span class="font-mono text-xs text-on-surface uppercase tracking-widest">Gatherings</span>
+                </div>
+                <h2 class="font-display text-4xl md:text-5xl font-extrabold text-white">Upcoming Summits & Events</h2>
+                <p class="font-body text-base text-on-surface-variant">Register to lock in your delegate pass for workshops, summits, and panels.</p>
+            </div>
+            <div data-aos="fade-left">
+                <a href="/events" class="btn-gradient text-white text-sm font-bold px-6 py-3 rounded-xl inline-flex items-center gap-2 shadow-lg shadow-secondary/15">
+                    Browse All Events <span class="material-symbols-outlined text-sm">arrow_outward</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            @forelse($events as $event)
+                <div class="glass-card rounded-3xl p-6 flex flex-col justify-between group border-accent/20 hover:border-accent/50 transition-all duration-300" data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}">
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between gap-4">
+                            <div class="flex items-center gap-1.5 text-accent font-mono text-[10px] font-bold">
+                                <span class="material-symbols-outlined text-sm">calendar_today</span>
+                                {{ strtoupper($event->status_badge) }}
+                            </div>
+                            <span class="px-2 py-0.5 bg-accent/20 text-accent font-mono text-[9px] uppercase rounded-full font-bold">{{ $event->ticket_price }}</span>
+                        </div>
+                        
+                        <h3 class="font-display text-xl font-bold text-white hover:text-secondary transition-colors">
+                            <a href="/event1?id={{ $event->id }}">{{ $event->title }}</a>
+                        </h3>
+                        
+                        <p class="font-body text-xs text-on-surface-variant leading-relaxed line-clamp-3">
+                            {!! strip_tags($event->description) !!}
+                        </p>
+                        
+                        <div class="p-3 bg-white/5 rounded-xl border border-white/5 space-y-1 font-mono text-[10px]">
+                            <div class="flex justify-between">
+                                <span class="text-on-surface-variant">DATE:</span>
+                                <span class="text-white">{{ $event->date_text }}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-on-surface-variant">LOCATION:</span>
+                                <span class="text-white">{{ $event->location }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6 pt-4 border-t border-white/5 flex justify-between items-center">
+                        <span class="font-mono text-[10px] text-on-surface-variant">Cap: {{ $event->capacity }}</span>
+                        <a href="/event1?id={{ $event->id }}" class="btn-gradient text-white px-4 py-2 rounded-xl text-[10px] font-bold shadow-md shadow-secondary/10 flex items-center gap-1">
+                            Register Node <span class="material-symbols-outlined text-xs">arrow_forward</span>
+                        </a>
+                    </div>
+                </div>
+            @empty
+                <div class="col-span-3 text-center text-on-surface-variant italic py-10">
+                    No summits scheduled.
+                </div>
+            @endforelse
+        </div>
+    </div>
+</section>
+
+<!-- Latest Insights Section -->
+<section class="py-20 md:py-28 relative overflow-hidden bg-[#05020c]/60 border-t border-b border-white/5">
     <div class="max-w-container-max mx-auto px-gutter">
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-16 gap-6">
             <div class="space-y-4" data-aos="fade-right">
@@ -215,136 +341,52 @@
                     <span class="font-mono text-xs text-on-surface uppercase tracking-widest">Intelligence Hub</span>
                 </div>
                 <h2 class="font-display text-4xl md:text-5xl font-extrabold text-white">Insights & Discoveries</h2>
-                <p class="font-body text-base text-on-surface-variant">The latest in deep neural modeling, summits, and platform expansions.</p>
+                <p class="font-body text-base text-on-surface-variant">The latest in deep neural modeling, algorithmic findings, and platform expansions.</p>
             </div>
             <div data-aos="fade-left">
-                <a href="/insights" class="btn-gradient text-white text-sm font-bold px-6 py-3 rounded-xl inline-flex items-center gap-2">
+                <a href="/insights" class="btn-gradient text-white text-sm font-bold px-6 py-3 rounded-xl inline-flex items-center gap-2 shadow-lg shadow-secondary/15">
                     Browse All Insights <span class="material-symbols-outlined text-sm">arrow_outward</span>
                 </a>
             </div>
         </div>
 
-        <!-- 3 Column Hub Grid -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <!-- Article Column 1 -->
-            @if(isset($posts[0]))
-                <article class="glass-card rounded-3xl overflow-hidden group flex flex-col justify-between" data-aos="fade-up" data-aos-delay="100">
+            @forelse($posts as $post)
+                <article class="glass-card rounded-3xl overflow-hidden group flex flex-col justify-between hover:border-secondary/50 transition-all duration-300" data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}">
                     <div>
-                        <div class="aspect-video overflow-hidden relative">
-                            <img alt="{{ $posts[0]->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 grayscale group-hover:grayscale-0" src="{{ asset($posts[0]->banner_image) }}"/>
-                        </div>
-                        <div class="p-8 space-y-4">
-                            <div class="flex items-center gap-3">
-                                <span class="px-2.5 py-0.5 bg-secondary/20 text-secondary font-mono text-[10px] uppercase rounded-full font-bold">{{ $posts[0]->category }}</span>
-                                <span class="text-on-surface-variant font-mono text-[10px]">{{ $posts[0]->reading_time }} MIN READ</span>
+                        @if($post->banner_image)
+                            <div class="aspect-video overflow-hidden relative border-b border-white/5">
+                                <img alt="{{ $post->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 grayscale group-hover:grayscale-0" src="{{ asset($post->banner_image) }}"/>
                             </div>
-                            <h4 class="font-display text-xl font-bold text-white group-hover:text-secondary transition-colors line-clamp-2">
-                                {{ $posts[0]->title }}
+                        @else
+                            <div class="aspect-video overflow-hidden relative bg-[#131b2e] flex items-center justify-center border-b border-white/5">
+                                <span class="material-symbols-outlined text-4xl text-on-surface-variant">article</span>
+                            </div>
+                        @endif
+                        <div class="p-6 space-y-3">
+                            <div class="flex items-center gap-3">
+                                <span class="px-2 py-0.5 bg-secondary/20 text-secondary font-mono text-[9px] uppercase rounded-full font-bold">{{ $post->category }}</span>
+                                <span class="text-on-surface-variant font-mono text-[9px]">{{ $post->reading_time }} MIN READ</span>
+                            </div>
+                            <h4 class="font-display text-lg font-bold text-white group-hover:text-secondary transition-colors line-clamp-2">
+                                {{ $post->title }}
                             </h4>
-                            <p class="font-body text-sm text-on-surface-variant line-clamp-3 leading-relaxed">
-                                {{ $posts[0]->excerpt }}
+                            <p class="font-body text-xs text-on-surface-variant line-clamp-3 leading-relaxed">
+                                {{ $post->excerpt }}
                             </p>
                         </div>
                     </div>
-                    <div class="px-8 pb-8 pt-2">
-                        <a href="/insights1?id={{ $posts[0]->id }}" class="flex items-center gap-2 text-secondary font-body text-sm font-bold hover:text-white transition-colors">
+                    <div class="px-6 pb-6 pt-2">
+                        <a href="/insights1?id={{ $post->id }}" class="flex items-center gap-1.5 text-secondary font-body text-xs font-bold hover:text-white transition-colors">
                             Read Insights <span class="material-symbols-outlined text-sm">arrow_forward</span>
                         </a>
                     </div>
                 </article>
-            @else
-                <article class="glass-card rounded-3xl overflow-hidden group flex flex-col justify-between">
-                    <div>
-                        <div class="aspect-video overflow-hidden relative bg-[#131b2e] flex items-center justify-center">
-                            <span class="material-symbols-outlined text-4xl text-on-surface-variant">article</span>
-                        </div>
-                        <div class="p-8 space-y-4">
-                            <h4 class="font-display text-xl font-bold text-white">Future of LLMs in Enterprise</h4>
-                            <p class="text-sm text-on-surface-variant">Deploy custom enterprise solutions to scale data orchestration pipelines.</p>
-                        </div>
-                    </div>
-                </article>
-            @endif
-
-            <!-- Event Card Column 2 -->
-            @if($featuredEvent)
-                <div class="glass-card rounded-3xl p-8 flex flex-col justify-between border-secondary/20 hover:border-secondary/50 group" data-aos="fade-up" data-aos-delay="200">
-                    <div class="space-y-6">
-                        <div class="flex items-center gap-2 text-accent font-mono text-xs font-bold">
-                            <span class="material-symbols-outlined text-base">event</span>
-                            {{ strtoupper($featuredEvent->status_badge) }}
-                        </div>
-                        <h4 class="font-display text-2xl font-extrabold text-white leading-tight">
-                            {{ $featuredEvent->title }}
-                        </h4>
-                        <p class="font-body text-sm text-on-surface-variant leading-relaxed line-clamp-3">
-                            {!! strip_tags($featuredEvent->description) !!}
-                        </p>
-                        
-                        <div class="p-4 bg-white/5 rounded-2xl border border-white/5 space-y-2 font-mono text-xs">
-                            <div class="flex justify-between">
-                                <span class="text-on-surface-variant">LOC:</span>
-                                <span class="text-white">{{ $featuredEvent->location }}</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-on-surface-variant">DATE:</span>
-                                <span class="text-white">{{ $featuredEvent->date_text }}</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-8 flex items-center justify-between">
-                        <div class="font-mono text-sm text-on-surface">{{ $featuredEvent->ticket_price }}</div>
-                        <a href="/event1?id={{ $featuredEvent->id }}" class="btn-gradient px-5 py-2.5 rounded-xl text-xs font-bold text-white shadow-md shadow-secondary/10">
-                            Register Node
-                        </a>
-                    </div>
+            @empty
+                <div class="col-span-3 text-center text-on-surface-variant italic py-10">
+                    No insights posted yet.
                 </div>
-            @else
-                <div class="glass-card rounded-3xl p-8 flex flex-col justify-between">
-                    <h4 class="text-white font-bold text-lg">AI Global Summit</h4>
-                    <p class="text-sm text-on-surface-variant">Summit schedule will post shortly.</p>
-                </div>
-            @endif
-
-            <!-- Article Column 3 -->
-            @if(isset($posts[1]))
-                <article class="glass-card rounded-3xl overflow-hidden group flex flex-col justify-between" data-aos="fade-up" data-aos-delay="300">
-                    <div>
-                        <div class="aspect-video overflow-hidden relative">
-                            <img alt="{{ $posts[1]->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 grayscale group-hover:grayscale-0" src="{{ asset($posts[1]->banner_image) }}"/>
-                        </div>
-                        <div class="p-8 space-y-4">
-                            <div class="flex items-center gap-3">
-                                <span class="px-2.5 py-0.5 bg-accent/20 text-accent font-mono text-[10px] uppercase rounded-full font-bold">{{ $posts[1]->category }}</span>
-                                <span class="text-on-surface-variant font-mono text-[10px]">{{ $posts[1]->reading_time }} MIN READ</span>
-                            </div>
-                            <h4 class="font-display text-xl font-bold text-white group-hover:text-secondary transition-colors line-clamp-2">
-                                {{ $posts[1]->title }}
-                            </h4>
-                            <p class="font-body text-sm text-on-surface-variant line-clamp-3 leading-relaxed">
-                                {{ $posts[1]->excerpt }}
-                            </p>
-                        </div>
-                    </div>
-                    <div class="px-8 pb-8 pt-2">
-                        <a href="/insights1?id={{ $posts[1]->id }}" class="flex items-center gap-2 text-secondary font-body text-sm font-bold hover:text-white transition-colors">
-                            Read Insights <span class="material-symbols-outlined text-sm">arrow_forward</span>
-                        </a>
-                    </div>
-                </article>
-            @else
-                <article class="glass-card rounded-3xl overflow-hidden group flex flex-col justify-between">
-                    <div>
-                        <div class="aspect-video overflow-hidden relative bg-[#131b2e] flex items-center justify-center">
-                            <span class="material-symbols-outlined text-4xl text-on-surface-variant">article</span>
-                        </div>
-                        <div class="p-8 space-y-4">
-                            <h4 class="font-display text-xl font-bold text-white">Securing the Perimeter</h4>
-                            <p class="text-sm text-on-surface-variant">Defend multi-agent threat grids with secure neural firewalls.</p>
-                        </div>
-                    </div>
-                </article>
-            @endif
+            @endforelse
         </div>
     </div>
 </section>
@@ -358,27 +400,40 @@
         
         <!-- Horizontally scrollable slider (premium responsive layout) -->
         <div class="flex flex-nowrap gap-8 overflow-x-auto pb-10 snap-x no-scrollbar" data-aos="fade-up" data-aos-delay="200">
-            @forelse($testimonials as $testimonial)
+            @forelse($combinedTestimonials as $item)
                 <div class="min-w-[300px] md:min-w-[450px] glass-card p-8 md:p-10 rounded-3xl snap-center relative flex flex-col justify-between">
                     <span class="material-symbols-outlined text-secondary/15 text-8xl absolute top-6 right-6 font-bold select-none pointer-events-none">format_quote</span>
                     
-                    <p class="font-body text-on-surface-variant italic text-base leading-relaxed mb-8 relative z-10">
-                        "{!! strip_tags($testimonial->quote_text) !!}"
-                    </p>
+                    <div>
+                        @if(isset($item->project))
+                            <div class="mb-4">
+                                <span class="px-2.5 py-1 text-[9px] font-mono uppercase rounded bg-primary/10 text-primary border border-primary/20">
+                                    Deployment: {{ $item->project->title }}
+                                </span>
+                            </div>
+                        @endif
+                        <p class="font-body text-on-surface-variant italic text-sm md:text-base leading-relaxed mb-8 relative z-10">
+                            "{!! strip_tags($item->quote_text) !!}"
+                        </p>
+                    </div>
 
                     <div class="flex items-center gap-4 relative z-10">
-                        <div class="w-14 h-14 rounded-full bg-secondary/20 overflow-hidden border border-white/10 shrink-0">
-                            <img alt="{{ $testimonial->client_name }}" class="w-full h-full object-cover" src="{{ asset($testimonial->client_avatar) }}"/>
+                        <div class="w-14 h-14 rounded-full bg-secondary/20 overflow-hidden border border-white/10 shrink-0 flex items-center justify-center">
+                            @if(isset($item->client_avatar) && $item->client_avatar)
+                                <img alt="{{ $item->client_name }}" class="w-full h-full object-cover" src="{{ asset($item->client_avatar) }}"/>
+                            @else
+                                <span class="material-symbols-outlined text-secondary text-2xl">account_circle</span>
+                            @endif
                         </div>
                         <div>
                             <div class="font-display text-base font-bold text-white flex items-center gap-1.5">
-                                {{ $testimonial->client_name }}
-                                @if($testimonial->is_verified)
+                                {{ $item->client_name }}
+                                @if($item->is_verified || isset($item->project))
                                     <span class="material-symbols-outlined text-emerald-400 text-xs font-bold" title="Verified Customer">check_circle</span>
                                 @endif
                             </div>
-                            <div class="font-mono text-xs text-on-surface-variant">{{ $testimonial->client_role }}</div>
-                            <div class="text-[10px] text-amber-400 mt-1 font-label-mono">{{ str_repeat('★', $testimonial->rating) }}</div>
+                            <div class="font-mono text-xs text-on-surface-variant">{{ $item->client_role }}</div>
+                            <div class="text-[10px] text-amber-400 mt-1 font-label-mono">{{ str_repeat('★', $item->rating) }}</div>
                         </div>
                     </div>
                 </div>

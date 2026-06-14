@@ -135,6 +135,231 @@
             </div>
         </section>
     @endif
+
+    <!-- Leave a Review & Telemetry Section -->
+    <section class="max-w-container-max mx-auto px-gutter pb-24" data-aos="fade-up">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-stretch">
+            
+            <!-- Left: Submission Form -->
+            <div class="glass-card rounded-3xl p-8 md:p-10 border-secondary/20 flex flex-col justify-between">
+                <div>
+                    <h3 class="font-display text-2xl font-extrabold text-white mb-2">Share Your Feedback</h3>
+                    <p class="text-on-surface-variant text-xs mb-8">Deploy your experience and insights regarding this project node.</p>
+
+                    @if(session('success'))
+                        <div class="bg-emerald-500/10 border border-emerald-500/30 rounded-xl p-4 flex items-center gap-3 text-emerald-400 text-sm mb-6 animate-pulse">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            {{ session('success') }}
+                        </div>
+                    @endif
+
+                    <form action="{{ route('project.review') }}" method="POST" class="space-y-6">
+                        @csrf
+                        <input type="hidden" name="project_id" value="{{ $project->id }}">
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <label class="font-mono text-[10px] text-on-surface-variant uppercase tracking-wider block font-bold">Identity (Name)</label>
+                                <input type="text" name="client_name" required placeholder="Sarah Connor" class="w-full bg-[#05020c] border border-white/10 focus:border-secondary px-4 py-3 text-sm rounded-xl text-white placeholder-on-surface-variant/40 outline-none transition-all">
+                            </div>
+                            <div class="space-y-2">
+                                <label class="font-mono text-[10px] text-on-surface-variant uppercase tracking-wider block font-bold">Professional Role</label>
+                                <input type="text" name="client_role" required placeholder="Lead Architect, Cyberdyne" class="w-full bg-[#05020c] border border-white/10 focus:border-secondary px-4 py-3 text-sm rounded-xl text-white placeholder-on-surface-variant/40 outline-none transition-all">
+                            </div>
+                        </div>
+
+                        <div class="space-y-2">
+                            <label class="font-mono text-[10px] text-on-surface-variant uppercase tracking-wider block font-bold">Efficacy Rating</label>
+                            <div class="flex items-center gap-1.5" id="star-rating-container">
+                                <input type="hidden" name="rating" id="rating-input-value" value="5">
+                                @for($i = 1; $i <= 5; $i++)
+                                    <button type="button" class="star-btn cursor-pointer transition-all focus:outline-none" data-rating="{{ $i }}">
+                                        <span class="material-symbols-outlined text-accent text-3xl transition-colors duration-150" style="font-variation-settings: 'FILL' 1;">star</span>
+                                    </button>
+                                @endfor
+                            </div>
+                        </div>
+
+                        <div class="space-y-2">
+                            <label class="font-mono text-[10px] text-on-surface-variant uppercase tracking-wider block font-bold">Detailed Review</label>
+                            <textarea name="quote_text" rows="4" required placeholder="Describe the performance, reliability, and deployment outcome..." class="w-full bg-[#05020c] border border-white/10 focus:border-secondary px-4 py-3 text-sm rounded-xl text-white placeholder-on-surface-variant/40 outline-none transition-all"></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full btn-gradient py-3.5 rounded-xl font-display text-sm text-white font-bold shadow-lg shadow-secondary/15 transform active:scale-98 transition-transform">
+                            Transmit Review Node
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Right: Approved Testimonials Carousel -->
+            <div class="glass-card rounded-3xl p-8 md:p-10 border-accent/20 flex flex-col justify-between min-h-[350px]">
+                <div class="h-full flex flex-col justify-between relative">
+                    <div>
+                        <h3 class="font-display text-2xl font-extrabold text-white mb-2">Efficacy Records</h3>
+                        <p class="text-on-surface-variant text-xs mb-6">Verified client telemetry for this deployment node.</p>
+                        
+                        @if($approvedReviews->isEmpty())
+                            <div class="h-48 flex items-center justify-center text-center text-on-surface-variant italic text-sm border border-dashed border-white/10 rounded-2xl">
+                                No telemetry records approved for this node yet.
+                            </div>
+                        @else
+                            <!-- Slides Container -->
+                            <div class="relative overflow-hidden min-h-[220px]" id="review-carousel">
+                                @foreach($approvedReviews as $review)
+                                    <div class="review-slide transition-all duration-500 absolute inset-x-0 top-0 {{ $loop->first ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none' }}" data-index="{{ $loop->index }}">
+                                        <span class="material-symbols-outlined text-accent/10 text-7xl absolute -top-4 -right-4 font-bold select-none pointer-events-none">format_quote</span>
+                                        <p class="font-body text-on-surface-variant italic text-sm md:text-base leading-relaxed mb-6 pr-6 relative z-10">
+                                            "{!! strip_tags($review->quote_text) !!}"
+                                        </p>
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-10 h-10 rounded-full bg-accent/20 flex items-center justify-center shrink-0 border border-accent/20">
+                                                <span class="material-symbols-outlined text-accent text-xl">account_circle</span>
+                                            </div>
+                                            <div>
+                                                <div class="font-display text-sm font-bold text-white flex items-center gap-1">
+                                                    {{ $review->client_name }}
+                                                    <span class="material-symbols-outlined text-emerald-400 text-xs font-bold" title="Verified Efficacy">check_circle</span>
+                                                </div>
+                                                <div class="font-mono text-[10px] text-on-surface-variant">{{ $review->client_role }}</div>
+                                                <div class="text-[9px] text-amber-400 font-label-mono mt-0.5">{{ str_repeat('★', $review->rating) }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endif
+                    </div>
+                    
+                    @if($approvedReviews->count() > 1)
+                        <div class="flex items-center justify-between mt-8 pt-4 border-t border-white/5">
+                            <div class="flex gap-1.5">
+                                @foreach($approvedReviews as $review)
+                                    <button class="carousel-dot w-2 h-2 rounded-full transition-all duration-300 {{ $loop->first ? 'bg-accent w-4' : 'bg-white/20' }}" data-index="{{ $loop->index }}"></button>
+                                @endforeach
+                            </div>
+                            <div class="flex gap-2">
+                                <button id="prev-review-btn" class="w-8 h-8 rounded-full border border-white/10 hover:border-accent/50 flex items-center justify-center text-on-surface-variant hover:text-white transition-colors">
+                                    <span class="material-symbols-outlined text-sm">chevron_left</span>
+                                </button>
+                                <button id="next-review-btn" class="w-8 h-8 rounded-full border border-white/10 hover:border-accent/50 flex items-center justify-center text-on-surface-variant hover:text-white transition-colors">
+                                    <span class="material-symbols-outlined text-sm">chevron_right</span>
+                                </button>
+                            </div>
+                        </div>
+                    @endif
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    @if($approvedReviews->count() > 1)
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const slides = document.querySelectorAll('.review-slide');
+            const dots = document.querySelectorAll('.carousel-dot');
+            const prevBtn = document.getElementById('prev-review-btn');
+            const nextBtn = document.getElementById('next-review-btn');
+            let currentIndex = 0;
+            
+            function showSlide(index) {
+                slides.forEach((slide, i) => {
+                    if (i === index) {
+                        slide.classList.remove('opacity-0', 'z-0', 'pointer-events-none');
+                        slide.classList.add('opacity-100', 'z-10');
+                    } else {
+                        slide.classList.remove('opacity-100', 'z-10');
+                        slide.classList.add('opacity-0', 'z-0', 'pointer-events-none');
+                    }
+                });
+                
+                dots.forEach((dot, i) => {
+                    if (i === index) {
+                        dot.classList.remove('bg-white/20');
+                        dot.classList.add('bg-accent', 'w-4');
+                    } else {
+                        dot.classList.remove('bg-accent', 'w-4');
+                        dot.classList.add('bg-white/20');
+                    }
+                });
+                currentIndex = index;
+            }
+            
+            if(prevBtn && nextBtn) {
+                prevBtn.addEventListener('click', () => {
+                    let nextIdx = currentIndex - 1;
+                    if (nextIdx < 0) nextIdx = slides.length - 1;
+                    showSlide(nextIdx);
+                });
+                
+                nextBtn.addEventListener('click', () => {
+                    let nextIdx = currentIndex + 1;
+                    if (nextIdx >= slides.length) nextIdx = 0;
+                    showSlide(nextIdx);
+                });
+            }
+            
+            dots.forEach(dot => {
+                dot.addEventListener('click', () => {
+                    const idx = parseInt(dot.getAttribute('data-index'));
+                    showSlide(idx);
+                });
+            });
+            
+            // Auto rotation every 6 seconds
+            setInterval(() => {
+                let nextIdx = currentIndex + 1;
+                if (nextIdx >= slides.length) nextIdx = 0;
+                showSlide(nextIdx);
+            }, 6000);
+        });
+
+        // Interactive Efficacy Star Rating
+        document.addEventListener("DOMContentLoaded", function() {
+            const starContainer = document.getElementById('star-rating-container');
+            if (starContainer) {
+                const starBtns = starContainer.querySelectorAll('.star-btn');
+                const ratingInput = document.getElementById('rating-input-value');
+                
+                function updateStars(rating) {
+                    starBtns.forEach(btn => {
+                        const btnRating = parseInt(btn.getAttribute('data-rating'));
+                        const starIcon = btn.querySelector('span');
+                        if (btnRating <= rating) {
+                            starIcon.className = 'material-symbols-outlined text-accent text-3xl transition-colors duration-150';
+                            starIcon.style.fontVariationSettings = "'FILL' 1";
+                        } else {
+                            starIcon.className = 'material-symbols-outlined text-on-surface-variant/40 text-3xl transition-colors duration-150';
+                            starIcon.style.fontVariationSettings = "'FILL' 0";
+                        }
+                    });
+                }
+
+                starBtns.forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const rating = parseInt(this.getAttribute('data-rating'));
+                        ratingInput.value = rating;
+                        updateStars(rating);
+                    });
+
+                    btn.addEventListener('mouseenter', function() {
+                        const rating = parseInt(this.getAttribute('data-rating'));
+                        updateStars(rating);
+                    });
+                });
+
+                starContainer.addEventListener('mouseleave', function() {
+                    const currentRating = parseInt(ratingInput.value);
+                    updateStars(currentRating);
+                });
+
+                // Init state
+                updateStars(parseInt(ratingInput.value));
+            }
+        });
+    </script>
+    @endif
 @else
     <div class="max-w-4xl mx-auto text-center py-20">
         <h2 class="text-white font-bold text-2xl">Project Record Offline</h2>

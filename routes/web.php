@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\EventController;
 use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\InquiryController;
 use App\Http\Controllers\Admin\ProjectController;
+use App\Http\Controllers\Admin\ProjectReviewController;
 use App\Http\Controllers\Admin\RegistrationController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\TestimonialController;
@@ -37,6 +38,8 @@ Route::post('/admin_logout', [PageController::class, 'logout'])->name('admin.log
 // FORMS
 Route::get('/register_form', [PageController::class, 'register_form'])->name('register');
 Route::post('/contact/submit', [InquiryController::class, 'store'])->name('contact.submit');
+Route::post('/event/register', [RegistrationController::class, 'publicStore'])->name('event.register');
+Route::post('/projects/review', [PageController::class, 'submitReview'])->name('project.review');
 
 // ADMIN CRUD GROUP (SSR)
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin.timeout'])->group(function () {
@@ -52,6 +55,12 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin.timeout'])->g
     Route::resource('projects', ProjectController::class);
     Route::resource('testimonials', TestimonialController::class);
     Route::resource('registrations', RegistrationController::class);
+
+    // Project Reviews
+    Route::get('/project-reviews', [ProjectReviewController::class, 'index'])->name('project-reviews.index');
+    Route::patch('/project-reviews/{review}/approve', [ProjectReviewController::class, 'approve'])->name('project-reviews.approve');
+    Route::patch('/project-reviews/{review}/reject', [ProjectReviewController::class, 'reject'])->name('project-reviews.reject');
+    Route::delete('/project-reviews/{review}', [ProjectReviewController::class, 'destroy'])->name('project-reviews.destroy');
 });
 
 Route::post('/chatbot/stream', [ChatbotController::class, 'stream'])

@@ -238,49 +238,54 @@
             <h1 class="font-headline-md text-headline-md font-bold text-primary tracking-tight">AI-Solutions</h1>
             <p class="text-on-surface-variant text-xs mt-1">Enterprise Admin01</p>
         </div>
-        <nav class="flex-1 space-y-1 px-4 overflow-y-auto">
+        <nav class="flex-1 space-y-1 px-4 overflow-y-auto no-scrollbar">
             <!-- Analytics -->
-            <a class="flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 group {{ request()->routeIs('admin.dashboard*') ? 'bg-gradient-to-r from-secondary/20 to-accent/10 border-r-4 border-accent text-white font-bold shadow-[0_0_15px_rgba(165,16,180,0.15)]' : 'text-on-surface-variant hover:bg-white/5' }}" href="{{ route('admin.dashboard') }}">
+            <a class="flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 group {{ request()->routeIs('admin.dashboard*') ? 'bg-gradient-to-r from-secondary/20 to-accent/10 border-l-4 border-accent text-white font-bold shadow-[0_0_15px_rgba(165,16,180,0.15)]' : 'text-on-surface-variant hover:bg-white/5' }}" href="{{ route('admin.dashboard') }}">
                 <span class="material-symbols-outlined {{ request()->routeIs('admin.dashboard*') ? 'text-accent' : 'text-on-surface-variant group-hover:text-accent' }}">monitoring</span>
                 <span class="font-body-base text-body-base">Analytics</span>
             </a>
             <!-- Inquiries -->
-            <a class="flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 group {{ request()->routeIs('admin.inquiries*') ? 'bg-gradient-to-r from-secondary/20 to-accent/10 border-r-4 border-accent text-white font-bold shadow-[0_0_15px_rgba(165,16,180,0.15)]' : 'text-on-surface-variant hover:bg-white/5' }}" href="{{ route('admin.inquiries') }}">
+            <a class="flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 group {{ request()->routeIs('admin.inquiries*') ? 'bg-gradient-to-r from-secondary/20 to-accent/10 border-l-4 border-accent text-white font-bold shadow-[0_0_15px_rgba(165,16,180,0.15)]' : 'text-on-surface-variant hover:bg-white/5' }}" href="{{ route('admin.inquiries') }}">
                 <span class="material-symbols-outlined {{ request()->routeIs('admin.inquiries*') ? 'text-accent' : 'text-on-surface-variant group-hover:text-accent' }}">chat_bubble</span>
                 <span class="font-body-base text-body-base">Inquiries</span>
             </a>
             <!-- Gallery -->
-            <a class="flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 group {{ request()->routeIs('admin.gallery.*') ? 'bg-gradient-to-r from-secondary/20 to-accent/10 border-r-4 border-accent text-white font-bold shadow-[0_0_15px_rgba(165,16,180,0.15)]' : 'text-on-surface-variant hover:bg-white/5' }}" href="{{ route('admin.gallery.index') }}">
+            <a class="flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 group {{ request()->routeIs('admin.gallery.*') ? 'bg-gradient-to-r from-secondary/20 to-accent/10 border-l-4 border-accent text-white font-bold shadow-[0_0_15px_rgba(165,16,180,0.15)]' : 'text-on-surface-variant hover:bg-white/5' }}" href="{{ route('admin.gallery.index') }}">
                 <span class="material-symbols-outlined {{ request()->routeIs('admin.gallery.*') ? 'text-accent' : 'text-on-surface-variant group-hover:text-accent' }}">collections</span>
                 <span class="font-body-base text-body-base">Gallery</span>
             </a>
             <!-- Blogs -->
-            <a class="flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 group {{ request()->routeIs('admin.blogs.*') ? 'bg-gradient-to-r from-secondary/20 to-accent/10 border-r-4 border-accent text-white font-bold shadow-[0_0_15px_rgba(165,16,180,0.15)]' : 'text-on-surface-variant hover:bg-white/5' }}" href="{{ route('admin.blogs.index') }}">
+            <a class="flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 group {{ request()->routeIs('admin.blogs.*') ? 'bg-gradient-to-r from-secondary/20 to-accent/10 border-l-4 border-accent text-white font-bold shadow-[0_0_15px_rgba(165,16,180,0.15)]' : 'text-on-surface-variant hover:bg-white/5' }}" href="{{ route('admin.blogs.index') }}">
                 <span class="material-symbols-outlined {{ request()->routeIs('admin.blogs.*') ? 'text-accent' : 'text-on-surface-variant group-hover:text-accent' }}">edit_note</span>
                 <span class="font-body-base text-body-base">Blogs</span>
             </a>
             <!-- Services -->
-            <a class="flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 group {{ request()->routeIs('admin.services.*') ? 'bg-gradient-to-r from-secondary/20 to-accent/10 border-r-4 border-accent text-white font-bold shadow-[0_0_15px_rgba(165,16,180,0.15)]' : 'text-on-surface-variant hover:bg-white/5' }}" href="{{ route('admin.services.index') }}">
+            <a class="flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 group {{ request()->routeIs('admin.services.*') ? 'bg-gradient-to-r from-secondary/20 to-accent/10 border-l-4 border-accent text-white font-bold shadow-[0_0_15px_rgba(165,16,180,0.15)]' : 'text-on-surface-variant hover:bg-white/5' }}" href="{{ route('admin.services.index') }}">
                 <span class="material-symbols-outlined {{ request()->routeIs('admin.services.*') ? 'text-accent' : 'text-on-surface-variant group-hover:text-accent' }}">settings_applications</span>
                 <span class="font-body-base text-body-base">Services</span>
             </a>
             <!-- Events -->
-            <a class="flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 group {{ request()->routeIs('admin.events.*') ? 'bg-gradient-to-r from-secondary/20 to-accent/10 border-r-4 border-accent text-white font-bold shadow-[0_0_15px_rgba(165,16,180,0.15)]' : 'text-on-surface-variant hover:bg-white/5' }}" href="{{ route('admin.events.index') }}">
+            <a class="flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 group {{ request()->routeIs('admin.events.*') ? 'bg-gradient-to-r from-secondary/20 to-accent/10 border-l-4 border-accent text-white font-bold shadow-[0_0_15px_rgba(165,16,180,0.15)]' : 'text-on-surface-variant hover:bg-white/5' }}" href="{{ route('admin.events.index') }}">
                 <span class="material-symbols-outlined {{ request()->routeIs('admin.events.*') ? 'text-accent' : 'text-on-surface-variant group-hover:text-accent' }}">event</span>
                 <span class="font-body-base text-body-base">Events</span>
             </a>
             <!-- Projects -->
-            <a class="flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 group {{ request()->routeIs('admin.projects.*') ? 'bg-gradient-to-r from-secondary/20 to-accent/10 border-r-4 border-accent text-white font-bold shadow-[0_0_15px_rgba(165,16,180,0.15)]' : 'text-on-surface-variant hover:bg-white/5' }}" href="{{ route('admin.projects.index') }}">
+            <a class="flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 group {{ request()->routeIs('admin.projects.*') ? 'bg-gradient-to-r from-secondary/20 to-accent/10 border-l-4 border-accent text-white font-bold shadow-[0_0_15px_rgba(165,16,180,0.15)]' : 'text-on-surface-variant hover:bg-white/5' }}" href="{{ route('admin.projects.index') }}">
                 <span class="material-symbols-outlined {{ request()->routeIs('admin.projects.*') ? 'text-accent' : 'text-on-surface-variant group-hover:text-accent' }}">folder_special</span>
                 <span class="font-body-base text-body-base">Projects</span>
             </a>
             <!-- Testimonials -->
-            <a class="flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 group {{ request()->routeIs('admin.testimonials.*') ? 'bg-gradient-to-r from-secondary/20 to-accent/10 border-r-4 border-accent text-white font-bold shadow-[0_0_15px_rgba(165,16,180,0.15)]' : 'text-on-surface-variant hover:bg-white/5' }}" href="{{ route('admin.testimonials.index') }}">
+            <a class="flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 group {{ request()->routeIs('admin.testimonials.*') ? 'bg-gradient-to-r from-secondary/20 to-accent/10 border-l-4 border-accent text-white font-bold shadow-[0_0_15px_rgba(165,16,180,0.15)]' : 'text-on-surface-variant hover:bg-white/5' }}" href="{{ route('admin.testimonials.index') }}">
                 <span class="material-symbols-outlined {{ request()->routeIs('admin.testimonials.*') ? 'text-accent' : 'text-on-surface-variant group-hover:text-accent' }}">rate_review</span>
                 <span class="font-body-base text-body-base">Feedback</span>
             </a>
+            <!-- Project Reviews -->
+            <a class="flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 group {{ request()->routeIs('admin.project-reviews.*') ? 'bg-gradient-to-r from-secondary/20 to-accent/10 border-l-4 border-accent text-white font-bold shadow-[0_0_15px_rgba(165,16,180,0.15)]' : 'text-on-surface-variant hover:bg-white/5' }}" href="{{ route('admin.project-reviews.index') }}">
+                <span class="material-symbols-outlined {{ request()->routeIs('admin.project-reviews.*') ? 'text-accent' : 'text-on-surface-variant group-hover:text-accent' }}">reviews</span>
+                <span class="font-body-base text-body-base">Project Reviews</span>
+            </a>
             <!-- Registrations -->
-            <a class="flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 group {{ request()->routeIs('admin.registrations.*') ? 'bg-gradient-to-r from-secondary/20 to-accent/10 border-r-4 border-accent text-white font-bold shadow-[0_0_15px_rgba(165,16,180,0.15)]' : 'text-on-surface-variant hover:bg-white/5' }}" href="{{ route('admin.registrations.index') }}">
+            <a class="flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 group {{ request()->routeIs('admin.registrations.*') ? 'bg-gradient-to-r from-secondary/20 to-accent/10 border-l-4 border-accent text-white font-bold shadow-[0_0_15px_rgba(165,16,180,0.15)]' : 'text-on-surface-variant hover:bg-white/5' }}" href="{{ route('admin.registrations.index') }}">
                 <span class="material-symbols-outlined {{ request()->routeIs('admin.registrations.*') ? 'text-accent' : 'text-on-surface-variant group-hover:text-accent' }}">how_to_reg</span>
                 <span class="font-body-base text-body-base">Registrations</span>
             </a>

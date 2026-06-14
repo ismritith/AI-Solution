@@ -24,6 +24,15 @@
 @endsection
 
 @section('content')
+    @if(session('success'))
+        <div class="max-w-container-max mx-auto px-gutter pt-8">
+            <div class="bg-emerald-500/10 border border-emerald-500/30 rounded-xl p-4 flex items-center gap-3 text-emerald-400 text-sm">
+                <span class="material-symbols-outlined">check_circle</span>
+                {{ session('success') }}
+            </div>
+        </div>
+    @endif
+
     @if($event)
         <!-- Hero Section -->
         <section class="relative min-h-[600px] flex flex-col items-center justify-center px-gutter text-center py-section-gap overflow-hidden">
@@ -156,14 +165,159 @@
                             </li>
                         @endif
                     </ul>
-                    <a href="/register_form?id={{ $event->id }}" class="block w-full btn-gradient text-white py-4 rounded-xl font-bold text-center text-lg">Reserve Attendance Pass</a>
+                    @php
+                        $canBook = false;
+                        try {
+                            $eventDate = \Carbon\Carbon::parse($event->date_text);
+                            if ($eventDate->isAfter(now())) {
+                                $canBook = true;
+                            }
+                        } catch (\Exception $e) {
+                            $canBook = str_contains(strtolower($event->status_badge ?? ''), 'open') || str_contains(strtolower($event->status_badge ?? ''), 'upcoming');
+                        }
+                    @endphp
+
+                    @if($canBook)
+                        <button onclick="openRegistrationModal()" class="block w-full btn-gradient text-white py-4 rounded-xl font-bold text-center text-lg">Reserve Attendance Pass</button>
+                    @else
+                        <button disabled class="block w-full bg-white/10 text-on-surface-variant/40 py-4 rounded-xl font-bold text-center text-lg cursor-not-allowed">Registration Closed (Event Passed)</button>
+                    @endif
                 </div>
             </div>
         </section>
+
+        <!-- Registration Modal Popup -->
+        <div id="registrationModal" class="fixed inset-0 z-50 hidden overflow-y-auto flex items-center justify-center p-4">
+            <!-- Backdrop -->
+            <div class="fixed inset-0 bg-black/80 backdrop-blur-md" onclick="closeRegistrationModal()"></div>
+            
+            <!-- Modal Body -->
+            <div class="glass-card w-full max-w-2xl rounded-3xl p-8 md:p-10 relative z-10 max-h-[90vh] overflow-y-auto border-secondary/20">
+                <button onclick="closeRegistrationModal()" class="absolute top-6 right-6 text-on-surface-variant hover:text-white transition-colors">
+                    <span class="material-symbols-outlined text-2xl">close</span>
+                </button>
+
+                <h3 class="font-display text-2xl md:text-3xl font-extrabold text-white mb-2">Reserve Attendance Pass</h3>
+                <p class="text-on-surface-variant text-sm mb-6">Complete the registration protocol for <span class="text-secondary font-semibold">{{ $event->title }}</span></p>
+
+                <form action="{{ route('event.register') }}" method="POST" class="space-y-6">
+                    @csrf
+                    <input type="hidden" name="event_name" value="{{ $event->title }}">
+
+                    <!-- Registration Type -->
+                    <div class="space-y-2">
+                        <label class="block font-mono text-[11px] text-on-surface-variant uppercase tracking-widest">Registration Type</label>
+                        <div class="flex gap-6">
+                            <label class="flex items-center gap-2 cursor-pointer text-sm text-white font-medium">
+                                <input type="radio" name="registration_type" value="individual" checked onchange="toggleRegType('individual')" class="accent-secondary bg-black border-white/10">
+                                Individual Pass
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer text-sm text-white font-medium">
+                                <input type="radio" name="registration_type" value="team" onchange="toggleRegType('team')" class="accent-secondary bg-black border-white/10">
+                                Team Registration
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Individual Fields -->
+                    <div id="individualFields" class="space-y-4">
+                        <div class="space-y-2">
+                            <label class="block font-mono text-[11px] text-on-surface-variant uppercase tracking-widest">Full Name</label>
+                            <input type="text" name="full_name" placeholder="John Connor" class="w-full bg-[#05020c] border border-white/10 focus:border-secondary px-4 py-3 text-sm rounded-xl text-white placeholder-on-surface-variant/40 outline-none transition-all">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="block font-mono text-[11px] text-on-surface-variant uppercase tracking-widest">Pass Selection</label>
+                            <select name="pass_type" class="w-full bg-[#05020c] border border-white/10 focus:border-secondary px-4 py-3 text-sm rounded-xl text-on-surface-variant outline-none transition-all cursor-pointer">
+                                <option value="Standard Delegate">Standard Delegate</option>
+                                <option value="VIP All-Access">VIP All-Access</option>
+                                <option value="Free Pass">Free Pass (Limited)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Team Fields -->
+                    <div id="teamFields" class="space-y-4 hidden">
+                        <div class="space-y-2">
+                            <label class="block font-mono text-[11px] text-on-surface-variant uppercase tracking-widest">Team Name</label>
+                            <input type="text" name="team_name" placeholder="e.g. Cyberdyne Systems" class="w-full bg-[#05020c] border border-white/10 focus:border-secondary px-4 py-3 text-sm rounded-xl text-white placeholder-on-surface-variant/40 outline-none transition-all">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="block font-mono text-[11px] text-on-surface-variant uppercase tracking-widest">Team Size</label>
+                            <input type="number" name="team_size" value="3" min="1" max="10" onchange="generatePublicMemberRows(this.value)" class="w-full bg-[#05020c] border border-white/10 focus:border-secondary px-4 py-3 text-sm rounded-xl text-white outline-none transition-all">
+                        </div>
+                        <div class="space-y-3">
+                            <label class="block font-mono text-[11px] text-on-surface-variant uppercase tracking-widest">Team Members</label>
+                            <div id="publicMemberRepeater" class="space-y-3 max-h-[200px] overflow-y-auto pr-2">
+                                <!-- Dynamic rows -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Common Contact Email -->
+                    <div class="space-y-2">
+                        <label id="emailInputLabel" class="block font-mono text-[11px] text-on-surface-variant uppercase tracking-widest">Contact Email</label>
+                        <input type="email" name="email" placeholder="email@domain.com" required class="w-full bg-[#05020c] border border-white/10 focus:border-secondary px-4 py-3 text-sm rounded-xl text-white placeholder-on-surface-variant/40 outline-none transition-all">
+                    </div>
+
+                    <!-- Form Actions -->
+                    <div class="pt-4 flex justify-end gap-4 border-t border-white/5">
+                        <button type="button" onclick="closeRegistrationModal()" class="px-6 py-3 rounded-xl font-medium text-sm text-on-surface-variant hover:bg-white/5 transition-all">Cancel</button>
+                        <button type="submit" class="px-8 py-3 rounded-xl font-bold text-sm text-white btn-gradient">Confirm Pass</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     @else
         <div class="max-w-4xl mx-auto text-center py-20">
             <h2 class="text-white font-bold text-2xl">Event Registry Node Empty</h2>
             <p class="text-on-surface-variant mt-2">The requested summit details are currently offline.</p>
         </div>
     @endif
+@endsection
+
+@section('scripts')
+<script>
+    function openRegistrationModal() {
+        const modal = document.getElementById('registrationModal');
+        modal.classList.remove('hidden');
+        document.body.classList.add('overflow-hidden');
+        generatePublicMemberRows(3);
+    }
+
+    function closeRegistrationModal() {
+        const modal = document.getElementById('registrationModal');
+        modal.classList.add('hidden');
+        document.body.classList.remove('overflow-hidden');
+    }
+
+    function toggleRegType(type) {
+        const individualFields = document.getElementById('individualFields');
+        const teamFields = document.getElementById('teamFields');
+        const emailLabel = document.getElementById('emailInputLabel');
+
+        if (type === 'individual') {
+            individualFields.classList.remove('hidden');
+            teamFields.classList.add('hidden');
+            emailLabel.textContent = 'Contact Email';
+        } else {
+            individualFields.classList.add('hidden');
+            teamFields.classList.remove('hidden');
+            emailLabel.textContent = 'Team Lead Email';
+        }
+    }
+
+    function generatePublicMemberRows(count) {
+        const container = document.getElementById('publicMemberRepeater');
+        container.innerHTML = '';
+        for (let i = 0; i < count; i++) {
+            const div = document.createElement('div');
+            div.className = 'grid grid-cols-2 gap-3';
+            div.innerHTML = `
+                <input type="text" name="members[${i}][name]" placeholder="Member #${i+1} Name" required class="bg-[#05020c] border border-white/10 focus:border-secondary px-3 py-2 text-xs rounded-lg text-white">
+                <input type="email" name="members[${i}][email]" placeholder="Member #${i+1} Email" required class="bg-[#05020c] border border-white/10 focus:border-secondary px-3 py-2 text-xs rounded-lg text-white">
+            `;
+            container.appendChild(div);
+        }
+    }
+</script>
 @endsection

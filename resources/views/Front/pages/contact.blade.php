@@ -33,33 +33,40 @@
         
         <!-- Contact Form (Left) -->
         <div class="lg:col-span-7 glass-card rounded-3xl p-8 md:p-12" data-aos="fade-right">
+            @if(session('success'))
+            <div class="bg-emerald-500/10 border border-emerald-500/30 rounded-xl p-4 flex items-center gap-3 text-emerald-400 text-sm mb-6">
+                <span class="material-symbols-outlined">check_circle</span>
+                {{ session('success') }}
+            </div>
+        @endif
+
             <h2 class="font-display text-3xl font-extrabold text-white mb-8">Send a Transmission</h2>
-            <form action="#" method="POST" class="space-y-6">
+            <form action="{{ route('contact.submit') }}" method="POST" class="space-y-6">
                 @csrf
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="space-y-2">
                         <label class="font-mono text-xs text-on-surface-variant uppercase tracking-wider block">Identity</label>
-                        <input class="w-full bg-[#05020c] border border-white/5 focus:border-secondary px-4 py-3 text-body text-sm outline-none transition-all rounded-xl text-white placeholder-on-surface-variant/40" placeholder="Your Name" type="text" required/>
+                        <input name="name" class="w-full bg-[#05020c] border border-white/5 focus:border-secondary px-4 py-3 text-body text-sm outline-none transition-all rounded-xl text-white placeholder-on-surface-variant/40" placeholder="Your Name" type="text" value="{{ old('name') }}" required/>
                     </div>
                     <div class="space-y-2">
                         <label class="font-mono text-xs text-on-surface-variant uppercase tracking-wider block">Interface (Email)</label>
-                        <input class="w-full bg-[#05020c] border border-white/5 focus:border-secondary px-4 py-3 text-body text-sm outline-none transition-all rounded-xl text-white placeholder-on-surface-variant/40" placeholder="Email Address" type="email" required/>
+                        <input name="email" class="w-full bg-[#05020c] border border-white/5 focus:border-secondary px-4 py-3 text-body text-sm outline-none transition-all rounded-xl text-white placeholder-on-surface-variant/40" placeholder="Email Address" type="email" value="{{ old('email') }}" required/>
                     </div>
                 </div>
                 
                 <div class="space-y-2">
                     <label class="font-mono text-xs text-on-surface-variant uppercase tracking-wider block">Department</label>
-                    <select class="w-full bg-[#05020c] border border-white/5 focus:border-secondary px-4 py-3 text-body text-sm outline-none transition-all rounded-xl text-on-surface-variant appearance-none">
-                        <option>General Inquiry</option>
-                        <option>Technical Support</option>
-                        <option>Partnership Request</option>
-                        <option>API Cloud Integration</option>
+                    <select name="department" class="w-full bg-[#05020c] border border-white/5 focus:border-secondary px-4 py-3 text-body text-sm outline-none transition-all rounded-xl text-on-surface-variant appearance-none">
+                        <option {{ old('department') === 'General Inquiry' ? 'selected' : '' }}>General Inquiry</option>
+                        <option {{ old('department') === 'Technical Support' ? 'selected' : '' }}>Technical Support</option>
+                        <option {{ old('department') === 'Partnership Request' ? 'selected' : '' }}>Partnership Request</option>
+                        <option {{ old('department') === 'API Cloud Integration' ? 'selected' : '' }}>API Cloud Integration</option>
                     </select>
                 </div>
                 
                 <div class="space-y-2">
                     <label class="font-mono text-xs text-on-surface-variant uppercase tracking-wider block">Message Payload</label>
-                    <textarea class="w-full bg-[#05020c] border border-white/5 focus:border-secondary px-4 py-3 text-body text-sm outline-none transition-all rounded-xl text-white placeholder-on-surface-variant/40" placeholder="Detailed requirements or message..." rows="5" required></textarea>
+                    <textarea name="message" class="w-full bg-[#05020c] border border-white/5 focus:border-secondary px-4 py-3 text-body text-sm outline-none transition-all rounded-xl text-white placeholder-on-surface-variant/40" placeholder="Detailed requirements or message..." rows="5" required>{{ old('message') }}</textarea>
                 </div>
                 
                 <button class="w-full btn-gradient py-4 rounded-xl font-display text-sm text-white font-bold shadow-lg shadow-secondary/15 transform active:scale-98" type="submit">

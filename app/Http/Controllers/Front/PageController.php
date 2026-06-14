@@ -7,6 +7,7 @@ use App\Models\BlogPost;
 use App\Models\Event;
 use App\Models\GalleryAsset;
 use App\Models\Project;
+use App\Models\ProjectReview;
 use App\Models\Service;
 use App\Models\Testimonial;
 use Illuminate\Http\Request;
@@ -20,11 +21,15 @@ class PageController extends Controller
     public function home()
     {
         $services = Service::latest()->take(6)->get();
-        $posts = BlogPost::where('status', 'published')->latest()->take(2)->get();
-        $featuredEvent = Event::latest()->first();
+        $posts = BlogPost::where('status', 'published')->latest()->take(3)->get();
+        $events = Event::latest()->take(3)->get();
+        $projects = Project::latest()->take(3)->get();
+        
         $testimonials = Testimonial::latest()->get();
+        $projectReviews = ProjectReview::with('project')->where('status', 'approved')->latest()->get();
+        $combinedTestimonials = $testimonials->concat($projectReviews)->sortByDesc('created_at');
 
-        return view('welcome', compact('services', 'posts', 'featuredEvent', 'testimonials'));
+        return view('welcome', compact('services', 'posts', 'events', 'projects', 'combinedTestimonials'));
     }
 
     /**
@@ -41,11 +46,32 @@ class PageController extends Controller
     /**
      * Render the Visual Neural Gallery page.
      */
-    public function gallery()
+    public function gallery(Request $request)
     {
-        $assets = GalleryAsset::latest()->get();
+        // Collect all distinct categories for each media type
+        $imageCategories = GalleryAsset::where('media_type', 'image')
+            ->distinct()->pluck('category')->filter()->sort()->values();
+        $videoCategories = GalleryAsset::where('media_type', 'video')
+            ->distinct()->pluck('category')->filter()->sort()->values();
 
-        return view('Front.pages.gallery', compact('assets'));
+        // Apply optional category filter per type
+        $imgCatFilter = $request->query('img_cat');
+        $vidCatFilter = $request->query('vid_cat');
+
+        $imagesQuery = GalleryAsset::where('media_type', 'image')->latest();
+        if ($imgCatFilter) {
+            $imagesQuery->where('category', $imgCatFilter);
+        }
+
+        $videosQuery = GalleryAsset::where('media_type', 'video')->latest();
+        if ($vidCatFilter) {
+            $videosQuery->where('category', $vidCatFilter);
+        }
+
+        $images = $imagesQuery->paginate(9, ['*'], 'img_page');
+        $videos = $videosQuery->paginate(9, ['*'], 'vid_page');
+
+        return view('Front.pages.gallery', compact('images', 'videos', 'imageCategories', 'videoCategories', 'imgCatFilter', 'vidCatFilter'));
     }
 
     /**
@@ -81,9 +107,9 @@ class PageController extends Controller
     /**
      * Render the Global AI Events page.
      */
-    public function events()
+    public function events(Request $request)
     {
-        $events = Event::latest()->get();
+        $events = Event::latest()->paginate(9);
 
         return view('Front.pages.events', compact('events'));
     }
@@ -127,13 +153,13 @@ class PageController extends Controller
         return view('Front.pages.services', compact('infrastructureServices', 'verticalServices', 'stepServices'));
     }
 
-    public function projects()
+    public function projects(Request $request)
     {
-        $featuredProjects = Project::where('classification', 'featured')->latest()->get();
-        $presentProjects = Project::where('classification', 'present')->latest()->get();
-        $legacyProjects = Project::where('classification', 'legacy')->latest()->get();
-        $horizonProjects = Project::where('classification', 'horizon')->latest()->get();
-        $testimonials = Testimonial::latest()->get();
+        $featuredProjects = Project::where('classification', 'featured')->latest()->paginate(9, ['*'], 'feat_page');
+        $presentProjects  = Project::where('classification', 'present')->latest()->paginate(9, ['*'], 'pres_page');
+        $legacyProjects   = Project::where('classification', 'legacy')->latest()->paginate(9, ['*'], 'leg_page');
+        $horizonProjects  = Project::where('classification', 'horizon')->latest()->paginate(9, ['*'], 'hor_page');
+        $testimonials     = Testimonial::latest()->get();
 
         return view('Front.pages.projects', compact('featuredProjects', 'presentProjects', 'legacyProjects', 'horizonProjects', 'testimonials'));
     }
@@ -145,8 +171,13 @@ class PageController extends Controller
     {
         $id = $request->query('id');
         $project = Project::find($id) ?? Project::first();
+        
+        $approvedReviews = [];
+        if ($project) {
+            $approvedReviews = $project->approvedReviews()->latest()->get();
+        }
 
-        return view('Front.pages.projects1', compact('project'));
+        return view('Front.pages.projects1', compact('project', 'approvedReviews'));
     }
 
     public function admin_login()
@@ -192,5 +223,22 @@ class PageController extends Controller
         $request->session()->forget(['admin_last_activity']);
 
         return redirect()->route('admin.login');
+    }
+
+    public function submitReview(Request $request)
+    {
+        $validated = $request->validate([
+            'project_id' => 'required|exists:projects,id',
+            'client_name' => 'required|string|max:255',
+            'client_role' => 'required|string|max:255',
+            'rating' => 'required|integer|min:1|max:5',
+            'quote_text' => 'required|string',
+        ]);
+
+        $validated['status'] = 'pending';
+
+        ProjectReview::create($validated);
+
+        return redirect()->back()->with('success', 'Your review was successfully submitted and is pending administrator moderation.');
     }
 }

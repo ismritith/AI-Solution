@@ -184,20 +184,17 @@
 
             <!-- Central Desktop Navigation links -->
             <nav class="hidden md:flex items-center space-x-8">
-                <a href="/services" class="font-body text-sm font-medium transition-all duration-200 {{ request()->is('services') ? 'text-secondary border-b-2 border-secondary pb-1' : 'text-on-surface-variant hover:text-white' }}">Services</a>
-                <a href="/gallery" class="font-body text-sm font-medium transition-all duration-200 {{ request()->is('gallery') ? 'text-secondary border-b-2 border-secondary pb-1' : 'text-on-surface-variant hover:text-white' }}">Gallery</a>
-                <a href="/insights" class="font-body text-sm font-medium transition-all duration-200 {{ request()->is('insights') ? 'text-secondary border-b-2 border-secondary pb-1' : 'text-on-surface-variant hover:text-white' }}">Insights</a>
-                <a href="/projects" class="font-body text-sm font-medium transition-all duration-200 {{ request()->is('projects') ? 'text-secondary border-b-2 border-secondary pb-1' : 'text-on-surface-variant hover:text-white' }}">Projects</a>
-                <a href="/events" class="font-body text-sm font-medium transition-all duration-200 {{ request()->is('events') ? 'text-secondary border-b-2 border-secondary pb-1' : 'text-on-surface-variant hover:text-white' }}">Events</a>
-                <a href="/about" class="font-body text-sm font-medium transition-all duration-200 {{ request()->is('about') && !request()->hash ? 'text-secondary border-b-2 border-secondary pb-1' : 'text-on-surface-variant hover:text-white' }}">About</a>
-                <a href="/contact" class="font-body text-sm font-medium transition-all duration-200 {{ request()->is('contact us') ? 'text-secondary border-b-2 border-secondary pb-1' : 'text-on-surface-variant hover:text-white' }}">Contact Us</a>
+                <a href="/services" class="font-body text-sm font-medium transition-all duration-200 {{ request()->is('services*') ? 'text-secondary border-b-2 border-secondary pb-1' : 'text-on-surface-variant hover:text-white' }}">Services</a>
+                <a href="/gallery" class="font-body text-sm font-medium transition-all duration-200 {{ request()->is('gallery*') ? 'text-secondary border-b-2 border-secondary pb-1' : 'text-on-surface-variant hover:text-white' }}">Gallery</a>
+                <a href="/insights" class="font-body text-sm font-medium transition-all duration-200 {{ request()->is('insights*') || request()->is('insights1*') ? 'text-secondary border-b-2 border-secondary pb-1' : 'text-on-surface-variant hover:text-white' }}">Insights</a>
+                <a href="/projects" class="font-body text-sm font-medium transition-all duration-200 {{ request()->is('projects*') || request()->is('projects1*') ? 'text-secondary border-b-2 border-secondary pb-1' : 'text-on-surface-variant hover:text-white' }}">Projects</a>
+                <a href="/events" class="font-body text-sm font-medium transition-all duration-200 {{ request()->is('events*') || request()->is('event1*') ? 'text-secondary border-b-2 border-secondary pb-1' : 'text-on-surface-variant hover:text-white' }}">Events</a>
+                <a href="/about" class="font-body text-sm font-medium transition-all duration-200 {{ request()->is('about*') ? 'text-secondary border-b-2 border-secondary pb-1' : 'text-on-surface-variant hover:text-white' }}">About</a>
+                <a href="/contact" class="font-body text-sm font-medium transition-all duration-200 {{ request()->is('contact*') ? 'text-secondary border-b-2 border-secondary pb-1' : 'text-on-surface-variant hover:text-white' }}">Contact Us</a>
             </nav>
 
             <!-- Actions block -->
             <div class="flex items-center gap-4">
-                <a href="/contact" class="hidden sm:inline-flex items-center justify-center font-body text-sm font-semibold text-secondary hover:bg-secondary/10 px-5 py-2.5 rounded-xl border border-secondary/20 hover:border-secondary/40 transition-all">
-                    Book Session
-                </a>
                 <a href="/contact" class="inline-flex items-center justify-center font-body text-sm font-bold text-white btn-gradient px-6 py-2.5 rounded-xl">
                     Get Started
                 </a>
