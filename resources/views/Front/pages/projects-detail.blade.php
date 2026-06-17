@@ -136,12 +136,12 @@
         </section>
     @endif
 
-    <!-- Leave a Review & Telemetry Section -->
+    <!-- Review CTA & Approved Reviews Section -->
     <section class="max-w-container-max mx-auto px-gutter pb-24" data-aos="fade-up">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-stretch">
             
-            <!-- Left: Submission Form -->
-            <div class="glass-card rounded-3xl p-8 md:p-10 border-secondary/20 flex flex-col justify-between">
+            <!-- Left: Review CTA Button -->
+            <div class="glass-card rounded-3xl p-8 md:p-10 border-secondary/20 flex flex-col justify-between" id="review-cta-card">
                 <div>
                     <h3 class="font-display text-2xl font-extrabold text-white mb-2">Share Your Feedback</h3>
                     <p class="text-on-surface-variant text-xs mb-8">Deploy your experience and insights regarding this project node.</p>
@@ -153,42 +153,9 @@
                         </div>
                     @endif
 
-                    <form action="{{ route('project.review') }}" method="POST" class="space-y-6">
-                        @csrf
-                        <input type="hidden" name="project_id" value="{{ $project->id }}">
-                        
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div class="space-y-2">
-                                <label class="font-mono text-[10px] text-on-surface-variant uppercase tracking-wider block font-bold">Identity (Name)</label>
-                                <input type="text" name="client_name" required placeholder="Sarah Connor" class="w-full bg-[#05020c] border border-white/10 focus:border-secondary px-4 py-3 text-sm rounded-xl text-white placeholder-on-surface-variant/40 outline-none transition-all">
-                            </div>
-                            <div class="space-y-2">
-                                <label class="font-mono text-[10px] text-on-surface-variant uppercase tracking-wider block font-bold">Professional Role</label>
-                                <input type="text" name="client_role" required placeholder="Lead Architect, Cyberdyne" class="w-full bg-[#05020c] border border-white/10 focus:border-secondary px-4 py-3 text-sm rounded-xl text-white placeholder-on-surface-variant/40 outline-none transition-all">
-                            </div>
-                        </div>
-
-                        <div class="space-y-2">
-                            <label class="font-mono text-[10px] text-on-surface-variant uppercase tracking-wider block font-bold">Efficacy Rating</label>
-                            <div class="flex items-center gap-1.5" id="star-rating-container">
-                                <input type="hidden" name="rating" id="rating-input-value" value="5">
-                                @for($i = 1; $i <= 5; $i++)
-                                    <button type="button" class="star-btn cursor-pointer transition-all focus:outline-none" data-rating="{{ $i }}">
-                                        <span class="material-symbols-outlined text-accent text-3xl transition-colors duration-150" style="font-variation-settings: 'FILL' 1;">star</span>
-                                    </button>
-                                @endfor
-                            </div>
-                        </div>
-
-                        <div class="space-y-2">
-                            <label class="font-mono text-[10px] text-on-surface-variant uppercase tracking-wider block font-bold">Detailed Review</label>
-                            <textarea name="quote_text" rows="4" required placeholder="Describe the performance, reliability, and deployment outcome..." class="w-full bg-[#05020c] border border-white/10 focus:border-secondary px-4 py-3 text-sm rounded-xl text-white placeholder-on-surface-variant/40 outline-none transition-all"></textarea>
-                        </div>
-
-                        <button type="submit" class="w-full btn-gradient py-3.5 rounded-xl font-display text-sm text-white font-bold shadow-lg shadow-secondary/15 transform active:scale-98 transition-transform">
-                            Transmit Review Node
-                        </button>
-                    </form>
+                    <button onclick="openReviewModal()" class="w-full btn-gradient py-4 rounded-xl font-display text-sm text-white font-bold shadow-lg shadow-secondary/15 transform hover:scale-[1.02] transition-transform flex items-center justify-center gap-2">
+                        <span class="material-symbols-outlined">rate_review</span> Transmit Review Node
+                    </button>
                 </div>
             </div>
             
@@ -254,9 +221,159 @@
         </div>
     </section>
 
-    @if($approvedReviews->count() > 1)
+    <!-- Review Modal Popup -->
+    <div id="reviewModal" class="fixed inset-0 z-50 hidden overflow-y-auto flex items-center justify-center p-4">
+        <!-- Backdrop -->
+        <div class="fixed inset-0 bg-black/80 backdrop-blur-md" onclick="closeReviewModal()"></div>
+        
+        <!-- Modal Body -->
+        <div class="glass-card w-full max-w-2xl rounded-3xl p-8 md:p-10 relative z-10 max-h-[90vh] overflow-y-auto border-secondary/20">
+            <button onclick="closeReviewModal()" class="absolute top-6 right-6 text-on-surface-variant hover:text-white transition-colors">
+                <span class="material-symbols-outlined text-2xl">close</span>
+            </button>
+
+            <h3 class="font-display text-2xl md:text-3xl font-extrabold text-white mb-2">Share Your Feedback</h3>
+            <p class="text-on-surface-variant text-sm mb-6">Deploy your experience regarding <span class="text-secondary font-semibold">{{ $project->title }}</span></p>
+
+            <form action="{{ route('project.review') }}" method="POST" class="space-y-6">
+                @csrf
+                <input type="hidden" name="project_id" value="{{ $project->id }}">
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-2">
+                        <label class="font-mono text-[10px] text-on-surface-variant uppercase tracking-wider block font-bold">Identity (Name) <span class="text-error">*</span></label>
+                        <input type="text" name="client_name" required maxlength="255" placeholder="Sarah Connor" class="w-full bg-[#05020c] border border-white/10 focus:border-secondary px-4 py-3 text-sm rounded-xl text-white placeholder-on-surface-variant/40 outline-none transition-all">
+                    </div>
+                    <div class="space-y-2">
+                        <label class="font-mono text-[10px] text-on-surface-variant uppercase tracking-wider block font-bold">Professional Role <span class="text-error">*</span></label>
+                        <input type="text" name="client_role" required maxlength="255" placeholder="Lead Architect, Cyberdyne" class="w-full bg-[#05020c] border border-white/10 focus:border-secondary px-4 py-3 text-sm rounded-xl text-white placeholder-on-surface-variant/40 outline-none transition-all">
+                    </div>
+                    <div class="space-y-2">
+                        <label class="font-mono text-[10px] text-on-surface-variant uppercase tracking-wider block font-bold">Email Address <span class="text-error">*</span></label>
+                        <input type="email" name="email" required maxlength="255" placeholder="sarah@cyberdyne.com" class="w-full bg-[#05020c] border border-white/10 focus:border-secondary px-4 py-3 text-sm rounded-xl text-white placeholder-on-surface-variant/40 outline-none transition-all">
+                    </div>
+                    <div class="space-y-2">
+                        <label class="font-mono text-[10px] text-on-surface-variant uppercase tracking-wider block font-bold">Phone Number (Optional)</label>
+                        <input type="text" name="phone" maxlength="20" placeholder="+1 (555) 012-3456" class="w-full bg-[#05020c] border border-white/10 focus:border-secondary px-4 py-3 text-sm rounded-xl text-white placeholder-on-surface-variant/40 outline-none transition-all">
+                    </div>
+                </div>
+
+                <div class="space-y-2">
+                    <label class="font-mono text-[10px] text-on-surface-variant uppercase tracking-wider block font-bold">Efficacy Rating <span class="text-error">*</span></label>
+                    <div class="flex items-center gap-1.5" id="star-rating-container">
+                        <input type="hidden" name="rating" id="rating-input-value" value="5">
+                        @for($i = 1; $i <= 5; $i++)
+                            <button type="button" class="star-btn cursor-pointer transition-all focus:outline-none" data-rating="{{ $i }}">
+                                <span class="material-symbols-outlined text-accent text-3xl transition-colors duration-150" style="font-variation-settings: 'FILL' 1;">star</span>
+                            </button>
+                        @endfor
+                    </div>
+                </div>
+
+                <div class="space-y-2 relative">
+                    <div class="flex justify-between items-end mb-1">
+                        <label class="font-mono text-[10px] text-on-surface-variant uppercase tracking-wider block font-bold">Detailed Review <span class="text-error">*</span></label>
+                        <span id="word-count-display" class="font-mono text-[10px] text-on-surface-variant"><span id="word-count">0</span> / 200 words</span>
+                    </div>
+                    <textarea id="quote-textarea" name="quote_text" rows="4" required placeholder="Describe the performance, reliability, and deployment outcome..." class="w-full bg-[#05020c] border border-white/10 focus:border-secondary px-4 py-3 text-sm rounded-xl text-white placeholder-on-surface-variant/40 outline-none transition-all"></textarea>
+                    <div id="word-limit-warning" class="text-error text-xs hidden mt-1">Maximum word limit (200) reached.</div>
+                </div>
+
+                <div class="pt-4 flex justify-end gap-4 border-t border-white/5">
+                    <button type="button" onclick="closeReviewModal()" class="px-6 py-3 rounded-xl font-medium text-sm text-on-surface-variant hover:bg-white/5 transition-all">Cancel</button>
+                    <button type="submit" class="px-8 py-3 rounded-xl font-bold text-sm text-white btn-gradient">Submit Review</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script>
+        // Review Modal
+        function openReviewModal() {
+            const modal = document.getElementById('reviewModal');
+            if(modal) {
+                modal.classList.remove('hidden');
+                document.body.classList.add('overflow-hidden');
+            }
+        }
+
+        function closeReviewModal() {
+            const modal = document.getElementById('reviewModal');
+            if(modal) {
+                modal.classList.add('hidden');
+                document.body.classList.remove('overflow-hidden');
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
+            // Word counter
+            const textarea = document.getElementById('quote-textarea');
+            const wordCountDisplay = document.getElementById('word-count');
+            const warningDisplay = document.getElementById('word-limit-warning');
+            
+            if(textarea) {
+                textarea.addEventListener('input', function() {
+                    const words = this.value.match(/\S+/g);
+                    const wordCount = words ? words.length : 0;
+                    
+                    wordCountDisplay.textContent = wordCount;
+                    
+                    if (wordCount > 200) {
+                        warningDisplay.classList.remove('hidden');
+                        wordCountDisplay.parentElement.classList.add('text-error');
+                        wordCountDisplay.parentElement.classList.remove('text-on-surface-variant');
+                        this.value = words.slice(0, 200).join(' ') + ' ';
+                        wordCountDisplay.textContent = 200;
+                    } else {
+                        warningDisplay.classList.add('hidden');
+                        wordCountDisplay.parentElement.classList.remove('text-error');
+                        wordCountDisplay.parentElement.classList.add('text-on-surface-variant');
+                    }
+                });
+            }
+
+            // Star Rating
+            const starContainer = document.getElementById('star-rating-container');
+            if (starContainer) {
+                const starBtns = starContainer.querySelectorAll('.star-btn');
+                const ratingInput = document.getElementById('rating-input-value');
+                
+                function updateStars(rating) {
+                    starBtns.forEach(btn => {
+                        const btnRating = parseInt(btn.getAttribute('data-rating'));
+                        const starIcon = btn.querySelector('span');
+                        if (btnRating <= rating) {
+                            starIcon.className = 'material-symbols-outlined text-accent text-3xl transition-colors duration-150';
+                            starIcon.style.fontVariationSettings = "'FILL' 1";
+                        } else {
+                            starIcon.className = 'material-symbols-outlined text-on-surface-variant/40 text-3xl transition-colors duration-150';
+                            starIcon.style.fontVariationSettings = "'FILL' 0";
+                        }
+                    });
+                }
+
+                starBtns.forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const rating = parseInt(this.getAttribute('data-rating'));
+                        ratingInput.value = rating;
+                        updateStars(rating);
+                    });
+
+                    btn.addEventListener('mouseenter', function() {
+                        const rating = parseInt(this.getAttribute('data-rating'));
+                        updateStars(rating);
+                    });
+                });
+
+                starContainer.addEventListener('mouseleave', function() {
+                    const currentRating = parseInt(ratingInput.value);
+                    updateStars(currentRating);
+                });
+
+                updateStars(parseInt(ratingInput.value));
+            }
+
+            // Review Carousel
             const slides = document.querySelectorAll('.review-slide');
             const dots = document.querySelectorAll('.carousel-dot');
             const prevBtn = document.getElementById('prev-review-btn');
@@ -307,59 +424,15 @@
                 });
             });
             
-            // Auto rotation every 6 seconds
-            setInterval(() => {
-                let nextIdx = currentIndex + 1;
-                if (nextIdx >= slides.length) nextIdx = 0;
-                showSlide(nextIdx);
-            }, 6000);
-        });
-
-        // Interactive Efficacy Star Rating
-        document.addEventListener("DOMContentLoaded", function() {
-            const starContainer = document.getElementById('star-rating-container');
-            if (starContainer) {
-                const starBtns = starContainer.querySelectorAll('.star-btn');
-                const ratingInput = document.getElementById('rating-input-value');
-                
-                function updateStars(rating) {
-                    starBtns.forEach(btn => {
-                        const btnRating = parseInt(btn.getAttribute('data-rating'));
-                        const starIcon = btn.querySelector('span');
-                        if (btnRating <= rating) {
-                            starIcon.className = 'material-symbols-outlined text-accent text-3xl transition-colors duration-150';
-                            starIcon.style.fontVariationSettings = "'FILL' 1";
-                        } else {
-                            starIcon.className = 'material-symbols-outlined text-on-surface-variant/40 text-3xl transition-colors duration-150';
-                            starIcon.style.fontVariationSettings = "'FILL' 0";
-                        }
-                    });
-                }
-
-                starBtns.forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        const rating = parseInt(this.getAttribute('data-rating'));
-                        ratingInput.value = rating;
-                        updateStars(rating);
-                    });
-
-                    btn.addEventListener('mouseenter', function() {
-                        const rating = parseInt(this.getAttribute('data-rating'));
-                        updateStars(rating);
-                    });
-                });
-
-                starContainer.addEventListener('mouseleave', function() {
-                    const currentRating = parseInt(ratingInput.value);
-                    updateStars(currentRating);
-                });
-
-                // Init state
-                updateStars(parseInt(ratingInput.value));
+            if (slides.length > 1) {
+                setInterval(() => {
+                    let nextIdx = currentIndex + 1;
+                    if (nextIdx >= slides.length) nextIdx = 0;
+                    showSlide(nextIdx);
+                }, 6000);
             }
         });
     </script>
-    @endif
 @else
     <div class="max-w-4xl mx-auto text-center py-20">
         <h2 class="text-white font-bold text-2xl">Project Record Offline</h2>

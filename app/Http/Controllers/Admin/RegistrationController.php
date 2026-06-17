@@ -28,6 +28,7 @@ class RegistrationController extends Controller
             'full_name' => 'nullable|string|max:255',
             'email' => 'required|email|max:255',
             'event_name' => 'required|string|max:255',
+            'event_id' => 'nullable|exists:events,id',
             'team_size' => 'nullable|integer|min:1|max:20',
             'pass_type' => 'nullable|string|max:255',
             'members' => 'nullable|array',
@@ -58,6 +59,7 @@ class RegistrationController extends Controller
             'full_name' => 'nullable|string|max:255',
             'email' => 'required|email|max:255',
             'event_name' => 'required|string|max:255',
+            'event_id' => 'nullable|exists:events,id',
             'team_size' => 'nullable|integer|min:1|max:20',
             'pass_type' => 'nullable|string|max:255',
             'members' => 'nullable|array',
@@ -87,6 +89,7 @@ class RegistrationController extends Controller
             'full_name' => 'nullable|string|max:255',
             'email' => 'required|email|max:255',
             'event_name' => 'required|string|max:255',
+            'event_id' => 'nullable|exists:events,id',
             'team_size' => 'nullable|integer|min:1|max:20',
             'pass_type' => 'nullable|string|max:255',
             'members' => 'nullable|array',
@@ -94,6 +97,6 @@ class RegistrationController extends Controller
 
         Registration::create($validated);
 
-        return redirect()->back()->with('success', 'Your registration has been successfully submitted.');
+        return redirect()->route('events')->with('success', 'Your registration has been successfully submitted.');
     }
 }

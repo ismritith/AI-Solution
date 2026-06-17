@@ -17,37 +17,27 @@ class ServiceSeeder extends Seeder
         Service::create([
             'category' => 'infrastructure',
             'title' => 'Quantum Neural Mesh',
-            'description' => 'A sub-millisecond telemetry backbone coordinating distributed neural workloads across isolated sandboxed execution nodes.',
+            'description' => 'A sub-millisecond telemetry backbone coordinating distributed AI workloads across high-performance execution nodes.',
             'icon' => 'memory',
-            'tags' => 'Telemetry, Real-time, Mesh',
-            'metric_subtitle' => '0.14ms latency reduction',
+            'tags' => 'AI Infrastructure, Real-time, Mesh',
+            'metric_subtitle' => 'Ultra-low latency processing',
             'is_featured' => true,
         ]);
 
         Service::create([
             'category' => 'infrastructure',
-            'title' => 'Cognitive Storage Nodes',
-            'description' => 'Self-healing, multi-database synchronization indexes powered by threat-detection monitoring scripts.',
+            'title' => 'Cognitive Data Fabric',
+            'description' => 'Unified and secure data pipelines enabling seamless integration, transformation, and real-time AI-ready data flow.',
             'icon' => 'database',
-            'tags' => 'Database, Sync, AI-Indexes',
-            'metric_subtitle' => '99.999% Sync Consistency',
-            'is_featured' => true,
-        ]);
-
-        Service::create([
-            'category' => 'vertical',
-            'title' => 'Autonomous Agent Swarms',
-            'description' => 'Deploy collaborative sandboxed agent swarms specialized in updating product assets, resolving threat buffers, and managing pipelines.',
-            'icon' => 'neurology',
-            'tags' => 'Orchestrator, Sandboxing, Swarms',
-            'metric_subtitle' => '84% operation gain',
+            'tags' => 'Data, Integration, AI Pipelines',
+            'metric_subtitle' => '99.9% data reliability',
             'is_featured' => true,
         ]);
 
         Service::create([
             'category' => 'step',
-            'title' => 'Define Objective Node',
-            'description' => 'Configure core optimization models, latency rules, and compliance sandboxes.',
+            'title' => 'Define AI Objective',
+            'description' => 'Translate business goals into measurable AI targets, system scope, and data requirements.',
             'icon' => 'flag',
             'step_number' => '1',
             'is_featured' => false,
@@ -55,8 +45,8 @@ class ServiceSeeder extends Seeder
 
         Service::create([
             'category' => 'step',
-            'title' => 'Orchestrate Telemetry',
-            'description' => 'Establish safe datastreams between operational database clusters and AI sandboxes.',
+            'title' => 'Build & Orchestrate Data Systems',
+            'description' => 'Integrate secure data pipelines and prepare structured environments for AI processing and model training.',
             'icon' => 'analytics',
             'step_number' => '2',
             'is_featured' => false,
@@ -64,10 +54,28 @@ class ServiceSeeder extends Seeder
 
         Service::create([
             'category' => 'step',
-            'title' => 'Launch Auto-Pilot',
-            'description' => 'Activate self-healing logic nodes, monitoring agents, and executive dashboards.',
+            'title' => 'Deploy Intelligent Systems',
+            'description' => 'Launch AI models into production with real-time monitoring, automation, and performance tracking.',
             'icon' => 'bolt',
             'step_number' => '3',
+            'is_featured' => false,
+        ]);
+
+        Service::create([
+            'category' => 'step',
+            'title' => 'Continuous Learning & Optimization',
+            'description' => 'Continuously improve AI models using feedback loops, retraining, and performance evaluation.',
+            'icon' => 'refresh',
+            'step_number' => '4',
+            'is_featured' => false,
+        ]);
+
+        Service::create([
+            'category' => 'step',
+            'title' => 'Scale & Govern AI Systems',
+            'description' => 'Scale AI capabilities across infrastructure while ensuring security, compliance, and ethical governance.',
+            'icon' => 'shield',
+            'step_number' => '5',
             'is_featured' => false,
         ]);
     }

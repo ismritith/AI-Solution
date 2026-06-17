@@ -236,7 +236,7 @@
     <aside class="fixed left-0 top-0 h-screen w-72 flex flex-col py-base bg-surface-container/50 backdrop-blur-3xl border-r border-white/10 z-50">
         <div class="px-gutter mb-10 mt-4">
             <h1 class="font-headline-md text-headline-md font-bold text-primary tracking-tight">AI-Solutions</h1>
-            <p class="text-on-surface-variant text-xs mt-1">Enterprise Admin01</p>
+            <p class="text-on-surface-variant text-xs mt-1">Admin_SmritiTh</p>
         </div>
         <nav class="flex-1 space-y-1 px-4 overflow-y-auto no-scrollbar">
             <!-- Analytics -->
@@ -336,6 +336,20 @@
                         <span>{{ session('success') }}</span>
                     </div>
                     <button onclick="this.parentElement.remove()" class="material-symbols-outlined hover:text-white transition-colors">close</button>
+                </div>
+            @endif
+
+            @if($errors->any())
+                <div class="glass-card p-4 rounded-xl border-red-500/30 bg-red-500/10 text-sm text-red-400 mb-6">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="material-symbols-outlined">error</span>
+                        <span class="font-bold">Please fix the following errors:</span>
+                    </div>
+                    <ul class="list-disc list-inside space-y-1">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
                 </div>
             @endif
 

@@ -12,6 +12,7 @@ class Registration extends Model
         'full_name',
         'email',
         'event_name',
+        'event_id',
         'team_size',
         'pass_type',
         'members',
@@ -20,4 +21,9 @@ class Registration extends Model
     protected $casts = [
         'members' => 'array',
     ];
+
+    public function event()
+    {
+        return $this->belongsTo(Event::class);
+    }
 }

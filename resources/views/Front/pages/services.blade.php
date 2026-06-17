@@ -1,204 +1,711 @@
 @extends('Front.layouts.app')
 
-@section('title', 'Our Services & Capabilities | AI-Solutions')
+@section('title', 'AI Services & Solutions | AI-Solutions')
 
 @section('content')
-<!-- Glowing background blur blobs -->
-<div class="bg-glow-main top-[10%] left-[-5%] opacity-55"></div>
-<div class="bg-glow-secondary top-[60%] right-[-5%] opacity-40"></div>
 
-<!-- Hero Section -->
-<section class="relative pt-48 pb-section-gap overflow-hidden">
-    <div class="absolute inset-0 grid-pattern pointer-events-none opacity-50"></div>
-    <div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-[1000px] h-[1000px] hero-glow pointer-events-none"></div>
-    <div class="relative z-10 max-w-container-max mx-auto px-gutter text-center" data-aos="fade-up">
-        <span class="inline-block px-4 py-1.5 mb-8 rounded-full border border-white/10 bg-[#1a0b25] text-white font-label-mono text-[10px] tracking-widest uppercase">Global Gatherings</span>
-        <h1 class="font-display text-5xl md:text-7xl font-extrabold text-white leading-tight">
-            Engineering the <span class="text-gradient-purple">Future of Intelligence.</span>
-        </h1>
-        
-        <p class="font-body-base text-lg text-on-surface-variant max-w-2xl mx-auto mb-12">
-            Connect with our core engineering architects, platform partners, and other developer pioneers at our upcoming workshops, hackathons, and global summits.
-        </p>
-        <div class="flex flex-col sm:flex-row gap-4 justify-center">
-            <button class="px-8 py-4 btn-gradient text-white rounded-xl font-bold shadow-xl hover:brightness-110 transition-all">Explore Deployment</button>
-            <button class="px-8 py-4 glass-card rounded-xl font-bold text-white border border-white/10 hover:bg-white/5">Technical Specs</button>
-        </div>
-    </div>
-</section>
+<!-- Ambient glows -->
+<div class="bg-glow-main top-[5%] left-[-5%] opacity-50"></div>
+<div class="bg-glow-secondary top-[55%] right-[-5%] opacity-35"></div>
+<div class="bg-glow-main top-[85%] left-[30%] opacity-30"></div>
 
-<!-- Core Services Bento Grid -->
-<section class="max-w-container-max mx-auto px-gutter py-section-gap">
-    <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
-        <div class="max-w-xl" data-aos="fade-right">
-            <h2 class="font-headline-md text-4xl mb-4 font-bold text-white">Core AI Infrastructure</h2>
-            <p class="text-on-surface-variant">Our modular ecosystem provides the foundational tools required to deploy state-of-the-art artificial intelligence across your entire value chain.</p>
-        </div>
-        <div class="font-label-mono text-xs text-on-surface-variant flex items-center gap-3" data-aos="fade-left">
-            <span class="w-12 h-[1px] bg-white/20"></span>
-            SERVICE PORTFOLIO
-        </div>
-    </div>
+<!-- ══════════════════════════════════════════════
+     HERO
+══════════════════════════════════════════════ -->
+<section class="relative pt-44 pb-28 overflow-hidden">
+    <div class="absolute inset-0 grid-pattern pointer-events-none opacity-40"></div>
 
-    <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
-        @forelse($infrastructureServices as $index => $service)
+    <div class="relative z-10 max-w-container-max mx-auto px-gutter">
+        <div class="max-w-4xl" data-aos="fade-up">
+            <span class="inline-flex items-center gap-2 px-4 py-1.5 mb-10 rounded-full border border-secondary/30 bg-secondary/10 font-mono text-[10px] text-on-surface uppercase tracking-widest">
+                <span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"></span>
+                Our Services
+            </span>
+
+            <h1 class="font-display text-5xl md:text-7xl font-extrabold text-white leading-[1.08] mb-8">
+                Intelligent solutions<br/>
+                <span class="text-gradient-coral">built for your business.</span>
+            </h1>
+
+            <p class="font-body text-lg text-on-surface-variant max-w-2xl leading-relaxed mb-12">
+                From strategic AI consulting to full-scale model deployment, we deliver end-to-end artificial intelligence services that drive measurable business outcomes — across every industry and function.
+            </p>
+
+            <div class="flex flex-wrap gap-4">
+                <a href="/contact" class="btn-gradient text-white font-bold px-8 py-4 rounded-xl font-body text-base shadow-lg shadow-secondary/20 inline-flex items-center gap-2">
+                    Book a Free Consultation
+                    <span class="material-symbols-outlined text-base">arrow_forward</span>
+                </a>
+                <a href="#services" class="glass-card text-white font-semibold px-8 py-4 rounded-xl font-body text-base hover:bg-white/10 transition-colors inline-flex items-center gap-2">
+                    Browse Services
+                    <span class="material-symbols-outlined text-base">expand_more</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Trust metrics bar -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-px mt-24 border border-white/5 rounded-2xl overflow-hidden" data-aos="fade-up" data-aos-delay="200">
             @php
-                $isWide = ($index === 0 || $index === 5);
-                $colSpan = $isWide ? 'md:col-span-8' : 'md:col-span-4';
+                $metrics = [
+                    ['value' => '500+',    'label' => 'Enterprise Clients',        'icon' => 'corporate_fare'],
+                    ['value' => '99.97%',  'label' => 'Platform Uptime SLA',       'icon' => 'verified'],
+                    ['value' => '1.2B+',   'label' => 'AI Requests Processed Daily','icon' => 'bolt'],
+                    ['value' => 'SOC 2',   'label' => 'Type II Certified',         'icon' => 'enhanced_encryption'],
+                ];
             @endphp
-            <div class="{{ $colSpan }} glass-card p-10 rounded-3xl group relative overflow-hidden flex flex-col justify-between" data-aos="fade-up" data-aos-delay="{{ $index * 50 }}">
-                <div>
-                    <div class="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center mb-8 border border-white/10 group-hover:border-primary/30 transition-all text-white">
-                        <span class="material-symbols-outlined text-3xl">{{ $service->icon ?? 'neurology' }}</span>
-                    </div>
-                    <h3 class="{{ $isWide ? 'font-headline-md text-3xl' : 'text-xl' }} mb-4 font-bold text-white">{{ $service->title }}</h3>
-                    <div class="text-on-surface-variant mb-10 text-sm leading-relaxed">
-                        {!! $service->description !!}
+            @foreach($metrics as $m)
+                <div class="bg-white/3 px-8 py-7 flex items-center gap-5 hover:bg-white/6 transition-colors">
+                    <span class="material-symbols-outlined text-secondary text-2xl shrink-0">{{ $m['icon'] }}</span>
+                    <div>
+                        <div class="font-display text-2xl font-extrabold text-white">{{ $m['value'] }}</div>
+                        <div class="font-mono text-[10px] text-on-surface-variant uppercase tracking-widest mt-0.5">{{ $m['label'] }}</div>
                     </div>
                 </div>
-                <div class="flex flex-wrap gap-4 items-center">
-                    @if($service->tags)
-                        @foreach(explode(',', $service->tags) as $tag)
-                            <span class="px-4 py-1.5 bg-white/5 rounded-full border border-white/10 font-label-mono text-[10px] text-white">{{ trim($tag) }}</span>
-                        @endforeach
-                    @endif
-                    @if($service->metric_subtitle)
-                        <span class="ml-auto text-white/80 font-bold text-xs font-label-mono">{{ $service->metric_subtitle }}</span>
-                    @endif
-                </div>
-            </div>
-        @empty
-            <div class="md:col-span-12 glass-card p-10 text-center text-on-surface-variant italic">
-                No core infrastructure services registered yet.
-            </div>
-        @endforelse
-    </div>
-</section>
-
-<!-- Industry Solutions -->
-<section class="bg-surface py-section-gap relative">
-    <div class="max-w-container-max mx-auto px-gutter relative z-10">
-        <div class="text-center mb-16" data-aos="fade-up">
-            <h2 class="font-headline-md text-4xl font-bold mb-6 text-white">Industry Verticals</h2>
-            <p class="text-on-surface-variant max-w-2xl mx-auto text-lg">We don't believe in one-size-fits-all. Our models are specialized for the unique regulatory and operational needs of key sectors.</p>
-        </div>
-        <div class="grid grid-cols-2 md:grid-cols-5 gap-6">
-            @forelse($verticalServices as $service)
-                <div class="group p-8 glass-card rounded-2xl text-center" data-aos="zoom-in">
-                    <div class="w-16 h-16 mx-auto bg-white/5 rounded-full flex items-center justify-center mb-6 border border-white/5 group-hover:border-primary/50 transition-all text-white">
-                        <span class="material-symbols-outlined text-4xl group-hover:text-primary transition-colors">{{ $service->icon ?? 'business' }}</span>
-                    </div>
-                    <h4 class="font-bold text-base text-white mb-2">{{ $service->title }}</h4>
-                    <p class="text-xs text-on-surface-variant line-clamp-2">{!! strip_tags($service->description) !!}</p>
-                </div>
-            @empty
-                <div class="col-span-5 text-center text-on-surface-variant text-sm italic">
-                    Industry modules will be listed soon.
-                </div>
-            @endforelse
+            @endforeach
         </div>
     </div>
 </section>
 
-<!-- Our Process -->
-<section class="py-section-gap max-w-container-max mx-auto px-gutter">
-    <div class="mb-24" data-aos="fade-right">
-        <h2 class="font-headline-md text-4xl font-bold mb-6 text-white">The Development Lifecycle</h2>
-        <p class="text-on-surface-variant max-w-xl text-lg">From initial concept to continuous optimization, our 4-stage process ensures transparency and technical excellence.</p>
-    </div>
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-12 relative">
-        <div class="hidden md:block absolute top-12 left-0 w-full h-[1px] bg-gradient-to-r from-white/0 via-white/10 to-white/0"></div>
-        
-        @forelse($stepServices as $service)
-            <div class="relative group" data-aos="fade-up">
-                <div class="w-24 h-24 rounded-full bg-[#0e0816] border border-white/10 flex items-center justify-center mb-10 relative z-10 group-hover:scale-105 transition-transform group-hover:border-primary/50">
-                    <span class="text-white font-bold text-2xl">0{{ $service->step_number }}</span>
-                </div>
-                <h3 class="font-headline-md text-2xl mb-4 font-bold text-white">{{ $service->title }}</h3>
-                <div class="text-on-surface-variant text-sm pr-6 leading-relaxed">
-                    {!! $service->description !!}
-                </div>
-            </div>
-        @empty
-            <div class="col-span-4 text-center text-on-surface-variant italic text-sm">
-                Development step registry is empty.
-            </div>
-        @endforelse
-    </div>
-</section>
 
-<!-- Why Choose Us -->
-<section class="py-section-gap bg-[#08050c] overflow-hidden">
-    <div class="max-w-container-max mx-auto px-gutter flex flex-col md:flex-row items-center gap-24">
-        <div class="flex-1" data-aos="fade-right">
-            <h2 class="font-headline-md text-4xl md:text-5xl font-bold mb-10 text-white">Why Enterprise Leaders Trust <span class="text-gradient">AI-Solutions</span></h2>
-            <div class="space-y-10">
-                <div class="flex gap-6">
-                    <div class="w-12 h-12 flex-shrink-0 bg-white/5 rounded-xl border border-white/10 flex items-center justify-center">
-                        <span class="material-symbols-outlined text-secondary">bolt</span>
-                    </div>
-                    <div>
-                        <h4 class="font-bold text-xl mb-2 text-white">Unmatched Innovation</h4>
-                        <p class="text-on-surface-variant text-base leading-relaxed">We don't just use AI; we engineer proprietary models that push the boundaries of what's possible.</p>
-                    </div>
-                </div>
-                <div class="flex gap-6">
-                    <div class="w-12 h-12 flex-shrink-0 bg-white/5 rounded-xl border border-white/10 flex items-center justify-center">
-                        <span class="material-symbols-outlined text-primary">layers</span>
-                    </div>
-                    <div>
-                        <h4 class="font-bold text-xl mb-2 text-white">Global Scalability</h4>
-                        <p class="text-on-surface-variant text-base leading-relaxed">Deploy once, scale everywhere. Our infrastructure handles millions of requests with sub-ms latency.</p>
-                    </div>
-                </div>
-                <div class="flex gap-6">
-                    <div class="w-12 h-12 flex-shrink-0 bg-white/5 rounded-xl border border-white/10 flex items-center justify-center">
-                        <span class="material-symbols-outlined text-secondary">enhanced_encryption</span>
-                    </div>
-                    <div>
-                        <h4 class="font-bold text-xl mb-2 text-white">Military-Grade Security</h4>
-                        <p class="text-on-surface-variant text-base leading-relaxed">Encryption at rest and in transit. Private cloud deployments ensure your data never leaves your control.</p>
-                    </div>
-                </div>
+<!-- ══════════════════════════════════════════════
+     SERVICE OFFERINGS — 7 CORE SERVICES
+══════════════════════════════════════════════ -->
+<section id="services" class="py-24 md:py-32">
+    <div class="max-w-container-max mx-auto px-gutter">
+
+        <div class="text-center mb-20" data-aos="fade-up">
+            <div class="inline-flex items-center gap-2 px-3 py-1 bg-secondary/15 border border-secondary/30 rounded-full mb-6">
+                <span class="font-mono text-xs text-on-surface uppercase tracking-widest">What We Offer</span>
             </div>
+            <h2 class="font-display text-4xl md:text-5xl font-extrabold text-white mb-4">Our Core Services</h2>
+            <p class="text-on-surface-variant max-w-2xl mx-auto text-base leading-relaxed">
+                Seven specialised practices. One integrated platform. Built to take AI from proof-of-concept to production at enterprise scale.
+            </p>
         </div>
-        <div class="flex-1 relative" data-aos="fade-left">
-            <div class="relative z-10 rounded-[2.5rem] overflow-hidden glass-card p-5 border border-white/5">
-                <img alt="AI Interface" class="w-full h-[550px] object-cover rounded-[2rem]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUVtY14NRMQ1IsUYO14hmDi6kR1yl2scitF2Qkm68MOzk7sd7iSenj95bJnMvBzFy1U5r4uJqNOo_A5rtM_OUiQc32EwcYDW07b--CDYCiTvfjlWTRq2-FDWIhBf76c7KteYzTcHS_TlsNM2JToYN_grEKlIK1w_SZlDsxYgbi8IFOtWSTT8-nTajCilpBiR6LicfA8XEJYCj2OgeEJ1eJn9Y34LpzN07MO6ih7o-jZl-8YVJl-b7XTYwpz-ntAmFyzNJ6d7_UW1LG"/>
-                <div class="absolute inset-0 bg-gradient-to-t from-[#050308]/90 via-transparent to-transparent"></div>
-                <div class="absolute bottom-12 left-12 right-12">
-                    <div class="glass-card p-8 rounded-3xl border border-white/10 backdrop-blur-2xl">
-                        <div class="flex items-center gap-4 mb-4">
-                            <div class="flex -space-x-3">
-                                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center border-2 border-[#050308] text-white text-xs font-bold">A</div>
-                                <div class="w-10 h-10 rounded-full bg-[#7c3aed] flex items-center justify-center border-2 border-[#050308] text-white text-xs font-bold">B</div>
-                                <div class="w-10 h-10 rounded-full bg-[#d81b60] flex items-center justify-center border-2 border-[#050308] text-white text-xs font-bold">C</div>
+
+        @php
+            $coreServices = [
+                [
+                    'index'   => 0,
+                    'icon'    => 'psychology',
+                    'color'   => 'secondary',
+                    'title'   => 'Artificial Intelligence Solutions',
+                    'summary' => 'End-to-end AI systems engineered for production environments.',
+                    'desc'    => 'We design, develop, and deploy bespoke AI systems tailored to your operational context. From autonomous decision engines and intelligent recommendation systems to multi-agent orchestration frameworks — our solutions integrate directly into your existing infrastructure without disrupting live workflows. Every deployment ships with observability, fallback logic, and a clear roadmap for continuous improvement.',
+                    'tags'    => ['Deep Learning', 'Reinforcement Learning', 'Multi-Agent Systems', 'AutoML', 'Model Governance'],
+                    'stat'    => '+84% average efficiency gain',
+                ],
+                [
+                    'index'   => 1,
+                    'icon'    => 'model_training',
+                    'color'   => 'accent',
+                    'title'   => 'Machine Learning Model Development',
+                    'summary' => 'Custom ML models built on your data, validated against your business goals.',
+                    'desc'    => 'We build supervised, unsupervised, and semi-supervised models across regression, classification, clustering, and ranking tasks. Our process starts with a rigorous data audit and baseline definition, moves through feature engineering and architecture selection, and ends with a production-ready model packaged with a model card, performance benchmarks, and a monitoring plan. We support scikit-learn, XGBoost, PyTorch, and TensorFlow stacks.',
+                    'tags'    => ['XGBoost', 'PyTorch', 'TensorFlow', 'Feature Engineering', 'Drift Detection'],
+                    'stat'    => 'Avg. 4× faster time-to-production',
+                ],
+                [
+                    'index'   => 2,
+                    'icon'    => 'bar_chart',
+                    'color'   => 'secondary',
+                    'title'   => 'Data Analytics & Business Intelligence',
+                    'summary' => 'Turn raw operational data into decisions your leadership can act on.',
+                    'desc'    => 'We build modern data stacks — ingestion, transformation, and visualisation — that give your teams a single source of truth. From real-time dashboards and KPI reporting to cohort analysis and attribution modelling, we connect your data warehouse to the business questions that matter. We work with Snowflake, BigQuery, Redshift, dbt, Looker, and Power BI to fit your existing environment.',
+                    'tags'    => ['dbt', 'Snowflake', 'BigQuery', 'Looker', 'Power BI', 'Airflow'],
+                    'stat'    => null,
+                ],
+                [
+                    'index'   => 3,
+                    'icon'    => 'chat',
+                    'color'   => 'accent',
+                    'title'   => 'Natural Language Processing (NLP) Solutions',
+                    'summary' => 'Extract meaning, automate language tasks, and deploy LLM-powered applications at scale.',
+                    'desc'    => 'Our NLP practice covers the full spectrum — from classical text classification and named entity recognition to retrieval-augmented generation (RAG) systems and domain-specific LLM fine-tuning. We build enterprise chatbots with role-based access and audit logging, document intelligence pipelines for contracts and reports, and sentiment analysis engines for customer feedback — all with hallucination guardrails and latency SLAs.',
+                    'tags'    => ['LLM Fine-Tuning', 'RAG', 'LangChain', 'Transformers', 'Named Entity Recognition', 'Vector DBs'],
+                    'stat'    => null,
+                ],
+                [
+                    'index'   => 4,
+                    'icon'    => 'image_search',
+                    'color'   => 'secondary',
+                    'title'   => 'Computer Vision Applications',
+                    'summary' => 'Real-time visual intelligence for manufacturing, logistics, and document processing.',
+                    'desc'    => 'We develop and deploy computer vision systems for object detection, defect classification, image segmentation, and optical character recognition — at the edge or in the cloud. Use cases include manufacturing quality control, warehouse inventory tracking, identity document verification, and satellite imagery analysis. Models are optimised for inference speed and deployable on NVIDIA Jetson, AWS Inferentia, and standard GPU clusters.',
+                    'tags'    => ['YOLO', 'OpenCV', 'Edge Inference', 'OCR', 'Image Segmentation', 'TensorRT'],
+                    'stat'    => null,
+                ],
+                [
+                    'index'   => 5,
+                    'icon'    => 'account_tree',
+                    'color'   => 'accent',
+                    'title'   => 'AI Automation & Workflow Optimisation',
+                    'summary' => 'Replace manual, rule-based processes with intelligent, self-improving pipelines.',
+                    'desc'    => 'We map your operational workflows, identify automation candidates, and build AI-powered systems that reduce manual effort, eliminate bottlenecks, and flag exceptions that require human review. From intelligent document processing and robotic process automation (RPA) augmentation to predictive scheduling and dynamic pricing engines — we engineer automation that scales without breaking under load.',
+                    'tags'    => ['RPA Integration', 'IDP', 'Predictive Scheduling', 'Event-Driven Architecture', 'Kafka'],
+                    'stat'    => 'Up to 70% reduction in manual processing',
+                ],
+                [
+                    'index'   => 6,
+                    'icon'    => 'lightbulb',
+                    'color'   => 'secondary',
+                    'title'   => 'AI Consulting & Digital Transformation',
+                    'summary' => 'Strategic guidance to build your AI capability from the ground up.',
+                    'desc'    => 'Not every organisation needs to build before it can think. Our consulting practice helps leadership teams assess AI readiness, prioritise use cases by ROI and feasibility, and design a phased transformation roadmap they can actually execute. We run discovery workshops, produce architecture decision records, and provide interim CTO-level support for organisations navigating their first enterprise AI programme.',
+                    'tags'    => ['AI Readiness Assessment', 'Use Case Prioritisation', 'Roadmapping', 'Change Management', 'AI Ethics'],
+                    'stat'    => null,
+                ],
+            ];
+        @endphp
+
+        <div class="space-y-6">
+            @foreach($coreServices as $svc)
+                @php $isEven = $svc['index'] % 2 === 0; @endphp
+
+                <!-- Service card: alternating layout -->
+                <div class="glass-card rounded-3xl p-8 md:p-12 group hover:border-{{ $svc['color'] }}/30 transition-all duration-300"
+                     data-aos="fade-up" data-aos-delay="{{ $svc['index'] * 50 }}">
+
+                    <div class="flex flex-col md:flex-row gap-10 {{ $isEven ? '' : 'md:flex-row-reverse' }} items-start">
+
+                        <!-- Icon + number column -->
+                        <div class="shrink-0 flex flex-row md:flex-col items-center md:items-start gap-5">
+                            <div class="w-16 h-16 rounded-2xl bg-{{ $svc['color'] }}/10 border border-{{ $svc['color'] }}/25 flex items-center justify-center group-hover:border-{{ $svc['color'] }}/50 group-hover:scale-105 transition-all text-{{ $svc['color'] }}">
+                                <span class="material-symbols-outlined text-3xl">{{ $svc['icon'] }}</span>
                             </div>
-                            <span class="text-xs font-label-mono text-white tracking-widest uppercase">Trusted by 500+ Firms</span>
+                            <span class="font-mono text-[11px] text-on-surface-variant/50 tracking-widest">
+                                0{{ $svc['index'] + 1 }} / 07
+                            </span>
                         </div>
-                        <p class="text-base italic text-white/80 leading-relaxed">"The transition to AI-Solutions' predictive engine reduced our operational overhead by 22% in the first quarter."</p>
+
+                        <!-- Content -->
+                        <div class="flex-1 space-y-5">
+                            <div>
+                                <h3 class="font-display text-2xl md:text-3xl font-extrabold text-white mb-2">
+                                    {{ $svc['title'] }}
+                                </h3>
+                                <p class="font-mono text-xs text-{{ $svc['color'] }} uppercase tracking-wider">
+                                    {{ $svc['summary'] }}
+                                </p>
+                            </div>
+
+                            <p class="font-body text-sm text-on-surface-variant leading-relaxed max-w-3xl">
+                                {{ $svc['desc'] }}
+                            </p>
+
+                            <div class="flex flex-wrap gap-2 pt-2">
+                                @foreach($svc['tags'] as $tag)
+                                    <span class="px-3 py-1 bg-white/5 border border-white/10 rounded-full font-mono text-[10px] text-on-surface-variant uppercase tracking-wide">
+                                        {{ $tag }}
+                                    </span>
+                                @endforeach
+                            </div>
+
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between pt-4 gap-4 border-t border-white/5">
+                                @if($svc['stat'])
+                                    <div class="flex items-center gap-2">
+                                        <span class="material-symbols-outlined text-secondary text-base">trending_up</span>
+                                        <span class="font-mono text-xs text-secondary font-bold">{{ $svc['stat'] }}</span>
+                                    </div>
+                                @else
+                                    <div></div>
+                                @endif
+                                <a href="/contact" class="inline-flex items-center gap-2 text-{{ $svc['color'] }} font-body text-sm font-bold hover:text-white transition-colors">
+                                    Discuss this service
+                                    <span class="material-symbols-outlined text-base">arrow_forward</span>
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <!-- Floating glows -->
-            <div class="absolute -top-12 -right-12 w-64 h-64 bg-primary/10 blur-[100px] rounded-full"></div>
-            <div class="absolute -bottom-12 -left-12 w-64 h-64 bg-secondary/10 blur-[100px] rounded-full"></div>
+            @endforeach
         </div>
     </div>
 </section>
 
-<!-- CTA Section -->
-<section class="py-section-gap relative overflow-hidden bg-surface">
-    <div class="max-w-container-max mx-auto px-gutter text-center relative z-10">
-        <div class="glass-card p-20 rounded-[4rem] border border-white/5 relative overflow-hidden" data-aos="zoom-in">
-            <div class="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5"></div>
-            <h2 class="font-display-lg text-5xl md:text-6xl mb-8 relative z-10 font-bold text-white">Ready to <span class="text-gradient">Evolve?</span></h2>
-            <p class="text-on-surface-variant max-w-xl mx-auto mb-12 relative z-10 text-lg leading-relaxed">Schedule a technical discovery session with our architects to map your journey into the intelligence era.</p>
-            <div class="flex flex-col sm:flex-row gap-6 justify-center relative z-10">
-                <button class="px-12 py-5 btn-gradient text-white rounded-2xl font-bold text-lg shadow-2xl hover:brightness-110 transition-all transform hover:-translate-y-1">Book a Strategy Call</button>
-                <button class="px-12 py-5 glass-card rounded-2xl font-bold text-lg text-white border border-white/10 hover:bg-white/5 transition-all">Ecosystem Map</button>
+
+<!-- ══════════════════════════════════════════════
+     SECTORS WE SERVE — FILTERABLE
+══════════════════════════════════════════════ -->
+<section class="py-24 md:py-32 bg-[#05020c]/50 border-t border-white/5" id="sectors">
+    <div class="max-w-container-max mx-auto px-gutter">
+
+        <!-- Header -->
+        <div class="text-center mb-14" data-aos="fade-up">
+            <div class="inline-flex items-center gap-2 px-3 py-1 bg-secondary/15 border border-secondary/30 rounded-full mb-6">
+                <span class="font-mono text-xs text-on-surface uppercase tracking-widest">Sectors We Serve</span>
+            </div>
+            <h2 class="font-display text-4xl md:text-5xl font-extrabold text-white mb-4">Where AI-Solutions Delivers</h2>
+            <p class="text-on-surface-variant max-w-2xl mx-auto text-base leading-relaxed">
+                We embed domain expertise into every engagement. Filter by sector to see the specific AI capabilities, compliance considerations, and project examples relevant to your industry.
+            </p>
+        </div>
+
+        <!-- Filter tabs -->
+        <div class="flex flex-wrap justify-center gap-3 mb-12" id="sector-filters" data-aos="fade-up" data-aos-delay="100">
+            @php
+                $filterTabs = [
+                    ['key' => 'all',            'label' => 'All Sectors',    'icon' => 'grid_view'],
+                    ['key' => 'healthcare',     'label' => 'Healthcare',     'icon' => 'health_and_safety'],
+                    ['key' => 'finance',        'label' => 'Finance',        'icon' => 'account_balance'],
+                    ['key' => 'it',             'label' => 'IT & SaaS',      'icon' => 'cloud'],
+                    ['key' => 'cybersecurity',  'label' => 'Cybersecurity',  'icon' => 'security'],
+                    ['key' => 'research',       'label' => 'Research',       'icon' => 'biotech'],
+                    ['key' => 'manufacturing',  'label' => 'Manufacturing',  'icon' => 'factory'],
+                    ['key' => 'logistics',      'label' => 'Logistics',      'icon' => 'local_shipping'],
+                    ['key' => 'energy',         'label' => 'Energy',         'icon' => 'energy_savings_leaf'],
+                    ['key' => 'legal',          'label' => 'Legal & Gov',    'icon' => 'gavel'],
+                ];
+            @endphp
+            @foreach($filterTabs as $tab)
+                <button
+                    data-filter="{{ $tab['key'] }}"
+                    class="sector-filter-btn flex items-center gap-2 px-4 py-2 rounded-xl font-mono text-xs uppercase tracking-wider border transition-all duration-200
+                           {{ $tab['key'] === 'all'
+                               ? 'bg-secondary text-white border-secondary shadow-lg shadow-secondary/20 active'
+                               : 'glass-card text-on-surface-variant border-white/10 hover:border-secondary/40 hover:text-white' }}">
+                    <span class="material-symbols-outlined text-sm">{{ $tab['icon'] }}</span>
+                    {{ $tab['label'] }}
+                </button>
+            @endforeach
+        </div>
+
+        <!-- Result count -->
+        <div class="text-center mb-8">
+            <span id="sector-count" class="font-mono text-xs text-on-surface-variant/60 uppercase tracking-widest"></span>
+        </div>
+
+        <!-- Sector cards grid -->
+        @php
+            $sectorCards = [
+                // Healthcare
+                ['sector' => 'healthcare', 'icon' => 'health_and_safety', 'title' => 'Healthcare & Life Sciences',
+                 'badge' => 'HIPAA · GxP · FDA 21 CFR',
+                 'desc'  => 'Clinical NLP for medical record extraction, diagnostic imaging AI, patient outcome prediction, and pharmacovigilance signal detection — all engineered under HIPAA and GxP compliance frameworks.',
+                 'projects' => ['Clinical NLP Platform', 'Radiology AI Triage', 'Drug Safety Signal Detection'],
+                 'stat'  => '94% diagnostic accuracy on benchmark datasets'],
+
+                ['sector' => 'healthcare', 'icon' => 'psychology', 'title' => 'Mental Health & Behavioural Analytics',
+                 'badge' => 'HIPAA · Ethics Board Reviewed',
+                 'desc'  => 'Behavioural pattern modelling, early risk stratification for patient deterioration, and NLP-driven therapy session analysis to support clinical decision-making at scale.',
+                 'projects' => ['Patient Risk Stratification', 'Therapy Session Summariser'],
+                 'stat'  => null],
+
+                // Finance
+                ['sector' => 'finance', 'icon' => 'account_balance', 'title' => 'Banking & Financial Services',
+                 'badge' => 'SOC 2 · PCI DSS · Basel III',
+                 'desc'  => 'Real-time fraud detection, credit risk underwriting models, AML transaction monitoring, and algorithmic trading signal generation — built to meet Basel III and PCI DSS requirements.',
+                 'projects' => ['Real-Time Fraud Engine', 'Credit Underwriting Model', 'AML Monitoring Pipeline'],
+                 'stat'  => '99.2% fraud detection precision at <12ms latency'],
+
+                ['sector' => 'finance', 'icon' => 'trending_up', 'title' => 'Insurance & InsurTech',
+                 'badge' => 'IFRS 17 · Solvency II',
+                 'desc'  => 'Automated claims triage, actuarial loss modelling, telematics-based risk scoring, and NLP document extraction for policy underwriting — designed for high-volume, regulated environments.',
+                 'projects' => ['Claims Triage Automation', 'Telematics Risk Scoring'],
+                 'stat'  => null],
+
+                // IT & SaaS
+                ['sector' => 'it', 'icon' => 'cloud', 'title' => 'Enterprise IT & SaaS Platforms',
+                 'badge' => 'ISO 27001 · Multi-Tenant',
+                 'desc'  => 'AI-powered feature development for SaaS products — including intelligent search, personalisation engines, churn prediction, and usage anomaly detection — deployable on AWS, GCP, or Azure.',
+                 'projects' => ['SaaS Churn Predictor', 'Intelligent Search Layer', 'Usage Anomaly Detector'],
+                 'stat'  => '4× faster feature time-to-market'],
+
+                ['sector' => 'it', 'icon' => 'code', 'title' => 'Developer Tools & DevOps Intelligence',
+                 'badge' => 'CI/CD · GitHub · GitLab',
+                 'desc'  => 'AI-assisted code review, automated test generation, incident prediction from observability signals, and LLM-powered documentation generation integrated directly into developer workflows.',
+                 'projects' => ['AI Code Review Bot', 'Incident Prediction System'],
+                 'stat'  => null],
+
+                // Cybersecurity
+                ['sector' => 'cybersecurity', 'icon' => 'security', 'title' => 'Threat Detection & SOC Automation',
+                 'badge' => 'MITRE ATT&CK · SIEM · SOAR',
+                 'desc'  => 'ML-based anomaly detection across network traffic, endpoint telemetry, and identity logs. Automated alert triage, threat hunting assistance, and SOAR playbook generation to reduce analyst fatigue.',
+                 'projects' => ['Network Anomaly Detector', 'SOC Alert Triage Engine', 'Threat Hunt Copilot'],
+                 'stat'  => '73% reduction in mean time to detect (MTTD)'],
+
+                ['sector' => 'cybersecurity', 'icon' => 'manage_accounts', 'title' => 'Identity & Access Intelligence',
+                 'badge' => 'Zero Trust · UEBA',
+                 'desc'  => 'User and Entity Behaviour Analytics (UEBA) for insider threat detection, privilege escalation monitoring, and continuous authentication risk scoring in Zero Trust architectures.',
+                 'projects' => ['UEBA Risk Scoring', 'Privilege Escalation Monitor'],
+                 'stat'  => null],
+
+                // Research
+                ['sector' => 'research', 'icon' => 'biotech', 'title' => 'Scientific Research & Academia',
+                 'badge' => 'IRB · Open Science · FAIR Data',
+                 'desc'  => 'Literature mining and meta-analysis automation, genomics data processing pipelines, research data curation tools, and LLM-assisted grant writing and systematic review — all FAIR-data compliant.',
+                 'projects' => ['Genomics Pipeline', 'Literature Mining Engine', 'Systematic Review Assistant'],
+                 'stat'  => '10× faster literature review cycles'],
+
+                ['sector' => 'research', 'icon' => 'science', 'title' => 'Drug Discovery & Computational Biology',
+                 'badge' => 'GxP · EMA · FDA',
+                 'desc'  => 'Molecular property prediction, protein structure analysis, clinical trial patient matching, and adverse event signal detection — accelerating R&D timelines in pharma and biotech.',
+                 'projects' => ['Molecular Property Predictor', 'Trial Patient Matching'],
+                 'stat'  => null],
+
+                // Manufacturing
+                ['sector' => 'manufacturing', 'icon' => 'factory', 'title' => 'Smart Manufacturing & Industry 4.0',
+                 'badge' => 'OPC-UA · IEC 62443 · ISO 9001',
+                 'desc'  => 'Predictive maintenance on production equipment, computer vision quality inspection, OEE optimisation, and supply chain disruption forecasting — integrated with MES and SCADA systems.',
+                 'projects' => ['Predictive Maintenance System', 'Vision QA Pipeline', 'OEE Optimiser'],
+                 'stat'  => '62% reduction in unplanned downtime'],
+
+                // Logistics
+                ['sector' => 'logistics', 'icon' => 'local_shipping', 'title' => 'Logistics, Retail & Supply Chain',
+                 'badge' => 'EDI · API-First · Real-Time',
+                 'desc'  => 'Probabilistic demand forecasting, dynamic pricing engines, last-mile route optimisation, warehouse slotting automation, and returns propensity modelling for omnichannel retail.',
+                 'projects' => ['Demand Forecasting Engine', 'Route Optimisation API', 'Dynamic Pricing Model'],
+                 'stat'  => '+18% on-time delivery rate improvement'],
+
+                // Energy
+                ['sector' => 'energy', 'icon' => 'energy_savings_leaf', 'title' => 'Energy, Utilities & Sustainability',
+                 'badge' => 'NERC CIP · ISO 50001 · ESG',
+                 'desc'  => 'Grid anomaly detection, renewable energy output forecasting, consumption pattern analysis, predictive asset maintenance for substations, and automated ESG reporting pipelines.',
+                 'projects' => ['Grid Anomaly Detector', 'Renewable Forecasting Model', 'ESG Reporting Automation'],
+                 'stat'  => null],
+
+                // Legal
+                ['sector' => 'legal', 'icon' => 'gavel', 'title' => 'Legal Tech & Government',
+                 'badge' => 'GDPR · FedRAMP · ATO',
+                 'desc'  => 'Contract intelligence and clause extraction, regulatory change monitoring, case outcome prediction, e-discovery document review acceleration, and public sector data analysis — built for data sovereignty requirements.',
+                 'projects' => ['Contract Intelligence Platform', 'Regulatory Monitor', 'e-Discovery Accelerator'],
+                 'stat'  => '85% reduction in contract review time'],
+            ];
+        @endphp
+
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6" id="sector-grid">
+            @foreach($sectorCards as $card)
+                <div class="sector-card glass-card rounded-3xl p-8 flex flex-col justify-between group hover:border-secondary/40 transition-all duration-300 opacity-100"
+                     data-sector="{{ $card['sector'] }}">
+
+                    <!-- Card header -->
+                    <div>
+                        <div class="flex items-start justify-between mb-6 gap-4">
+                            <div class="w-14 h-14 rounded-2xl bg-secondary/10 border border-secondary/20 flex items-center justify-center text-secondary group-hover:border-secondary/50 group-hover:scale-105 transition-all shrink-0">
+                                <span class="material-symbols-outlined text-2xl">{{ $card['icon'] }}</span>
+                            </div>
+                            <span class="font-mono text-[9px] text-on-surface-variant/60 uppercase tracking-wider text-right leading-relaxed pt-1">
+                                {{ $card['badge'] }}
+                            </span>
+                        </div>
+
+                        <h4 class="font-display font-extrabold text-lg text-white mb-3 group-hover:text-secondary transition-colors">
+                            {{ $card['title'] }}
+                        </h4>
+                        <p class="text-xs text-on-surface-variant leading-relaxed mb-6">
+                            {{ $card['desc'] }}
+                        </p>
+
+                        <!-- Project examples -->
+                        <div class="space-y-2 mb-6">
+                            <div class="font-mono text-[9px] text-on-surface-variant/50 uppercase tracking-widest mb-3">Delivered Projects</div>
+                            @foreach($card['projects'] as $proj)
+                                <div class="flex items-center gap-2">
+                                    <span class="w-1 h-1 rounded-full bg-secondary shrink-0"></span>
+                                    <span class="font-mono text-[10px] text-on-surface-variant">{{ $proj }}</span>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+
+                    <!-- Card footer -->
+                    <div class="pt-5 border-t border-white/5 flex items-center justify-between gap-4">
+                        @if($card['stat'])
+                            <div class="flex items-center gap-1.5">
+                                <span class="material-symbols-outlined text-secondary text-sm">trending_up</span>
+                                <span class="font-mono text-[9px] text-secondary font-bold leading-tight">{{ $card['stat'] }}</span>
+                            </div>
+                        @else
+                            <div></div>
+                        @endif
+                        <a href="/contact" class="inline-flex items-center gap-1 text-on-surface-variant hover:text-white transition-colors font-mono text-[10px] uppercase tracking-wider group/btn shrink-0">
+                            Learn more
+                            <span class="material-symbols-outlined text-sm group-hover/btn:translate-x-0.5 transition-transform">arrow_forward</span>
+                        </a>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+
+        <!-- Empty state -->
+        <div id="sector-empty" class="hidden text-center py-20">
+            <span class="material-symbols-outlined text-5xl text-on-surface-variant/30 mb-4 block">search_off</span>
+            <p class="font-mono text-sm text-on-surface-variant/50 uppercase tracking-widest">No sectors match the selected filter.</p>
+        </div>
+
+    </div>
+</section>
+
+<script>
+(function () {
+    const filterBtns  = document.querySelectorAll('.sector-filter-btn');
+    const cards       = document.querySelectorAll('.sector-card');
+    const countEl     = document.getElementById('sector-count');
+    const emptyEl     = document.getElementById('sector-empty');
+
+    function updateCount(visible) {
+        countEl.textContent = visible === cards.length
+            ? `Showing all ${visible} sectors`
+            : `Showing ${visible} of ${cards.length} sectors`;
+    }
+
+    function filterCards(active) {
+        let visible = 0;
+        cards.forEach(card => {
+            const match = active === 'all' || card.dataset.sector === active;
+            if (match) {
+                card.style.display = '';
+                // small stagger
+                setTimeout(() => {
+                    card.style.opacity  = '1';
+                    card.style.transform = 'translateY(0)';
+                }, visible * 40);
+                visible++;
+            } else {
+                card.style.opacity  = '0';
+                card.style.transform = 'translateY(12px)';
+                setTimeout(() => { card.style.display = 'none'; }, 200);
+            }
+        });
+        emptyEl.classList.toggle('hidden', visible > 0);
+        updateCount(visible);
+    }
+
+    // Initialise transitions on cards
+    cards.forEach(c => {
+        c.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
+    });
+
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            filterBtns.forEach(b => {
+                b.classList.remove('bg-secondary', 'text-white', 'border-secondary', 'shadow-lg', 'shadow-secondary/20', 'active');
+                b.classList.add('glass-card', 'text-on-surface-variant', 'border-white/10');
+            });
+            btn.classList.add('bg-secondary', 'text-white', 'border-secondary', 'shadow-lg', 'shadow-secondary/20', 'active');
+            btn.classList.remove('glass-card', 'text-on-surface-variant', 'border-white/10');
+            filterCards(btn.dataset.filter);
+        });
+    });
+
+    // Set initial count
+    updateCount(cards.length);
+})();
+</script>
+
+
+<!-- ══════════════════════════════════════════════
+     DELIVERY PROCESS
+══════════════════════════════════════════════ -->
+<section class="py-24 md:py-32 max-w-container-max mx-auto px-gutter">
+    <div class="mb-20" data-aos="fade-right">
+        <div class="inline-flex items-center gap-2 px-3 py-1 bg-secondary/15 border border-secondary/30 rounded-full mb-6">
+            <span class="font-mono text-xs text-on-surface uppercase tracking-widest">How We Work</span>
+        </div>
+        <h2 class="font-display text-4xl md:text-5xl font-extrabold text-white mb-4">Our Delivery Process</h2>
+        <p class="text-on-surface-variant max-w-xl text-base leading-relaxed">
+            A structured, milestone-driven process designed to keep your stakeholders informed and your engineers unblocked at every stage.
+        </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-10 relative">
+        <div class="hidden md:block absolute top-10 left-0 w-full h-[1px] bg-gradient-to-r from-white/0 via-secondary/20 to-white/0 pointer-events-none"></div>
+
+        @forelse($stepServices as $service)
+            <div class="relative group" data-aos="fade-up" data-aos-delay="{{ $loop->index * 80 }}">
+                <div class="w-20 h-20 rounded-full bg-[#0e0816] border border-white/10 flex items-center justify-center mb-8 relative z-10 group-hover:border-secondary/50 group-hover:scale-105 transition-all">
+                    <span class="text-secondary font-display font-extrabold text-xl">0{{ $service->step_number }}</span>
+                </div>
+                <h3 class="font-display text-xl font-extrabold text-white mb-3">{{ $service->title }}</h3>
+                <div class="text-on-surface-variant text-sm leading-relaxed">{!! $service->description !!}</div>
+            </div>
+        @empty
+            @php
+                $steps = [
+                    ['n' => 1, 'title' => 'Discovery & Scoping',     'desc' => 'We audit your data assets, map existing infrastructure, and define measurable success criteria with your technical and business leads before a line of code is written.'],
+                    ['n' => 2, 'title' => 'Prototype & Validate',    'desc' => 'A time-boxed sprint produces a working proof-of-concept against a representative data slice. We surface blockers and validate assumptions before they compound.'],
+                    ['n' => 3, 'title' => 'Production Engineering',  'desc' => 'Full-stack build-out with automated testing, CI/CD pipelines, and observability. We deliver architecture decision records and runbooks alongside every system.'],
+                    ['n' => 4, 'title' => 'Operate & Optimise',      'desc' => 'Post-launch, we monitor model performance, alert on data drift, and run quarterly optimisation cycles — so the system improves as your business evolves.'],
+                ];
+            @endphp
+            @foreach($steps as $i => $step)
+                <div class="relative group" data-aos="fade-up" data-aos-delay="{{ $i * 80 }}">
+                    <div class="w-20 h-20 rounded-full bg-[#0e0816] border border-white/10 flex items-center justify-center mb-8 relative z-10 group-hover:border-secondary/50 group-hover:scale-105 transition-all">
+                        <span class="text-secondary font-display font-extrabold text-xl">0{{ $step['n'] }}</span>
+                    </div>
+                    <h3 class="font-display text-xl font-extrabold text-white mb-3">{{ $step['title'] }}</h3>
+                    <p class="text-on-surface-variant text-sm leading-relaxed">{{ $step['desc'] }}</p>
+                </div>
+            @endforeach
+        @endforelse
+    </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════
+     ENGAGEMENT MODELS
+══════════════════════════════════════════════ -->
+<section class="py-24 md:py-32 bg-[#08050c] border-t border-white/5">
+    <div class="max-w-container-max mx-auto px-gutter">
+        <div class="text-center mb-16" data-aos="fade-up">
+            <div class="inline-flex items-center gap-2 px-3 py-1 bg-secondary/15 border border-secondary/30 rounded-full mb-6">
+                <span class="font-mono text-xs text-on-surface uppercase tracking-widest">Engagement Models</span>
+            </div>
+            <h2 class="font-display text-4xl md:text-5xl font-extrabold text-white mb-4">How engagements are structured</h2>
+            <p class="text-on-surface-variant max-w-xl mx-auto text-base leading-relaxed">
+                Three commercial models depending on your team's maturity, timeline, and the scope of work.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            @php
+                $engagements = [
+                    ['icon' => 'rocket_launch',          'title' => 'Accelerator Sprint',     'duration' => '6–10 weeks',       'highlight' => false,
+                     'ideal'    => 'Teams with a defined problem and clean data who need to validate an AI approach quickly.',
+                     'includes' => ['Problem framing & data audit', 'Baseline model + working prototype', 'Architecture decision record', 'Handover documentation for internal team']],
+
+                    ['icon' => 'precision_manufacturing', 'title' => 'Full-Build Programme',  'duration' => '3–9 months',       'highlight' => true,
+                     'ideal'    => 'Organisations building a net-new AI capability that needs to reach production.',
+                     'includes' => ['End-to-end ML platform build', 'Model development, testing & validation', 'Production deployment with CI/CD', '90-day post-launch support included']],
+
+                    ['icon' => 'support_agent',           'title' => 'Embedded Partnership',  'duration' => 'Ongoing retainer', 'highlight' => false,
+                     'ideal'    => 'Scaling teams that need senior AI engineers working inside existing product squads.',
+                     'includes' => ['Dedicated engineers in your sprints', 'Continuous model monitoring & tuning', 'On-demand architecture reviews', 'Quarterly roadmap alignment sessions']],
+                ];
+            @endphp
+            @foreach($engagements as $i => $e)
+                <div class="glass-card rounded-3xl p-8 flex flex-col justify-between relative {{ $e['highlight'] ? 'border-secondary/40' : '' }}"
+                     data-aos="fade-up" data-aos-delay="{{ $i * 100 }}">
+                    @if($e['highlight'])
+                        <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 bg-secondary text-white font-mono text-[9px] uppercase tracking-widest rounded-full whitespace-nowrap">
+                            Most Popular
+                        </div>
+                    @endif
+                    <div>
+                        <div class="w-12 h-12 rounded-xl {{ $e['highlight'] ? 'bg-secondary/20 border-secondary/40 text-secondary' : 'bg-white/5 border-white/10 text-on-surface-variant' }} border flex items-center justify-center mb-6">
+                            <span class="material-symbols-outlined text-2xl">{{ $e['icon'] }}</span>
+                        </div>
+                        <h3 class="font-display text-xl font-extrabold text-white mb-1">{{ $e['title'] }}</h3>
+                        <div class="font-mono text-[10px] text-secondary uppercase tracking-widest mb-4">{{ $e['duration'] }}</div>
+                        <p class="text-on-surface-variant text-sm leading-relaxed mb-6">{{ $e['ideal'] }}</p>
+                        <ul class="space-y-3">
+                            @foreach($e['includes'] as $item)
+                                <li class="flex items-start gap-3 text-sm text-on-surface">
+                                    <span class="material-symbols-outlined text-secondary text-base mt-0.5 shrink-0">check_circle</span>
+                                    {{ $item }}
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    <div class="mt-8 pt-6 border-t border-white/5">
+                        <a href="/contact"
+                           class="{{ $e['highlight'] ? 'btn-gradient shadow-lg shadow-secondary/20' : 'glass-card hover:bg-white/10' }} text-white font-bold px-6 py-3 rounded-xl text-sm inline-flex items-center gap-2 w-full justify-center transition-colors">
+                            Discuss This Model
+                            <span class="material-symbols-outlined text-base">arrow_forward</span>
+                        </a>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════
+     WHY AI-SOLUTIONS
+══════════════════════════════════════════════ -->
+<section class="py-24 md:py-32 max-w-container-max mx-auto px-gutter">
+    <div class="grid md:grid-cols-2 gap-20 items-center">
+        <div data-aos="fade-right">
+            <div class="inline-flex items-center gap-2 px-3 py-1 bg-secondary/15 border border-secondary/30 rounded-full mb-8">
+                <span class="font-mono text-xs text-on-surface uppercase tracking-widest">Why AI-Solutions</span>
+            </div>
+            <h2 class="font-display text-4xl md:text-5xl font-extrabold text-white mb-10 leading-tight">
+                What separates an AI project<br/>from an <span class="text-gradient-coral">AI product.</span>
+            </h2>
+
+            <div class="space-y-8">
+                @php
+                    $reasons = [
+                        ['icon' => 'schema',      'color' => 'text-secondary', 'title' => 'Systems thinking, not model-first',
+                         'desc' => 'Most AI failures are integration failures. We design data contracts, APIs, and fallback logic before touching a model architecture.'],
+                        ['icon' => 'monitoring',  'color' => 'text-accent',    'title' => 'Observability built in from day one',
+                         'desc' => 'Every deployment ships with structured logging, latency dashboards, and automated drift alerts. You always know how your models are performing.'],
+                        ['icon' => 'groups',      'color' => 'text-secondary', 'title' => 'Embedded, not outsourced',
+                         'desc' => 'Our engineers work inside your sprint cadence, attend standups, and write code in your repositories. Knowledge stays with your team after we leave.'],
+                        ['icon' => 'policy',      'color' => 'text-accent',    'title' => 'Responsible AI by default',
+                         'desc' => 'Bias audits, explainability reports, and EU AI Act readiness reviews are standard — not upsells. We help regulated industries operate AI defensibly.'],
+                    ];
+                @endphp
+                @foreach($reasons as $r)
+                    <div class="flex gap-6 group">
+                        <div class="w-12 h-12 shrink-0 bg-white/5 rounded-xl border border-white/10 flex items-center justify-center group-hover:border-secondary/30 transition-colors">
+                            <span class="material-symbols-outlined {{ $r['color'] }}">{{ $r['icon'] }}</span>
+                        </div>
+                        <div>
+                            <h4 class="font-display font-bold text-lg text-white mb-1">{{ $r['title'] }}</h4>
+                            <p class="text-on-surface-variant text-sm leading-relaxed">{{ $r['desc'] }}</p>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+
+        <!-- Stats grid -->
+        <div class="grid grid-cols-2 gap-5" data-aos="fade-left" data-aos-delay="150">
+            @php
+                $stats = [
+                    ['value' => '+31%',  'label' => 'Median operating margin improvement at 12 months post-launch',   'icon' => 'trending_up',   'color' => 'secondary'],
+                    ['value' => '6 wks', 'label' => 'Average time to compliance-ready AI governance framework',        'icon' => 'policy',        'color' => 'accent'],
+                    ['value' => '92%',   'label' => 'Of clients report production deployment within agreed timeline',   'icon' => 'task_alt',      'color' => 'secondary'],
+                    ['value' => '4×',    'label' => 'Faster model time-to-production vs. in-house team benchmarks',    'icon' => 'speed',         'color' => 'accent'],
+                ];
+            @endphp
+            @foreach($stats as $i => $s)
+                <div class="glass-card rounded-2xl p-7 flex flex-col gap-4 {{ $i === 1 ? 'translate-y-6' : ($i === 3 ? 'translate-y-6' : '') }} hover:border-{{ $s['color'] }}/40 transition-all group">
+                    <span class="material-symbols-outlined text-{{ $s['color'] }} text-2xl">{{ $s['icon'] }}</span>
+                    <div class="font-display text-3xl font-extrabold text-white">{{ $s['value'] }}</div>
+                    <p class="font-mono text-[10px] text-on-surface-variant uppercase tracking-wide leading-relaxed">{{ $s['label'] }}</p>
+                </div>
+            @endforeach
+        </div>
+    </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════
+     CTA
+══════════════════════════════════════════════ -->
+<section class="py-24 md:py-32 relative bg-[#05020c]/60 border-t border-white/5">
+    <div class="max-w-container-max mx-auto px-gutter">
+        <div class="glass-card rounded-[3rem] p-12 md:p-20 text-center relative overflow-hidden" data-aos="zoom-in">
+            <div class="absolute top-0 right-0 w-80 h-80 bg-glow-secondary opacity-25 -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+            <div class="absolute bottom-0 left-0 w-80 h-80 bg-glow-main opacity-20 translate-y-1/2 -translate-x-1/2 pointer-events-none"></div>
+
+            <div class="relative z-10 max-w-2xl mx-auto space-y-6">
+                <span class="inline-flex items-center gap-2 px-3 py-1 bg-secondary/15 border border-secondary/30 rounded-full font-mono text-xs text-on-surface uppercase tracking-widest">
+                    Get Started
+                </span>
+                <h2 class="font-display text-4xl md:text-6xl font-extrabold text-white leading-tight">
+                    Ready to move from<br/>pilot to production?
+                </h2>
+                <p class="font-body text-base md:text-lg text-on-surface-variant leading-relaxed">
+                    Most AI initiatives stall between prototype and deployment. We specialise in closing that gap. Talk to a solutions architect about your specific challenge — no pitch deck, just a technical conversation.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center pt-4">
+                    <a href="/contact" class="btn-gradient text-white font-bold px-10 py-4 rounded-xl text-base shadow-xl shadow-secondary/20 inline-flex items-center gap-2">
+                        Book a Free Architecture Review
+                        <span class="material-symbols-outlined text-base">arrow_forward</span>
+                    </a>
+                    <a href="/projects" class="glass-card text-white font-semibold px-10 py-4 rounded-xl text-base hover:bg-white/10 transition-colors inline-flex items-center gap-2">
+                        See Client Deployments
+                        <span class="material-symbols-outlined text-base">arrow_outward</span>
+                    </a>
+                </div>
+                <p class="font-mono text-xs text-on-surface-variant/60 pt-2">45-minute session with a senior engineer. No commitment required.</p>
             </div>
         </div>
     </div>
 </section>
+
 @endsection

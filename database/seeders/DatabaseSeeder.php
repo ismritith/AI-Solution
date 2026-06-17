@@ -14,6 +14,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        \Illuminate\Support\Facades\Schema::disableForeignKeyConstraints();
+
         $this->call([
             AdminUserSeeder::class,
             ServiceSeeder::class,
@@ -26,5 +28,7 @@ class DatabaseSeeder extends Seeder
             ProjectReviewSeeder::class,
             RegistrationSeeder::class,
         ]);
+
+        \Illuminate\Support\Facades\Schema::enableForeignKeyConstraints();
     }
 }

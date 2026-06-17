@@ -194,10 +194,23 @@
             </nav>
 
             <!-- Actions block -->
-            <div class="flex items-center gap-4">
-                <a href="/contact" class="inline-flex items-center justify-center font-body text-sm font-bold text-white btn-gradient px-6 py-2.5 rounded-xl">
+            <div class="flex items-center gap-2">
+                
+                <a href="/contact"
+                class="inline-flex items-center justify-center font-body text-sm font-bold text-white btn-gradient px-6 py-2.5 rounded-xl">
                     Get Started
                 </a>
+
+                <a href="/admin_login"
+                class="inline-flex items-center gap-2 font-body text-sm font-bold text-white glass-card px-6 py-2.5 rounded-xl hover:bg-white/10">
+                    
+                    <span class="w-8 h-8 rounded-full bg-secondary/20 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-base">account_circle</span>
+                    </span>
+
+                    Admin Dashboard
+                </a>
+
             </div>
         </div>
     </header>
@@ -227,8 +240,8 @@
                     Empowering modern organizations through fully autonomous agents, predictive pipelines, and secure enterprise intelligence.
                 </p>
                 <div class="flex gap-4">
-                    <a href="https://github.com" target="_blank" class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center hover:bg-secondary/20 hover:border-secondary/40 transition-all text-on-surface hover:text-white" aria-label="Terminal Source Link">
-                        <span class="material-symbols-outlined text-lg">terminal</span>
+                    <a href="https://github.com/ismritith/AI-Solution" target="_blank" class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center hover:bg-secondary/20 hover:border-secondary/40 transition-all text-on-surface hover:text-white" aria-label="Terminal Source Link">
+                        <span class="material-symbols-outlined text-lg">code</span>
                     </a>
                     <a href="/about" class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center hover:bg-secondary/20 hover:border-secondary/40 transition-all text-on-surface hover:text-white" aria-label="Groups Link">
                         <span class="material-symbols-outlined text-lg">groups</span>
@@ -270,15 +283,15 @@
         </div>
 
         <!-- Trademark bottom footer node -->
-        <div class="max-w-container-max mx-auto px-gutter py-8 border-t border-outline-variant flex flex-col sm:flex-row justify-between items-center gap-4 relative z-10">
-            <p class="font-body text-xs text-on-surface-variant">
-                &copy; {{ date('Y') }} AI-Solutions Inc. Empowering enterprise operations via autonomous orchestration.
+        <div class="max-w-container-max mx-auto px-gutter py-8 border-t border-outline-variant flex justify-center items-center relative z-10">
+            <p class="font-body text-xs text-on-surface-variant text-center">
+                 &copy; {{ date('Y') }} AI-Solutions Inc. Advancing Intelligence Through Innovation. | All rights reserved
             </p>
-            <div class="flex gap-6 text-xs font-mono text-on-surface-variant">
-                <span class="text-secondary font-bold">NEXUS v3.2</span>
-                <span>REGIONAL CORE: PACIFIC-1</span>
-            </div>
         </div>
+
+            <p class="font-body text-xs text-on-surface-variant text-center">
+                Developed by <a href="https://ismritith.com" target="_blank" class="text-secondary hover:text-white transition-colors">Ismritith</a> 
+            </p>
     </footer>
 
     <!-- AOS Animation Library JS -->

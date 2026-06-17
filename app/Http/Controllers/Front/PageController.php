@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use App\Models\BlogPost;
+use App\Models\ContactInquiry;
 use App\Models\Event;
 use App\Models\GalleryAsset;
 use App\Models\Project;
@@ -120,9 +121,9 @@ class PageController extends Controller
     public function event1(Request $request)
     {
         $id = $request->query('id');
-        $event = Event::find($id) ?? Event::first();
+        $event = $id ? Event::find($id) : null;
 
-        return view('Front.pages.event1', compact('event'));
+        return view('Front.pages.event-detail', compact('event'));
     }
 
     /**
@@ -140,6 +141,9 @@ class PageController extends Controller
     {
         return view('Front.pages.contact');
     }
+
+
+    
 
     /**
      * Render the Services index page.
@@ -170,14 +174,14 @@ class PageController extends Controller
     public function projects1(Request $request)
     {
         $id = $request->query('id');
-        $project = Project::find($id) ?? Project::first();
+        $project = $id ? Project::find($id) : null;
         
         $approvedReviews = [];
         if ($project) {
             $approvedReviews = $project->approvedReviews()->latest()->get();
         }
 
-        return view('Front.pages.projects1', compact('project', 'approvedReviews'));
+        return view('Front.pages.projects-detail', compact('project', 'approvedReviews'));
     }
 
     public function admin_login()
@@ -231,8 +235,18 @@ class PageController extends Controller
             'project_id' => 'required|exists:projects,id',
             'client_name' => 'required|string|max:255',
             'client_role' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'phone' => 'nullable|string|max:20',
             'rating' => 'required|integer|min:1|max:5',
-            'quote_text' => 'required|string',
+            'quote_text' => [
+                'required',
+                'string',
+                function ($attribute, $value, $fail) {
+                    if (str_word_count($value) > 200) {
+                        $fail('The review description must not exceed 200 words.');
+                    }
+                },
+            ],
         ]);
 
         $validated['status'] = 'pending';

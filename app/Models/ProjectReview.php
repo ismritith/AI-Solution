@@ -10,6 +10,8 @@ class ProjectReview extends Model
         'project_id',
         'client_name',
         'client_role',
+        'email',
+        'phone',
         'rating',
         'quote_text',
         'status',

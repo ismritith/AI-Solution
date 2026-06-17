@@ -41,38 +41,75 @@
         @endif
 
             <h2 class="font-display text-3xl font-extrabold text-white mb-8">Send a Transmission</h2>
-            <form action="{{ route('contact.submit') }}" method="POST" class="space-y-6">
-                @csrf
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="space-y-2">
-                        <label class="font-mono text-xs text-on-surface-variant uppercase tracking-wider block">Identity</label>
-                        <input name="name" class="w-full bg-[#05020c] border border-white/5 focus:border-secondary px-4 py-3 text-body text-sm outline-none transition-all rounded-xl text-white placeholder-on-surface-variant/40" placeholder="Your Name" type="text" value="{{ old('name') }}" required/>
-                    </div>
-                    <div class="space-y-2">
-                        <label class="font-mono text-xs text-on-surface-variant uppercase tracking-wider block">Interface (Email)</label>
-                        <input name="email" class="w-full bg-[#05020c] border border-white/5 focus:border-secondary px-4 py-3 text-body text-sm outline-none transition-all rounded-xl text-white placeholder-on-surface-variant/40" placeholder="Email Address" type="email" value="{{ old('email') }}" required/>
-                    </div>
-                </div>
-                
-                <div class="space-y-2">
-                    <label class="font-mono text-xs text-on-surface-variant uppercase tracking-wider block">Department</label>
-                    <select name="department" class="w-full bg-[#05020c] border border-white/5 focus:border-secondary px-4 py-3 text-body text-sm outline-none transition-all rounded-xl text-on-surface-variant appearance-none">
-                        <option {{ old('department') === 'General Inquiry' ? 'selected' : '' }}>General Inquiry</option>
-                        <option {{ old('department') === 'Technical Support' ? 'selected' : '' }}>Technical Support</option>
-                        <option {{ old('department') === 'Partnership Request' ? 'selected' : '' }}>Partnership Request</option>
-                        <option {{ old('department') === 'API Cloud Integration' ? 'selected' : '' }}>API Cloud Integration</option>
-                    </select>
-                </div>
-                
-                <div class="space-y-2">
-                    <label class="font-mono text-xs text-on-surface-variant uppercase tracking-wider block">Message Payload</label>
-                    <textarea name="message" class="w-full bg-[#05020c] border border-white/5 focus:border-secondary px-4 py-3 text-body text-sm outline-none transition-all rounded-xl text-white placeholder-on-surface-variant/40" placeholder="Detailed requirements or message..." rows="5" required>{{ old('message') }}</textarea>
-                </div>
-                
-                <button class="w-full btn-gradient py-4 rounded-xl font-display text-sm text-white font-bold shadow-lg shadow-secondary/15 transform active:scale-98" type="submit">
-                    Initiate Connection
-                </button>
-            </form>
+<form action="{{ route('contact.submit') }}" method="POST" class="space-y-6">
+    @csrf
+
+    {{-- Row 1: Name + Email --}}
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="space-y-2">
+            <label class="font-mono text-xs text-on-surface-variant uppercase tracking-wider block">Identity</label>
+            <input name="name" class="w-full bg-[#05020c] border border-white/5 focus:border-secondary px-4 py-3 text-body text-sm outline-none transition-all rounded-xl text-white placeholder-on-surface-variant/40" placeholder="Your Name" type="text" value="{{ old('name') }}" required/>
+        </div>
+        <div class="space-y-2">
+            <label class="font-mono text-xs text-on-surface-variant uppercase tracking-wider block">Interface (Email)</label>
+            <input name="email" class="w-full bg-[#05020c] border border-white/5 focus:border-secondary px-4 py-3 text-body text-sm outline-none transition-all rounded-xl text-white placeholder-on-surface-variant/40" placeholder="Email Address" type="email" value="{{ old('email') }}" required/>
+        </div>
+    </div>
+
+    {{-- Row 2: Phone + Company --}}
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="space-y-2">
+            <label class="font-mono text-xs text-on-surface-variant uppercase tracking-wider block">Phone Number</label>
+            <input name="phone" class="w-full bg-[#05020c] border border-white/5 focus:border-secondary px-4 py-3 text-body text-sm outline-none transition-all rounded-xl text-white placeholder-on-surface-variant/40" placeholder="+1 (555) 000-0000" type="tel" value="{{ old('phone') }}" required/>
+        </div>
+        <div class="space-y-2">
+            <label class="font-mono text-xs text-on-surface-variant uppercase tracking-wider block">Company Name</label>
+            <input name="company" class="w-full bg-[#05020c] border border-white/5 focus:border-secondary px-4 py-3 text-body text-sm outline-none transition-all rounded-xl text-white placeholder-on-surface-variant/40" placeholder="Your Company" type="text" value="{{ old('company') }}" required/>
+        </div>
+    </div>
+
+    {{-- Row 3: Job Title + Country --}}
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="space-y-2">
+            <label class="font-mono text-xs text-on-surface-variant uppercase tracking-wider block">Job Title</label>
+            <input name="job_title" class="w-full bg-[#05020c] border border-white/5 focus:border-secondary px-4 py-3 text-body text-sm outline-none transition-all rounded-xl text-white placeholder-on-surface-variant/40" placeholder="e.g. CTO, Software Engineer" type="text" value="{{ old('job_title') }}" required/>
+        </div>
+        <div class="space-y-2">
+            <label class="font-mono text-xs text-on-surface-variant uppercase tracking-wider block">Country</label>
+            <select name="country" class="w-full bg-[#05020c] border border-white/5 focus:border-secondary px-4 py-3 text-body text-sm outline-none transition-all rounded-xl text-on-surface-variant appearance-none" required>
+                <option value="" disabled {{ old('country') ? '' : 'selected' }}>Select your country</option>
+                @php
+                    $countries = ['Afghanistan','Albania','Algeria','Andorra','Angola','Argentina','Armenia','Australia','Austria','Azerbaijan','Bahrain','Bangladesh','Belarus','Belgium','Belize','Bolivia','Brazil','Cambodia','Canada','Chile','China','Colombia','Croatia','Cuba','Czech Republic','Denmark','Ecuador','Egypt','Estonia','Ethiopia','Finland','France','Germany','Ghana','Greece','Guatemala','Hungary','India','Indonesia','Iran','Iraq','Ireland','Israel','Italy','Jamaica','Japan','Jordan','Kazakhstan','Kenya','Kuwait','Latvia','Lebanon','Lithuania','Luxembourg','Malaysia','Mexico','Morocco','Myanmar','Nepal','Netherlands','New Zealand','Nigeria','Norway','Pakistan','Panama','Peru','Philippines','Poland','Portugal','Qatar','Romania','Russia','Saudi Arabia','Singapore','South Africa','South Korea','Spain','Sri Lanka','Sweden','Switzerland','Taiwan','Thailand','Turkey','Ukraine','United Arab Emirates','United Kingdom','United States','Venezuela','Vietnam','Other'];
+                @endphp
+                @foreach($countries as $country)
+                    <option value="{{ $country }}" {{ old('country') === $country ? 'selected' : '' }}>{{ $country }}</option>
+                @endforeach
+            </select>
+        </div>
+    </div>
+
+    {{-- Department --}}
+    <div class="space-y-2">
+        <label class="font-mono text-xs text-on-surface-variant uppercase tracking-wider block">Department</label>
+        <select name="department" class="w-full bg-[#05020c] border border-white/5 focus:border-secondary px-4 py-3 text-body text-sm outline-none transition-all rounded-xl text-on-surface-variant appearance-none">
+            <option {{ old('department') === 'General Inquiry' ? 'selected' : '' }}>General Inquiry</option>
+            <option {{ old('department') === 'Technical Support' ? 'selected' : '' }}>Technical Support</option>
+            <option {{ old('department') === 'Partnership Request' ? 'selected' : '' }}>Partnership Request</option>
+            <option {{ old('department') === 'API Cloud Integration' ? 'selected' : '' }}>API Cloud Integration</option>
+        </select>
+    </div>
+
+    {{-- Job Details --}}
+    <div class="space-y-2">
+        <label class="font-mono text-xs text-on-surface-variant uppercase tracking-wider block">Job Details / Message Payload</label>
+        <textarea name="message" class="w-full bg-[#05020c] border border-white/5 focus:border-secondary px-4 py-3 text-body text-sm outline-none transition-all rounded-xl text-white placeholder-on-surface-variant/40" placeholder="Describe your requirements, project scope, or message in detail..." rows="5" required>{{ old('message') }}</textarea>
+    </div>
+
+    <button class="w-full btn-gradient py-4 rounded-xl font-display text-sm text-white font-bold shadow-lg shadow-secondary/15 transform active:scale-98" type="submit">
+        Initiate Connection
+    </button>
+</form>
+            
         </div>
         
         <!-- Contact Info (Right Side Column) -->

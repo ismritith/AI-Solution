@@ -46,13 +46,13 @@
                             <span class="material-symbols-outlined text-base">event</span>
                             {{ strtoupper($featuredEvent->status_badge) }}
                         </div>
-                        <a href="/register_form?id={{ $featuredEvent->id }}" class="inline-flex items-center justify-center font-body text-sm font-bold text-white btn-gradient px-6 py-2.5 rounded-xl">
+                        <a href="/event1?id={{ $featuredEvent->id }}#register" class="inline-flex items-center justify-center font-body text-sm font-bold text-white btn-gradient px-6 py-2.5 rounded-xl relative z-50">
                             Register Now
                         </a>
                     </div>
                     
                     <h2 class="font-display text-3xl md:text-4xl font-extrabold text-white leading-tight hover:underline">
-                        <a href="/event1?id={{ $featuredEvent->id }}">{{ $featuredEvent->title }}</a>
+                        <a href="/event1?id={{ $featuredEvent->id }}" class="relative z-50">{{ $featuredEvent->title }}</a>
                     </h2>
                     
                     <div class="font-body text-base text-on-surface-variant max-w-3xl leading-relaxed">
@@ -77,9 +77,6 @@
                 
                 <div class="mt-10 pt-6 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center gap-4 relative z-10">
                     <div class="font-mono text-sm text-on-surface-variant">Ticket Tier Pricing: <strong class="text-white">{{ $featuredEvent->ticket_price }}</strong></div>
-                    <a href="/event1?id={{ $featuredEvent->id }}" class="btn-gradient text-white font-bold px-8 py-3.5 rounded-xl text-sm shadow-md shadow-secondary/15 flex items-center gap-1.5">
-                        Reserve Pass <span class="material-symbols-outlined text-sm">arrow_forward</span>
-                    </a>
                 </div>
             </div>
         @else
@@ -101,7 +98,7 @@
                     </div>
                     
                     <h3 class="font-display text-2xl font-extrabold text-white hover:underline">
-                        <a href="/event1?id={{ $event->id }}">{{ $event->title }}</a>
+                        <a href="/event1?id={{ $event->id }}" class="relative z-50">{{ $event->title }}</a>
                     </h3>
                     
                     <div class="font-body text-sm text-on-surface-variant leading-relaxed line-clamp-3">
@@ -122,8 +119,8 @@
                 
                 <div class="mt-8 pt-6 border-t border-white/5 flex justify-between items-center">
                     <span class="font-mono text-xs text-on-surface-variant">{{ $event->capacity }}</span>
-                    <a href="/event1?id={{ $event->id }}" class="btn-gradient text-white px-5 py-2.5 rounded-xl text-xs font-bold shadow-md shadow-secondary/10 flex items-center gap-1">
-                        Register Node <span class="material-symbols-outlined text-xs">arrow_forward</span>
+                    <a href="/event1?id={{ $event->id }}#register" class="btn-gradient text-white px-5 py-2.5 rounded-xl text-xs font-bold shadow-md shadow-secondary/10 flex items-center gap-1 relative z-50">
+                        Register Now <span class="material-symbols-outlined text-xs">arrow_forward</span>
                     </a>
                 </div>
             </div>

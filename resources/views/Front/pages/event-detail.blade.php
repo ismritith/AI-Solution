@@ -200,8 +200,18 @@
                 <h3 class="font-display text-2xl md:text-3xl font-extrabold text-white mb-2">Reserve Attendance Pass</h3>
                 <p class="text-on-surface-variant text-sm mb-6">Complete the registration protocol for <span class="text-secondary font-semibold">{{ $event->title }}</span></p>
 
+                                @if($errors->any())
+                    <div class="bg-error/10 border border-error/30 rounded-xl p-4 mb-6 text-error text-sm">
+                        <ul class="list-disc pl-5 space-y-1">
+                            @foreach($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 <form action="{{ route('event.register') }}" method="POST" class="space-y-6">
                     @csrf
+                    <input type="hidden" name="event_id" value="{{ $event->id }}">
                     <input type="hidden" name="event_name" value="{{ $event->title }}">
 
                     <!-- Registration Type -->
@@ -281,7 +291,9 @@
         const modal = document.getElementById('registrationModal');
         modal.classList.remove('hidden');
         document.body.classList.add('overflow-hidden');
-        generatePublicMemberRows(3);
+        
+        const checkedRadio = document.querySelector('input[name="registration_type"]:checked');
+        toggleRegType(checkedRadio ? checkedRadio.value : 'individual');
     }
 
     function closeRegistrationModal() {
@@ -294,15 +306,31 @@
         const individualFields = document.getElementById('individualFields');
         const teamFields = document.getElementById('teamFields');
         const emailLabel = document.getElementById('emailInputLabel');
+        
+        const fullNameInput = individualFields.querySelector('input[name="full_name"]');
+        const teamNameInput = teamFields.querySelector('input[name="team_name"]');
 
         if (type === 'individual') {
             individualFields.classList.remove('hidden');
             teamFields.classList.add('hidden');
             emailLabel.textContent = 'Contact Email';
+            
+            fullNameInput.required = true;
+            teamNameInput.required = false;
+            teamNameInput.value = '';
+            
+            document.getElementById('publicMemberRepeater').innerHTML = '';
         } else {
             individualFields.classList.add('hidden');
             teamFields.classList.remove('hidden');
             emailLabel.textContent = 'Team Lead Email';
+            
+            fullNameInput.required = false;
+            fullNameInput.value = '';
+            teamNameInput.required = true;
+            
+            const teamSizeInput = document.querySelector('input[name="team_size"]');
+            generatePublicMemberRows(teamSizeInput ? teamSizeInput.value : 3);
         }
     }
 
@@ -319,5 +347,11 @@
             container.appendChild(div);
         }
     }
+
+        document.addEventListener('DOMContentLoaded', function() {
+        if(window.location.hash === '#register' || {{ $errors->any() ? 'true' : 'false' }}) {
+            openRegistrationModal();
+        }
+    });
 </script>
 @endsection

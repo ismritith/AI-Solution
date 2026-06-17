@@ -30,12 +30,35 @@
     </div>
 </section>
 
+@php
+    // Maps known gallery category labels (case-insensitive) to a Material Symbols icon,
+    // so pills feel purpose-built rather than generic. Unrecognised categories fall back
+    // to a neutral "label" icon, so this never breaks when new categories are added in the admin panel.
+    $categoryIconMap = [
+        'events' => 'event', 'event' => 'event',
+        'projects' => 'rocket_launch', 'project' => 'rocket_launch',
+        'team' => 'groups', 'teams' => 'groups', 'our team' => 'groups',
+        'workshops' => 'school', 'workshop' => 'school',
+        'office' => 'apartment', 'office culture' => 'apartment',
+        'awards' => 'trophy', 'award' => 'trophy', 'awards & recognition' => 'trophy',
+        'conference' => 'mic', 'conferences' => 'mic',
+        'product' => 'inventory_2', 'products' => 'inventory_2',
+        'product launch' => 'rocket_launch', 'product launches' => 'rocket_launch',
+        'demo' => 'play_circle', 'demos' => 'play_circle', 'product demos' => 'play_circle',
+        'partnership' => 'handshake', 'partnerships' => 'handshake',
+        'community' => 'diversity_3',
+    ];
+    $resolveCategoryIcon = function ($cat) use ($categoryIconMap) {
+        return $categoryIconMap[strtolower(trim($cat))] ?? 'label';
+    };
+@endphp
+
 <!-- Images Section -->
 <section class="py-12 max-w-container-max mx-auto px-gutter">
     <div class="flex items-center gap-6 mb-8" data-aos="fade-right">
         <div>
             <h2 class="font-display text-3xl font-extrabold text-white">Neural Image Gallery</h2>
-            <p class="text-xs text-on-surface-variant mt-1">Curated high-resolution generative meshes and system architectures</p>
+            <p class="text-xs text-on-surface-variant mt-1">Moments from our events, project deliveries, and the team building the future of work</p>
         </div>
         <div class="h-px bg-white/10 flex-grow"></div>
     </div>
@@ -44,35 +67,49 @@
     @if($imageCategories->isNotEmpty())
         <div class="flex flex-wrap gap-2 mb-8">
             <a href="{{ request()->fullUrlWithQuery(['img_cat' => null, 'img_page' => null]) }}"
-               class="px-4 py-1.5 rounded-full text-xs font-mono font-bold uppercase tracking-widest transition-all border
+               class="flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-mono font-bold uppercase tracking-widest transition-all border
                       {{ !$imgCatFilter ? 'bg-secondary text-white border-secondary shadow-lg shadow-secondary/30' : 'border-white/10 text-on-surface-variant hover:border-secondary/40 hover:text-white' }}">
+                <span class="material-symbols-outlined text-[14px]">apps</span>
                 All
             </a>
             @foreach($imageCategories as $cat)
                 <a href="{{ request()->fullUrlWithQuery(['img_cat' => $cat, 'img_page' => null]) }}"
-                   class="px-4 py-1.5 rounded-full text-xs font-mono font-bold uppercase tracking-widest transition-all border
+                   class="flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-mono font-bold uppercase tracking-widest transition-all border
                           {{ $imgCatFilter === $cat ? 'bg-secondary text-white border-secondary shadow-lg shadow-secondary/30' : 'border-white/10 text-on-surface-variant hover:border-secondary/40 hover:text-white' }}">
+                    <span class="material-symbols-outlined text-[14px]">{{ $resolveCategoryIcon($cat) }}</span>
                     {{ $cat }}
                 </a>
             @endforeach
         </div>
     @endif
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         @forelse($images as $image)
             @php
                 $imageUrl = $image->upload_method === 'upload' ? asset('storage/' . $image->file_path) : $image->external_url;
             @endphp
-            <div class="relative group overflow-hidden rounded-2xl glass-card h-80 flex flex-col justify-end" data-aos="fade-up">
+            <div class="relative group overflow-hidden rounded-2xl glass-card h-[26rem] md:h-[30rem] flex flex-col justify-end cursor-pointer"
+                 data-aos="fade-up"
+                 onclick="openImageModal('{{ $imageUrl }}', '{{ addslashes($image->title) }}', '{{ addslashes(strip_tags($image->description)) }}')">
                 <div class="absolute inset-0 z-0 overflow-hidden">
                     <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="{{ $imageUrl }}" alt="{{ $image->title }}"/>
                     <div class="absolute inset-0 bg-gradient-to-t from-primary via-primary/40 to-transparent pointer-events-none"></div>
                 </div>
-                
-                <div class="relative z-10 p-6 space-y-1 pointer-events-none">
-                    <span class="font-mono text-[10px] text-secondary uppercase font-bold tracking-widest">{{ $image->category }}</span>
-                    <h4 class="text-white font-display font-bold text-lg">{{ $image->title }}</h4>
-                    <div class="text-[11px] text-on-surface-variant leading-relaxed line-clamp-2 mt-1">
+
+                <!-- Zoom Overlay -->
+                <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                    <div class="w-14 h-14 rounded-full bg-secondary/20 border border-secondary/40 flex items-center justify-center text-secondary group-hover:bg-secondary group-hover:text-white group-hover:shadow-[0_0_20px_rgba(165,16,180,0.6)] transition-all duration-300">
+                        <span class="material-symbols-outlined text-2xl leading-none">zoom_in</span>
+                    </div>
+                </div>
+
+                <div class="relative z-10 p-7 space-y-1.5 pointer-events-none">
+                    <span class="font-mono text-[10px] text-secondary uppercase font-bold tracking-widest flex items-center gap-1.5">
+                        <span class="material-symbols-outlined text-[13px]">{{ $resolveCategoryIcon($image->category) }}</span>
+                        {{ $image->category }}
+                    </span>
+                    <h4 class="text-white font-display font-bold text-xl">{{ $image->title }}</h4>
+                    <div class="text-xs text-on-surface-variant leading-relaxed line-clamp-2 mt-1">
                         {!! strip_tags($image->description) !!}
                     </div>
                 </div>
@@ -206,7 +243,7 @@
     @endif
 </section>
 
-<!-- CTA Waitlist early access Section -->
+<!-- CTA Waitlist early access Section — last block of page content, so it renders directly above the shared footer in Front.layouts.app -->
 <section class="py-20 max-w-container-max mx-auto px-gutter">
     <div class="glass-card rounded-[40px] p-12 text-center relative overflow-hidden" data-aos="zoom-in">
         <div class="absolute -bottom-20 left-1/2 -translate-x-1/2 w-96 h-96 bg-glow-secondary opacity-40 pointer-events-none"></div>
@@ -229,6 +266,25 @@
     </div>
 </section>
 
+<!-- Glassmorphic Image Lightbox Modal -->
+<div id="imageModal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-[#05020c]/90 backdrop-blur-md p-4 transition-all duration-300 opacity-0">
+    <div class="absolute inset-0" onclick="closeImageModal()"></div>
+    <div class="relative w-full max-w-4xl glass-card rounded-3xl overflow-hidden border border-white/10 z-10 transform scale-95 transition-all duration-300">
+        <!-- Header -->
+        <div class="flex items-center justify-between p-4 bg-white/5 border-b border-white/5">
+            <h4 id="imageModalTitle" class="text-white font-display font-bold text-lg">Gallery Asset</h4>
+            <button onclick="closeImageModal()" class="text-on-surface-variant hover:text-white transition-colors flex items-center justify-center w-8 h-8 rounded-full bg-white/5 hover:bg-white/10">
+                <span class="material-symbols-outlined text-xl">close</span>
+            </button>
+        </div>
+        <!-- Image container -->
+        <div class="relative w-full max-h-[65vh] bg-black flex items-center justify-center overflow-hidden">
+            <img id="imageModalImg" class="w-full h-full object-contain" src="" alt=""/>
+        </div>
+        <p id="imageModalDesc" class="text-on-surface-variant text-sm leading-relaxed p-5"></p>
+    </div>
+</div>
+
 <!-- Glassmorphic Video Lightbox Modal -->
 <div id="videoModal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-[#05020c]/90 backdrop-blur-md p-4 transition-all duration-300 opacity-0">
     <div class="absolute inset-0" onclick="closeVideoModal()"></div>
@@ -250,6 +306,39 @@
 
 @section('scripts')
 <script>
+    function openImageModal(url, title, description) {
+        const modal = document.getElementById('imageModal');
+        const modalTitle = document.getElementById('imageModalTitle');
+        const modalDesc = document.getElementById('imageModalDesc');
+        const img = document.getElementById('imageModalImg');
+
+        modalTitle.textContent = title || 'Gallery Asset';
+        modalDesc.textContent = description || '';
+        img.src = url;
+        img.alt = title || 'Gallery Asset';
+
+        modal.classList.remove('hidden');
+        setTimeout(() => {
+            modal.classList.add('opacity-100');
+            modal.querySelector('.transform').classList.remove('scale-95');
+            modal.querySelector('.transform').classList.add('scale-100');
+        }, 10);
+    }
+
+    function closeImageModal() {
+        const modal = document.getElementById('imageModal');
+        const img = document.getElementById('imageModalImg');
+
+        modal.classList.remove('opacity-100');
+        modal.querySelector('.transform').classList.add('scale-95');
+        modal.querySelector('.transform').classList.remove('scale-100');
+
+        setTimeout(() => {
+            modal.classList.add('hidden');
+            img.src = '';
+        }, 300);
+    }
+
     function openVideoModal(url, title) {
         const modal = document.getElementById('videoModal');
         const modalTitle = document.getElementById('videoModalTitle');

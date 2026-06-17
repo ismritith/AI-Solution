@@ -28,4 +28,9 @@ class Event extends Model
         'agenda' => 'array',
         'speakers' => 'array',
     ];
+
+    public function registrations()
+    {
+        return $this->hasMany(Registration::class);
+    }
 }

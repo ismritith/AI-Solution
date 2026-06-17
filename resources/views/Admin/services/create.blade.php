@@ -93,7 +93,7 @@
         });
 
         // Sync Quill HTML with hidden input on submit
-        const form = document.querySelector('form');
+        const form = document.querySelector('form:not(#logout-form)');
         form.onsubmit = function() {
             const descInput = document.getElementById('description_input');
             descInput.value = quill.root.innerHTML;

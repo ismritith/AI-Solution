@@ -25,6 +25,7 @@
                     <th class="py-4 px-4">Project</th>
                     <th class="py-4 px-4">Client</th>
                     <th class="py-4 px-4">Role</th>
+                    <th class="py-4 px-4">Contact</th>
                     <th class="py-4 px-4">Rating</th>
                     <th class="py-4 px-4">Status</th>
                     <th class="py-4 px-4">Review Text</th>
@@ -48,6 +49,10 @@
                         </td>
                         <td class="py-4 px-4 text-on-surface-variant text-xs">
                             {{ $review->client_role }}
+                        </td>
+                        <td class="py-4 px-4 text-on-surface-variant text-xs">
+                            <div class="truncate max-w-[120px]" title="{{ $review->email }}">{{ $review->email ?? 'N/A' }}</div>
+                            <div class="truncate max-w-[120px]" title="{{ $review->phone }}">{{ $review->phone }}</div>
                         </td>
                         <td class="py-4 px-4 text-xs font-label-mono text-amber-400">
                             {{ str_repeat('★', $review->rating) }}
@@ -104,7 +109,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="7" class="py-8 px-4 text-center text-on-surface-variant italic">
+                        <td colspan="8" class="py-8 px-4 text-center text-on-surface-variant italic">
                             No project reviews registered on the local net.
                         </td>
                     </tr>
