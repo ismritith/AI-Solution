@@ -37,7 +37,7 @@
         
         <!-- Featured Event (first item on current page) -->
         @if($featuredEvent)
-            <div class="glass-card rounded-3xl p-8 md:p-10 flex flex-col justify-between group border-secondary/20 hover:border-secondary/50 relative overflow-hidden md:col-span-2" data-aos="fade-up">
+            <a href="/event1?id={{ $featuredEvent->id }}" class="glass-card rounded-3xl p-8 md:p-10 flex flex-col justify-between group border-secondary/20 hover:border-secondary/50 relative overflow-hidden md:col-span-2 hover:no-underline" data-aos="fade-up">
                 <div class="absolute -top-24 -left-24 w-64 h-64 bg-secondary/10 rounded-full filter blur-3xl pointer-events-none"></div>
                 
                 <div class="space-y-6 relative z-10">
@@ -46,13 +46,13 @@
                             <span class="material-symbols-outlined text-base">event</span>
                             {{ strtoupper($featuredEvent->status_badge) }}
                         </div>
-                        <a href="/event1?id={{ $featuredEvent->id }}#register" class="inline-flex items-center justify-center font-body text-sm font-bold text-white btn-gradient px-6 py-2.5 rounded-xl relative z-50">
+                        <span class="inline-flex items-center justify-center font-body text-sm font-bold text-white btn-gradient px-6 py-2.5 rounded-xl">
                             Register Now
-                        </a>
+                        </span>
                     </div>
                     
-                    <h2 class="font-display text-3xl md:text-4xl font-extrabold text-white leading-tight hover:underline">
-                        <a href="/event1?id={{ $featuredEvent->id }}" class="relative z-50">{{ $featuredEvent->title }}</a>
+                    <h2 class="font-display text-3xl md:text-4xl font-extrabold text-white leading-tight">
+                        {{ $featuredEvent->title }}
                     </h2>
                     
                     <div class="font-body text-base text-on-surface-variant max-w-3xl leading-relaxed">
@@ -78,7 +78,7 @@
                 <div class="mt-10 pt-6 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center gap-4 relative z-10">
                     <div class="font-mono text-sm text-on-surface-variant">Ticket Tier Pricing: <strong class="text-white">{{ $featuredEvent->ticket_price }}</strong></div>
                 </div>
-            </div>
+            </a>
         @else
             <div class="md:col-span-2 glass-card rounded-3xl p-10 text-center text-on-surface-variant italic">
                 No events currently scheduled.
@@ -87,7 +87,7 @@
         
         <!-- Remaining Events Grid -->
         @foreach($remainingEvents as $event)
-            <div class="glass-card rounded-3xl p-8 flex flex-col justify-between group border-accent/20 hover:border-accent/50" data-aos="fade-up">
+            <a href="/event1?id={{ $event->id }}" class="glass-card rounded-3xl p-8 flex flex-col justify-between group border-accent/20 hover:border-accent/50 hover:no-underline" data-aos="fade-up">
                 <div class="space-y-6">
                     <div class="flex items-center justify-between gap-4">
                         <div class="flex items-center gap-2 text-accent font-mono text-xs font-bold">
@@ -97,8 +97,8 @@
                         <span class="px-2.5 py-0.5 bg-accent/20 text-accent font-mono text-[10px] uppercase rounded-full font-bold">{{ $event->ticket_price }}</span>
                     </div>
                     
-                    <h3 class="font-display text-2xl font-extrabold text-white hover:underline">
-                        <a href="/event1?id={{ $event->id }}" class="relative z-50">{{ $event->title }}</a>
+                    <h3 class="font-display text-2xl font-extrabold text-white">
+                        {{ $event->title }}
                     </h3>
                     
                     <div class="font-body text-sm text-on-surface-variant leading-relaxed line-clamp-3">
@@ -119,11 +119,11 @@
                 
                 <div class="mt-8 pt-6 border-t border-white/5 flex justify-between items-center">
                     <span class="font-mono text-xs text-on-surface-variant">{{ $event->capacity }}</span>
-                    <a href="/event1?id={{ $event->id }}#register" class="btn-gradient text-white px-5 py-2.5 rounded-xl text-xs font-bold shadow-md shadow-secondary/10 flex items-center gap-1 relative z-50">
+                    <span class="btn-gradient text-white px-5 py-2.5 rounded-xl text-xs font-bold shadow-md shadow-secondary/10 flex items-center gap-1">
                         Register Now <span class="material-symbols-outlined text-xs">arrow_forward</span>
-                    </a>
+                    </span>
                 </div>
-            </div>
+            </a>
         @endforeach
         
     </div>

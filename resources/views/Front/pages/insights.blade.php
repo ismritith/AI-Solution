@@ -32,7 +32,7 @@
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-12">
             <!-- Main Featured Post (Left) -->
             @if ($featuredPost)
-                <article class="lg:col-span-8 group cursor-pointer" data-aos="fade-right">
+                <a href="/insights1?id={{ $featuredPost->id }}" class="lg:col-span-8 group cursor-pointer hover:no-underline" data-aos="fade-right">
                     <div class="glass-card rounded-3xl h-full flex flex-col p-5 space-y-6">
                         <div class="relative rounded-2xl overflow-hidden aspect-[16/9]">
                             <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-103 grayscale group-hover:grayscale-0"
@@ -50,8 +50,7 @@
                             <div>
                                 <h2
                                     class="font-display text-2xl md:text-3xl font-extrabold text-white group-hover:text-secondary transition-colors leading-tight">
-                                    <a href="/insights1?id={{ $featuredPost->id }}"
-                                        class="hover:underline">{{ $featuredPost->title }}</a>
+                                    {{ $featuredPost->title }}
                                 </h2>
                                 <p class="text-on-surface-variant font-body text-sm leading-relaxed mt-3">
                                     {{ $featuredPost->excerpt }}
@@ -77,7 +76,7 @@
                             </div>
                         </div>
                     </div>
-                </article>
+                </a>
             @else
                 <div class="lg:col-span-8 glass-card rounded-3xl p-8 flex items-center justify-center">
                     <p class="text-on-surface-variant italic">No insights published yet.</p>
@@ -87,13 +86,13 @@
             <!-- Side Bento Stack (Right) -->
             <div class="lg:col-span-4 flex flex-col gap-8" data-aos="fade-left" data-aos-delay="200">
                 @forelse($remainingPosts->take(2) as $sidePost)
-                    <article class="glass-card rounded-3xl p-8 group cursor-pointer flex flex-col justify-between h-full">
+                    <a href="/insights1?id={{ $sidePost->id }}" class="glass-card rounded-3xl p-8 group cursor-pointer flex flex-col justify-between h-full hover:no-underline">
                         <div class="space-y-4">
                             <span
                                 class="bg-accent/15 border border-accent/30 text-accent font-mono text-[10px] px-2.5 py-0.5 rounded-full font-bold uppercase inline-block">{{ $sidePost->category }}</span>
                             <h3
                                 class="font-display text-xl font-bold text-white leading-snug group-hover:text-secondary transition-colors">
-                                <a href="/insights1?id={{ $sidePost->id }}">{{ $sidePost->title }}</a>
+                                {{ $sidePost->title }}
                             </h3>
                             <p class="text-on-surface-variant font-body text-xs leading-relaxed line-clamp-3">
                                 {{ $sidePost->excerpt }}
@@ -102,12 +101,12 @@
                         <div class="flex items-center justify-between pt-6 border-t border-white/5 mt-6">
                             <span
                                 class="font-mono text-[10px] text-on-surface-variant uppercase tracking-widest font-bold">{{ $sidePost->published_at ? $sidePost->published_at->format('M d, Y') : '' }}</span>
-                            <a href="/insights1?id={{ $sidePost->id }}"
+                            <span
                                 class="material-symbols-outlined text-secondary group-hover:translate-x-1 transition-transform">
                                 arrow_forward
-                            </a>
+                            </span>
                         </div>
-                    </article>
+                    </a>
                 @empty
                     <div class="glass-card rounded-3xl p-8 flex items-center justify-center h-full">
                         <p class="text-on-surface-variant italic text-xs">No additional posts scheduled.</p>
@@ -120,8 +119,8 @@
         @if ($remainingPosts->count() > 2)
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 @foreach ($remainingPosts->skip(2) as $post)
-                    <article
-                        class="glass-card rounded-3xl overflow-hidden group cursor-pointer flex flex-col justify-between"
+                    <a href="/insights1?id={{ $post->id }}"
+                        class="glass-card rounded-3xl overflow-hidden group cursor-pointer flex flex-col justify-between hover:no-underline"
                         data-aos="fade-up">
                         <div>
                             <div class="aspect-video relative overflow-hidden">
@@ -137,7 +136,7 @@
                                 </div>
                                 <h4
                                     class="font-display text-xl font-bold text-white group-hover:text-secondary transition-colors line-clamp-2">
-                                    <a href="/insights1?id={{ $post->id }}">{{ $post->title }}</a>
+                                    {{ $post->title }}
                                 </h4>
                                 <p class="text-on-surface-variant font-body text-xs leading-relaxed line-clamp-3">
                                     {{ $post->excerpt }}
@@ -145,12 +144,11 @@
                             </div>
                         </div>
                         <div class="px-8 pb-8 pt-2">
-                            <a href="/insights1?id={{ $post->id }}"
-                                class="flex items-center gap-2 text-secondary font-body text-xs font-bold hover:text-white transition-colors">
+                            <span class="flex items-center gap-2 text-secondary font-body text-xs font-bold group-hover:text-white transition-colors">
                                 Read Article <span class="material-symbols-outlined text-sm">arrow_forward</span>
-                            </a>
+                            </span>
                         </div>
-                    </article>
+                    </a>
                 @endforeach
             </div>
         @endif

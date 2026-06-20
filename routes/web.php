@@ -24,6 +24,7 @@ Route::get('/events', [PageController::class, 'events'])->name('events');
 Route::get('/event1', [PageController::class, 'event1'])->name('events.detail');
 Route::get('/contact', [PageController::class, 'contact'])->name('contact');
 Route::get('/services', [PageController::class, 'services'])->name('services');
+Route::get('/service-details', [PageController::class, 'serviceDetail'])->name('services.detail');
 Route::get('/projects', [PageController::class, 'projects'])->name('projects');
 Route::get('/projects1', [PageController::class, 'projects1'])->name('projects.detail');
 

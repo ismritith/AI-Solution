@@ -14,17 +14,29 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-                <label class="block text-xs font-label-mono uppercase tracking-widest text-on-surface-variant mb-2">Category Classification</label>
-                <select name="category" id="category" required class="w-full bg-surface-container border border-white/10 rounded-xl px-4 py-2.5 text-sm text-on-surface focus:ring-primary focus:border-primary focus:ring-1">
-                    <option value="infrastructure">Infrastructure Layer</option>
-                    <option value="vertical">Industry Vertical Solution</option>
-                    <option value="step">Step-by-Step Methodology</option>
-                </select>
-            </div>
+                <label class="block text-xs font-label-mono uppercase tracking-widest text-on-surface-variant mb-2">Service Category (Filter Tag)</label>
+                    <select name="service_category" class="w-full bg-surface-container border border-white/10 rounded-xl px-4 py-2.5 text-sm text-on-surface focus:ring-primary focus:border-primary focus:ring-1">
+                        <option value="">— None (used for Methodology steps) —</option>
+                        <option value="AI Solutions">AI Solutions</option>
+                        <option value="Machine Learning">Machine Learning</option>
+                        <option value="Data Analytics">Data Analytics</option>
+                        <option value="NLP">NLP</option>
+                        <option value="Computer Vision">Computer Vision</option>
+                        <option value="Automation">Automation</option>
+                        <option value="Consulting">Consulting</option>
+                    </select>
+                </div>
 
             <div>
                 <label class="block text-xs font-label-mono uppercase tracking-widest text-on-surface-variant mb-2">Material Icon Symbol</label>
                 <select name="icon" required class="w-full bg-surface-container border border-white/10 rounded-xl px-4 py-2.5 text-sm text-on-surface focus:ring-primary focus:border-primary focus:ring-1">
+                    <option value="psychology">Psychology (AI Brain)</option>
+                    <option value="model_training">Model Training (ML)</option>
+                    <option value="bar_chart">Bar Chart (Analytics)</option>
+                    <option value="chat">Chat (NLP)</option>
+                    <option value="image_search">Image Search (Vision)</option>
+                    <option value="account_tree">Account Tree (Workflow)</option>
+                    <option value="lightbulb">Lightbulb (Consulting)</option>
                     <option value="neurology">Neurology (Brain)</option>
                     <option value="memory">Memory (Processor)</option>
                     <option value="shield">Shield (Security)</option>
@@ -32,6 +44,13 @@
                     <option value="database">Database (Storage)</option>
                     <option value="insights">Insights (Analytics)</option>
                     <option value="settings_applications">Settings (Systems)</option>
+                    <option value="code">Code (Development)</option>
+                    <option value="cloud">Cloud (Infrastructure)</option>
+                    <option value="security">Security (Cyber)</option>
+                    <option value="rocket_launch">Rocket (Launch)</option>
+                    <option value="flag">Flag (Objective)</option>
+                    <option value="analytics">Analytics (Data)</option>
+                    <option value="refresh">Refresh (Optimization)</option>
                 </select>
             </div>
         </div>
@@ -44,7 +63,7 @@
 
             <div class="flex items-center mt-6">
                 <label class="inline-flex items-center cursor-pointer">
-                    <input type="checkbox" name="is_featured" class="sr-only peer">
+                    <input type="checkbox" value="1" name="is_featured" class="sr-only peer">
                     <div class="relative w-11 h-6 bg-surface-container peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary border border-white/10"></div>
                     <span class="ms-3 text-sm font-medium text-on-surface">Featured Capability</span>
                 </label>

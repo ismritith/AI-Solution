@@ -150,11 +150,29 @@ class PageController extends Controller
      */
     public function services()
     {
-        $infrastructureServices = Service::where('category', 'infrastructure')->latest()->get();
-        $verticalServices = Service::where('category', 'vertical')->latest()->get();
-        $stepServices = Service::where('category', 'step')->orderBy('step_number')->get();
+        $allServices = Service::latest()->get();
+        $infrastructureServices = $allServices->where('category', 'infrastructure');
+        $verticalServices = $allServices->where('category', 'vertical');
+        $stepServices = $allServices->where('category', 'step')->sortBy('step_number');
 
-        return view('Front.pages.services', compact('infrastructureServices', 'verticalServices', 'stepServices'));
+        return view('Front.pages.services', compact('allServices', 'infrastructureServices', 'verticalServices', 'stepServices'));
+    }
+
+    /**
+     * Render the single Service Detail page.
+     */
+    public function serviceDetail(Request $request)
+    {
+        $id = $request->query('id');
+        $service = $id ? Service::find($id) : null;
+
+        // Fetch other services for "Related Services" section (exclude current)
+        $relatedServices = collect();
+        if ($service) {
+            $relatedServices = Service::where('id', '!=', $service->id)->latest()->take(3)->get();
+        }
+
+        return view('Front.pages.service-details', compact('service', 'relatedServices'));
     }
 
     public function projects(Request $request)

@@ -127,7 +127,7 @@
             @forelse($services as $index => $service)
                 @if($index == 2)
                     <!-- Special large box for 3rd service -->
-                    <div class="md:col-span-6 glass-card rounded-3xl p-8 flex flex-col md:flex-row items-center gap-10 group" data-aos="fade-up" data-aos-delay="300">
+                    <a href="/services" class="md:col-span-6 glass-card rounded-3xl p-8 flex flex-col md:flex-row items-center gap-10 group hover:no-underline" data-aos="fade-up" data-aos-delay="300">
                         <div class="flex-1 space-y-6">
                             <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-secondary to-accent flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg shadow-secondary/20 text-white">
                                 <span class="material-symbols-outlined text-white text-3xl">{{ $service->icon ?? 'neurology' }}</span>
@@ -144,9 +144,9 @@
                                 </div>
                             @endif
                             <div>
-                                <a href="/services" class="inline-flex items-center gap-2 text-secondary font-body text-sm font-semibold hover:text-white transition-colors">
+                                <span class="inline-flex items-center gap-2 text-secondary font-body text-sm font-semibold group-hover:text-white transition-colors">
                                     Explore all services <span class="material-symbols-outlined text-sm">arrow_forward</span>
-                                </a>
+                                </span>
                             </div>
                         </div>
                         <div class="w-full md:w-2/5 bg-[#05020c] rounded-2xl p-6 border border-white/5 font-mono text-xs space-y-2 text-on-surface-variant relative overflow-hidden">
@@ -159,9 +159,9 @@
                             <p><span class="text-accent">metric:</span> <span class="text-yellow-400">"{{ $service->metric_subtitle ?? 'Verified' }}"</span></p>
                             <p class="text-green-400"><span class="text-on-surface-variant">>></span> NODE INTEGRITY: OPTIMAL</p>
                         </div>
-                    </div>
+                    </a>
                 @else
-                    <div class="md:col-span-3 glass-card rounded-3xl p-8 flex flex-col justify-between group" data-aos="fade-up" data-aos-delay="100">
+                    <a href="/services" class="md:col-span-3 glass-card rounded-3xl p-8 flex flex-col justify-between group hover:no-underline" data-aos="fade-up" data-aos-delay="100">
                         <div class="space-y-6">
                             <div class="w-14 h-14 rounded-2xl {{ $index == 1 ? 'bg-accent/10 text-accent' : 'bg-secondary/10 text-secondary' }} flex items-center justify-center group-hover:scale-110 transition-transform">
                                 <span class="material-symbols-outlined text-3xl">{{ $service->icon ?? 'insights' }}</span>
@@ -179,15 +179,15 @@
                             @endif
                         </div>
                         <div class="mt-8">
-                            <a href="/services" class="flex items-center gap-2 text-secondary font-body text-sm font-semibold hover:text-white transition-colors">
+                            <span class="flex items-center gap-2 text-secondary font-body text-sm font-semibold group-hover:text-white transition-colors">
                                 Explore <span class="material-symbols-outlined text-sm">arrow_forward</span>
-                            </a>
+                            </span>
                         </div>
-                    </div>
+                    </a>
                 @endif
             @empty
                 <!-- Fallback defaults if empty database -->
-                <div class="md:col-span-3 glass-card rounded-3xl p-8 flex flex-col justify-between group">
+                <a href="/services" class="md:col-span-3 glass-card rounded-3xl p-8 flex flex-col justify-between group hover:no-underline">
                     <div class="space-y-6">
                         <div class="w-14 h-14 rounded-2xl bg-secondary/10 flex items-center justify-center text-secondary">
                             <span class="material-symbols-outlined text-3xl">insights</span>
@@ -198,9 +198,9 @@
                         </p>
                     </div>
                     <div class="mt-8">
-                        <a href="/services" class="flex items-center gap-2 text-secondary font-body text-sm font-semibold hover:text-white transition-colors">Learn more</a>
+                        <span class="flex items-center gap-2 text-secondary font-body text-sm font-semibold group-hover:text-white transition-colors">Learn more</span>
                     </div>
-                </div>
+                </a>
             @endforelse
         </div>
     </div>
@@ -226,7 +226,7 @@
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             @forelse($projects as $project)
-                <div class="glass-card rounded-3xl p-6 flex flex-col group h-full relative z-10 hover:border-primary/30 transition-all duration-300" data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}">
+                <a href="/projects1?id={{ $project->id }}" class="glass-card rounded-3xl p-6 flex flex-col group h-full relative z-10 hover:border-primary/30 transition-all duration-300 hover:no-underline" data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}">
                     @if($project->cover_image)
                         <div class="rounded-2xl overflow-hidden mb-6 h-48 border border-white/10 relative">
                             <img alt="{{ $project->title }}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="{{ asset($project->cover_image) }}"/>
@@ -243,8 +243,8 @@
                         </div>
                     @endif
                     <div class="flex-grow space-y-4">
-                        <h3 class="font-display text-xl font-bold text-white hover:text-secondary transition-colors">
-                            <a href="/projects1?id={{ $project->id }}">{{ $project->title }}</a>
+                        <h3 class="font-display text-xl font-bold text-white group-hover:text-secondary transition-colors">
+                            {{ $project->title }}
                         </h3>
                         <div class="text-on-surface-variant/80 text-xs leading-relaxed line-clamp-3">
                             {!! strip_tags($project->description) !!}
@@ -252,11 +252,11 @@
                     </div>
                     <div class="mt-6 pt-6 border-t border-white/5 flex justify-between items-center">
                         <div class="text-primary font-bold text-xs tracking-wide">{{ $project->footer_stat }}</div>
-                        <a href="/projects1?id={{ $project->id }}" class="text-on-surface-variant hover:text-white transition-colors flex items-center gap-1.5 group/btn font-semibold text-xs">
+                        <span class="text-on-surface-variant hover:text-white transition-colors flex items-center gap-1.5 group/btn font-semibold text-xs">
                             View Specs <span class="material-symbols-outlined text-[16px] group-hover/btn:translate-x-1 transition-transform">arrow_forward</span>
-                        </a>
+                        </span>
                     </div>
-                </div>
+                </a>
             @empty
                 <div class="col-span-3 text-center text-on-surface-variant italic py-10">
                     No projects deployed.
@@ -286,7 +286,7 @@
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             @forelse($events as $event)
-                <div class="glass-card rounded-3xl p-6 flex flex-col justify-between group border-accent/20 hover:border-accent/50 transition-all duration-300" data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}">
+                <a href="/event1?id={{ $event->id }}" class="glass-card rounded-3xl p-6 flex flex-col justify-between group border-accent/20 hover:border-accent/50 transition-all duration-300 hover:no-underline" data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}">
                     <div class="space-y-4">
                         <div class="flex items-center justify-between gap-4">
                             <div class="flex items-center gap-1.5 text-accent font-mono text-[10px] font-bold">
@@ -296,8 +296,8 @@
                             <span class="px-2 py-0.5 bg-accent/20 text-accent font-mono text-[9px] uppercase rounded-full font-bold">{{ $event->ticket_price }}</span>
                         </div>
                         
-                        <h3 class="font-display text-xl font-bold text-white hover:text-secondary transition-colors">
-                            <a href="/event1?id={{ $event->id }}">{{ $event->title }}</a>
+                        <h3 class="font-display text-xl font-bold text-white group-hover:text-secondary transition-colors">
+                            {{ $event->title }}
                         </h3>
                         
                         <p class="font-body text-xs text-on-surface-variant leading-relaxed line-clamp-3">
@@ -318,11 +318,11 @@
                     
                     <div class="mt-6 pt-4 border-t border-white/5 flex justify-between items-center">
                         <span class="font-mono text-[10px] text-on-surface-variant">Cap: {{ $event->capacity }}</span>
-                        <a href="/event1?id={{ $event->id }}" class="btn-gradient text-white px-4 py-2 rounded-xl text-[10px] font-bold shadow-md shadow-secondary/10 flex items-center gap-1">
+                        <span class="btn-gradient text-white px-4 py-2 rounded-xl text-[10px] font-bold shadow-md shadow-secondary/10 flex items-center gap-1">
                             Register Node <span class="material-symbols-outlined text-xs">arrow_forward</span>
-                        </a>
+                        </span>
                     </div>
-                </div>
+                </a>
             @empty
                 <div class="col-span-3 text-center text-on-surface-variant italic py-10">
                     No summits scheduled.
@@ -352,7 +352,7 @@
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             @forelse($posts as $post)
-                <article class="glass-card rounded-3xl overflow-hidden group flex flex-col justify-between hover:border-secondary/50 transition-all duration-300" data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}">
+                <a href="/insights1?id={{ $post->id }}" class="glass-card rounded-3xl overflow-hidden group flex flex-col justify-between hover:border-secondary/50 transition-all duration-300 hover:no-underline" data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}">
                     <div>
                         @if($post->banner_image)
                             <div class="aspect-video overflow-hidden relative border-b border-white/5">
@@ -377,11 +377,11 @@
                         </div>
                     </div>
                     <div class="px-6 pb-6 pt-2">
-                        <a href="/insights1?id={{ $post->id }}" class="flex items-center gap-1.5 text-secondary font-body text-xs font-bold hover:text-white transition-colors">
+                        <span class="flex items-center gap-1.5 text-secondary font-body text-xs font-bold group-hover:text-white transition-colors">
                             Read Insights <span class="material-symbols-outlined text-sm">arrow_forward</span>
-                        </a>
+                        </span>
                     </div>
-                </article>
+                </a>
             @empty
                 <div class="col-span-3 text-center text-on-surface-variant italic py-10">
                     No insights posted yet.

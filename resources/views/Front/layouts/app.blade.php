@@ -184,7 +184,7 @@
 
             <!-- Central Desktop Navigation links -->
             <nav class="hidden md:flex items-center space-x-8">
-                <a href="/services" class="font-body text-sm font-medium transition-all duration-200 {{ request()->is('services*') ? 'text-secondary border-b-2 border-secondary pb-1' : 'text-on-surface-variant hover:text-white' }}">Services</a>
+                <a href="/services" class="font-body text-sm font-medium transition-all duration-200 {{ request()->is('services*') || request()->is('service-details*') ? 'text-secondary border-b-2 border-secondary pb-1' : 'text-on-surface-variant hover:text-white' }}">Services</a>
                 <a href="/gallery" class="font-body text-sm font-medium transition-all duration-200 {{ request()->is('gallery*') ? 'text-secondary border-b-2 border-secondary pb-1' : 'text-on-surface-variant hover:text-white' }}">Gallery</a>
                 <a href="/insights" class="font-body text-sm font-medium transition-all duration-200 {{ request()->is('insights*') || request()->is('insights1*') ? 'text-secondary border-b-2 border-secondary pb-1' : 'text-on-surface-variant hover:text-white' }}">Insights</a>
                 <a href="/projects" class="font-body text-sm font-medium transition-all duration-200 {{ request()->is('projects*') || request()->is('projects1*') ? 'text-secondary border-b-2 border-secondary pb-1' : 'text-on-surface-variant hover:text-white' }}">Projects</a>

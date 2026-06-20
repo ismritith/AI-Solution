@@ -26,13 +26,34 @@
             <div>
                 <label class="block text-xs font-label-mono uppercase tracking-widest text-on-surface-variant mb-2">Material Icon Symbol</label>
                 <select name="icon" required class="w-full bg-surface-container border border-white/10 rounded-xl px-4 py-2.5 text-sm text-on-surface focus:ring-primary focus:border-primary focus:ring-1">
-                    <option value="neurology" {{ $service->icon === 'neurology' ? 'selected' : '' }}>Neurology (Brain)</option>
-                    <option value="memory" {{ $service->icon === 'memory' ? 'selected' : '' }}>Memory (Processor)</option>
-                    <option value="shield" {{ $service->icon === 'shield' ? 'selected' : '' }}>Shield (Security)</option>
-                    <option value="bolt" {{ $service->icon === 'bolt' ? 'selected' : '' }}>Bolt (Performance)</option>
-                    <option value="database" {{ $service->icon === 'database' ? 'selected' : '' }}>Database (Storage)</option>
-                    <option value="insights" {{ $service->icon === 'insights' ? 'selected' : '' }}>Insights (Analytics)</option>
-                    <option value="settings_applications" {{ $service->icon === 'settings_applications' ? 'selected' : '' }}>Settings (Systems)</option>
+                    @php
+                        $icons = [
+                            'psychology' => 'Psychology (AI Brain)',
+                            'model_training' => 'Model Training (ML)',
+                            'bar_chart' => 'Bar Chart (Analytics)',
+                            'chat' => 'Chat (NLP)',
+                            'image_search' => 'Image Search (Vision)',
+                            'account_tree' => 'Account Tree (Workflow)',
+                            'lightbulb' => 'Lightbulb (Consulting)',
+                            'neurology' => 'Neurology (Brain)',
+                            'memory' => 'Memory (Processor)',
+                            'shield' => 'Shield (Security)',
+                            'bolt' => 'Bolt (Performance)',
+                            'database' => 'Database (Storage)',
+                            'insights' => 'Insights (Analytics)',
+                            'settings_applications' => 'Settings (Systems)',
+                            'code' => 'Code (Development)',
+                            'cloud' => 'Cloud (Infrastructure)',
+                            'security' => 'Security (Cyber)',
+                            'rocket_launch' => 'Rocket (Launch)',
+                            'flag' => 'Flag (Objective)',
+                            'analytics' => 'Analytics (Data)',
+                            'refresh' => 'Refresh (Optimization)',
+                        ];
+                    @endphp
+                    @foreach($icons as $value => $label)
+                        <option value="{{ $value }}" {{ $service->icon === $value ? 'selected' : '' }}>{{ $label }}</option>
+                    @endforeach
                 </select>
             </div>
         </div>

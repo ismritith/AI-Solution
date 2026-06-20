@@ -112,7 +112,7 @@ $defaultStyle = ['bg' => 'bg-white/10', 'border' => 'border-white/20', 'text' =>
         {{-- Featured past (horizontal hero card) --}}
         @php $feat = $pastProjects->first(); @endphp
         @if($feat)
-        <div class="glass-card rounded-3xl overflow-hidden mb-8">
+        <a href="{{ route('projects.detail', ['id' => $feat->id]) }}" class="glass-card rounded-3xl overflow-hidden mb-8 block hover:no-underline">
             <div class="grid grid-cols-1 lg:grid-cols-2">
                 <div class="relative min-h-[280px] lg:min-h-[380px] overflow-hidden">
                     <div class="absolute inset-0 bg-gradient-to-r from-transparent to-primary/70 z-10 hidden lg:block"></div>
@@ -154,13 +154,13 @@ $defaultStyle = ['bg' => 'bg-white/10', 'border' => 'border-white/20', 'text' =>
                         @endforeach
                         @endif
                     </div>
-                    <a href="{{ route('projects.detail', ['id' => $feat->id]) }}" class="inline-flex items-center gap-2 font-mono text-[10px] text-secondary uppercase tracking-widest hover:gap-3 transition-all">
+                    <span class="inline-flex items-center gap-2 font-mono text-[10px] text-secondary uppercase tracking-widest group-hover:gap-3 transition-all">
                         <span>View Case Study</span>
                         <span class="material-symbols-outlined text-sm">arrow_forward</span>
-                    </a>
+                    </span>
                 </div>
             </div>
-        </div>
+        </a>
         @endif
 
         {{-- Non-featured past grid --}}
@@ -171,7 +171,7 @@ $defaultStyle = ['bg' => 'bg-white/10', 'border' => 'border-white/20', 'text' =>
             @foreach($pastProjects as $project)
             @if($project->id !== ($feat->id ?? null))
             @php $ss = $statusStyles[$project->status_badge] ?? $defaultStyle; @endphp
-            <article class="glass-card rounded-3xl overflow-hidden flex flex-col group">
+            <a href="{{ route('projects.detail', ['id' => $project->id]) }}" class="glass-card rounded-3xl overflow-hidden flex flex-col group hover:no-underline">
                 <div class="relative h-48 overflow-hidden">
                     <div class="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent z-10"></div>
                     <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="{{ asset($project->cover_image) }}" alt="{{ $project->title }}" />
@@ -211,12 +211,12 @@ $defaultStyle = ['bg' => 'bg-white/10', 'border' => 'border-white/20', 'text' =>
                         @endforeach
                         @endif
                     </div>
-                    <a href="{{ route('projects.detail', ['id' => $project->id]) }}" class="inline-flex items-center gap-2 font-mono text-[10px] text-secondary uppercase tracking-widest hover:gap-3 transition-all pt-1">
+                    <span class="inline-flex items-center gap-2 font-mono text-[10px] text-secondary uppercase tracking-widest group-hover:gap-3 transition-all pt-1">
                         <span>Case Study</span>
                         <span class="material-symbols-outlined text-sm">arrow_forward</span>
-                    </a>
+                    </span>
                 </div>
-            </article>
+            </a>
             @endif
             @endforeach
         </div>
@@ -228,7 +228,7 @@ $defaultStyle = ['bg' => 'bg-white/10', 'border' => 'border-white/20', 'text' =>
 
         @php $feat = $presentProjects->first(); @endphp
         @if($feat)
-        <div class="glass-card rounded-3xl overflow-hidden mb-8 border border-secondary/20">
+        <a href="{{ route('projects.detail', ['id' => $feat->id]) }}" class="glass-card rounded-3xl overflow-hidden mb-8 border border-secondary/20 block hover:no-underline">
             <div class="grid grid-cols-1 lg:grid-cols-2">
                 <div class="relative min-h-[280px] lg:min-h-[380px] overflow-hidden">
                     <div class="absolute inset-0 bg-gradient-to-r from-transparent to-primary/70 z-10 hidden lg:block"></div>
@@ -274,13 +274,13 @@ $defaultStyle = ['bg' => 'bg-white/10', 'border' => 'border-white/20', 'text' =>
                         @endforeach
                         @endif
                     </div>
-                    <a href="{{ route('projects.detail', ['id' => $feat->id]) }}" class="inline-flex items-center gap-2 font-mono text-[10px] text-secondary uppercase tracking-widest hover:gap-3 transition-all">
+                    <span class="inline-flex items-center gap-2 font-mono text-[10px] text-secondary uppercase tracking-widest group-hover:gap-3 transition-all">
                         <span>View Live Dashboard</span>
                         <span class="material-symbols-outlined text-sm">arrow_forward</span>
-                    </a>
+                    </span>
                 </div>
             </div>
-        </div>
+        </a>
         @endif
 
         @if($presentProjects->isEmpty() && !$feat)
@@ -290,7 +290,7 @@ $defaultStyle = ['bg' => 'bg-white/10', 'border' => 'border-white/20', 'text' =>
             @foreach($presentProjects as $project)
             @if($project->id !== ($feat->id ?? null))
             @php $ss = $statusStyles[$project->status_badge] ?? $defaultStyle; @endphp
-            <article class="glass-card rounded-3xl overflow-hidden flex flex-col group border border-secondary/10">
+            <a href="{{ route('projects.detail', ['id' => $project->id]) }}" class="glass-card rounded-3xl overflow-hidden flex flex-col group border border-secondary/10 hover:no-underline">
                 <div class="relative h-48 overflow-hidden">
                     <div class="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent z-10"></div>
                     <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="{{ asset($project->cover_image) }}" alt="{{ $project->title }}" />
@@ -333,12 +333,12 @@ $defaultStyle = ['bg' => 'bg-white/10', 'border' => 'border-white/20', 'text' =>
                         @endforeach
                         @endif
                     </div>
-                    <a href="{{ route('projects.detail', ['id' => $project->id]) }}" class="inline-flex items-center gap-2 font-mono text-[10px] text-secondary uppercase tracking-widest hover:gap-3 transition-all pt-1">
+                    <span class="inline-flex items-center gap-2 font-mono text-[10px] text-secondary uppercase tracking-widest group-hover:gap-3 transition-all pt-1">
                         <span>Live Details</span>
                         <span class="material-symbols-outlined text-sm">arrow_forward</span>
-                    </a>
+                    </span>
                 </div>
-            </article>
+            </a>
             @endif
             @endforeach
         </div>
@@ -350,7 +350,7 @@ $defaultStyle = ['bg' => 'bg-white/10', 'border' => 'border-white/20', 'text' =>
 
         @php $feat = $upcomingProjects->first(); @endphp
         @if($feat)
-        <div class="glass-card rounded-3xl overflow-hidden mb-8 border border-accent/20">
+        <a href="{{ route('contact') }}" class="glass-card rounded-3xl overflow-hidden mb-8 border border-accent/20 block hover:no-underline">
             <div class="grid grid-cols-1 lg:grid-cols-2">
                 <div class="relative min-h-[280px] lg:min-h-[380px] overflow-hidden">
                     <div class="absolute inset-0 bg-gradient-to-r from-transparent to-primary/70 z-10 hidden lg:block"></div>
@@ -395,13 +395,13 @@ $defaultStyle = ['bg' => 'bg-white/10', 'border' => 'border-white/20', 'text' =>
                         @endforeach
                         @endif
                     </div>
-                    <a href="{{ route('contact') }}" class="inline-flex items-center gap-2 font-mono text-[10px] text-accent uppercase tracking-widest hover:gap-3 transition-all">
+                    <span class="inline-flex items-center gap-2 font-mono text-[10px] text-accent uppercase tracking-widest group-hover:gap-3 transition-all">
                         <span>Express Interest</span>
                         <span class="material-symbols-outlined text-sm">arrow_forward</span>
-                    </a>
+                    </span>
                 </div>
             </div>
-        </div>
+        </a>
         @endif
 
         @if($upcomingProjects->isEmpty() && !$feat)
@@ -411,7 +411,7 @@ $defaultStyle = ['bg' => 'bg-white/10', 'border' => 'border-white/20', 'text' =>
             @foreach($upcomingProjects as $project)
             @if($project->id !== ($feat->id ?? null))
             @php $ss = $statusStyles[$project->status_badge] ?? $defaultStyle; @endphp
-            <article class="glass-card rounded-3xl overflow-hidden flex flex-col group border border-accent/10">
+            <a href="{{ route('contact') }}" class="glass-card rounded-3xl overflow-hidden flex flex-col group border border-accent/10 hover:no-underline">
                 <div class="relative h-48 overflow-hidden">
                     <div class="absolute inset-0 bg-primary/40 backdrop-blur-[2px] z-10"></div>
                     <div class="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent z-10"></div>
@@ -452,12 +452,12 @@ $defaultStyle = ['bg' => 'bg-white/10', 'border' => 'border-white/20', 'text' =>
                         @endforeach
                         @endif
                     </div>
-                    <a href="{{ route('contact') }}" class="inline-flex items-center gap-2 font-mono text-[10px] text-accent uppercase tracking-widest hover:gap-3 transition-all pt-1">
+                    <span class="inline-flex items-center gap-2 font-mono text-[10px] text-accent uppercase tracking-widest group-hover:gap-3 transition-all pt-1">
                         <span>Express Interest</span>
                         <span class="material-symbols-outlined text-sm">arrow_forward</span>
-                    </a>
+                    </span>
                 </div>
-            </article>
+            </a>
             @endif
             @endforeach
         </div>

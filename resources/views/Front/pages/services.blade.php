@@ -84,141 +84,155 @@
         </div>
 
         @php
-            $coreServices = [
-                [
-                    'index'   => 0,
-                    'icon'    => 'psychology',
-                    'color'   => 'secondary',
-                    'title'   => 'Artificial Intelligence Solutions',
-                    'summary' => 'End-to-end AI systems engineered for production environments.',
-                    'desc'    => 'We design, develop, and deploy bespoke AI systems tailored to your operational context. From autonomous decision engines and intelligent recommendation systems to multi-agent orchestration frameworks — our solutions integrate directly into your existing infrastructure without disrupting live workflows. Every deployment ships with observability, fallback logic, and a clear roadmap for continuous improvement.',
-                    'tags'    => ['Deep Learning', 'Reinforcement Learning', 'Multi-Agent Systems', 'AutoML', 'Model Governance'],
-                    'stat'    => '+84% average efficiency gain',
-                ],
-                [
-                    'index'   => 1,
-                    'icon'    => 'model_training',
-                    'color'   => 'accent',
-                    'title'   => 'Machine Learning Model Development',
-                    'summary' => 'Custom ML models built on your data, validated against your business goals.',
-                    'desc'    => 'We build supervised, unsupervised, and semi-supervised models across regression, classification, clustering, and ranking tasks. Our process starts with a rigorous data audit and baseline definition, moves through feature engineering and architecture selection, and ends with a production-ready model packaged with a model card, performance benchmarks, and a monitoring plan. We support scikit-learn, XGBoost, PyTorch, and TensorFlow stacks.',
-                    'tags'    => ['XGBoost', 'PyTorch', 'TensorFlow', 'Feature Engineering', 'Drift Detection'],
-                    'stat'    => 'Avg. 4× faster time-to-production',
-                ],
-                [
-                    'index'   => 2,
-                    'icon'    => 'bar_chart',
-                    'color'   => 'secondary',
-                    'title'   => 'Data Analytics & Business Intelligence',
-                    'summary' => 'Turn raw operational data into decisions your leadership can act on.',
-                    'desc'    => 'We build modern data stacks — ingestion, transformation, and visualisation — that give your teams a single source of truth. From real-time dashboards and KPI reporting to cohort analysis and attribution modelling, we connect your data warehouse to the business questions that matter. We work with Snowflake, BigQuery, Redshift, dbt, Looker, and Power BI to fit your existing environment.',
-                    'tags'    => ['dbt', 'Snowflake', 'BigQuery', 'Looker', 'Power BI', 'Airflow'],
-                    'stat'    => null,
-                ],
-                [
-                    'index'   => 3,
-                    'icon'    => 'chat',
-                    'color'   => 'accent',
-                    'title'   => 'Natural Language Processing (NLP) Solutions',
-                    'summary' => 'Extract meaning, automate language tasks, and deploy LLM-powered applications at scale.',
-                    'desc'    => 'Our NLP practice covers the full spectrum — from classical text classification and named entity recognition to retrieval-augmented generation (RAG) systems and domain-specific LLM fine-tuning. We build enterprise chatbots with role-based access and audit logging, document intelligence pipelines for contracts and reports, and sentiment analysis engines for customer feedback — all with hallucination guardrails and latency SLAs.',
-                    'tags'    => ['LLM Fine-Tuning', 'RAG', 'LangChain', 'Transformers', 'Named Entity Recognition', 'Vector DBs'],
-                    'stat'    => null,
-                ],
-                [
-                    'index'   => 4,
-                    'icon'    => 'image_search',
-                    'color'   => 'secondary',
-                    'title'   => 'Computer Vision Applications',
-                    'summary' => 'Real-time visual intelligence for manufacturing, logistics, and document processing.',
-                    'desc'    => 'We develop and deploy computer vision systems for object detection, defect classification, image segmentation, and optical character recognition — at the edge or in the cloud. Use cases include manufacturing quality control, warehouse inventory tracking, identity document verification, and satellite imagery analysis. Models are optimised for inference speed and deployable on NVIDIA Jetson, AWS Inferentia, and standard GPU clusters.',
-                    'tags'    => ['YOLO', 'OpenCV', 'Edge Inference', 'OCR', 'Image Segmentation', 'TensorRT'],
-                    'stat'    => null,
-                ],
-                [
-                    'index'   => 5,
-                    'icon'    => 'account_tree',
-                    'color'   => 'accent',
-                    'title'   => 'AI Automation & Workflow Optimisation',
-                    'summary' => 'Replace manual, rule-based processes with intelligent, self-improving pipelines.',
-                    'desc'    => 'We map your operational workflows, identify automation candidates, and build AI-powered systems that reduce manual effort, eliminate bottlenecks, and flag exceptions that require human review. From intelligent document processing and robotic process automation (RPA) augmentation to predictive scheduling and dynamic pricing engines — we engineer automation that scales without breaking under load.',
-                    'tags'    => ['RPA Integration', 'IDP', 'Predictive Scheduling', 'Event-Driven Architecture', 'Kafka'],
-                    'stat'    => 'Up to 70% reduction in manual processing',
-                ],
-                [
-                    'index'   => 6,
-                    'icon'    => 'lightbulb',
-                    'color'   => 'secondary',
-                    'title'   => 'AI Consulting & Digital Transformation',
-                    'summary' => 'Strategic guidance to build your AI capability from the ground up.',
-                    'desc'    => 'Not every organisation needs to build before it can think. Our consulting practice helps leadership teams assess AI readiness, prioritise use cases by ROI and feasibility, and design a phased transformation roadmap they can actually execute. We run discovery workshops, produce architecture decision records, and provide interim CTO-level support for organisations navigating their first enterprise AI programme.',
-                    'tags'    => ['AI Readiness Assessment', 'Use Case Prioritisation', 'Roadmapping', 'Change Management', 'AI Ethics'],
-                    'stat'    => null,
-                ],
+            // Merge infrastructure + vertical services for the "Core Services" section
+            $dbCoreServices = collect()->merge($infrastructureServices)->merge($verticalServices);
+            $useStatic = $dbCoreServices->isEmpty();
+
+            // Static fallback data matching the current UI fields
+            $staticCoreServices = [
+                ['index' => 0, 'icon' => 'psychology', 'color' => 'secondary',
+                 'title' => 'Artificial Intelligence Solutions',
+                 'summary' => 'End-to-end AI systems engineered for production environments.',
+                 'desc' => 'We design, develop, and deploy bespoke AI systems tailored to your operational context. From autonomous decision engines and intelligent recommendation systems to multi-agent orchestration frameworks — our solutions integrate directly into your existing infrastructure without disrupting live workflows.',
+                 'tags' => ['Deep Learning', 'Reinforcement Learning', 'Multi-Agent Systems', 'AutoML', 'Model Governance'],
+                 'stat' => '+84% average efficiency gain'],
+                ['index' => 1, 'icon' => 'model_training', 'color' => 'accent',
+                 'title' => 'Machine Learning Model Development',
+                 'summary' => 'Custom ML models built on your data, validated against your business goals.',
+                 'desc' => 'We build supervised, unsupervised, and semi-supervised models across regression, classification, clustering, and ranking tasks. Our process starts with a rigorous data audit and ends with a production-ready model packaged with benchmarks and a monitoring plan.',
+                 'tags' => ['XGBoost', 'PyTorch', 'TensorFlow', 'Feature Engineering', 'Drift Detection'],
+                 'stat' => 'Avg. 4× faster time-to-production'],
+                ['index' => 2, 'icon' => 'bar_chart', 'color' => 'secondary',
+                 'title' => 'Data Analytics & Business Intelligence',
+                 'summary' => 'Turn raw operational data into decisions your leadership can act on.',
+                 'desc' => 'We build modern data stacks — ingestion, transformation, and visualisation — that give your teams a single source of truth. From real-time dashboards and KPI reporting to cohort analysis and attribution modelling.',
+                 'tags' => ['dbt', 'Snowflake', 'BigQuery', 'Looker', 'Power BI', 'Airflow'],
+                 'stat' => null],
+                ['index' => 3, 'icon' => 'chat', 'color' => 'accent',
+                 'title' => 'Natural Language Processing (NLP) Solutions',
+                 'summary' => 'Extract meaning, automate language tasks, and deploy LLM-powered applications at scale.',
+                 'desc' => 'Our NLP practice covers the full spectrum — from classical text classification and named entity recognition to retrieval-augmented generation (RAG) systems and domain-specific LLM fine-tuning.',
+                 'tags' => ['LLM Fine-Tuning', 'RAG', 'LangChain', 'Transformers', 'Named Entity Recognition', 'Vector DBs'],
+                 'stat' => null],
+                ['index' => 4, 'icon' => 'image_search', 'color' => 'secondary',
+                 'title' => 'Computer Vision Applications',
+                 'summary' => 'Real-time visual intelligence for manufacturing, logistics, and document processing.',
+                 'desc' => 'We develop and deploy computer vision systems for object detection, defect classification, image segmentation, and optical character recognition — at the edge or in the cloud.',
+                 'tags' => ['YOLO', 'OpenCV', 'Edge Inference', 'OCR', 'Image Segmentation', 'TensorRT'],
+                 'stat' => null],
+                ['index' => 5, 'icon' => 'account_tree', 'color' => 'accent',
+                 'title' => 'AI Automation & Workflow Optimisation',
+                 'summary' => 'Replace manual, rule-based processes with intelligent, self-improving pipelines.',
+                 'desc' => 'We map your operational workflows, identify automation candidates, and build AI-powered systems that reduce manual effort, eliminate bottlenecks, and flag exceptions that require human review.',
+                 'tags' => ['RPA Integration', 'IDP', 'Predictive Scheduling', 'Event-Driven Architecture', 'Kafka'],
+                 'stat' => 'Up to 70% reduction in manual processing'],
+                ['index' => 6, 'icon' => 'lightbulb', 'color' => 'secondary',
+                 'title' => 'AI Consulting & Digital Transformation',
+                 'summary' => 'Strategic guidance to build your AI capability from the ground up.',
+                 'desc' => 'Our consulting practice helps leadership teams assess AI readiness, prioritise use cases by ROI and feasibility, and design a phased transformation roadmap they can actually execute.',
+                 'tags' => ['AI Readiness Assessment', 'Use Case Prioritisation', 'Roadmapping', 'Change Management', 'AI Ethics'],
+                 'stat' => null],
             ];
         @endphp
 
         <div class="space-y-6">
-            @foreach($coreServices as $svc)
-                @php $isEven = $svc['index'] % 2 === 0; @endphp
-
-                <!-- Service card: alternating layout -->
-                <div class="glass-card rounded-3xl p-8 md:p-12 group hover:border-{{ $svc['color'] }}/30 transition-all duration-300"
-                     data-aos="fade-up" data-aos-delay="{{ $svc['index'] * 50 }}">
-
-                    <div class="flex flex-col md:flex-row gap-10 {{ $isEven ? '' : 'md:flex-row-reverse' }} items-start">
-
-                        <!-- Icon + number column -->
-                        <div class="shrink-0 flex flex-row md:flex-col items-center md:items-start gap-5">
-                            <div class="w-16 h-16 rounded-2xl bg-{{ $svc['color'] }}/10 border border-{{ $svc['color'] }}/25 flex items-center justify-center group-hover:border-{{ $svc['color'] }}/50 group-hover:scale-105 transition-all text-{{ $svc['color'] }}">
-                                <span class="material-symbols-outlined text-3xl">{{ $svc['icon'] }}</span>
+            @if($useStatic)
+                {{-- Render static fallback --}}
+                @foreach($staticCoreServices as $svc)
+                    @php $isEven = $svc['index'] % 2 === 0; @endphp
+                    <a href="/contact" class="glass-card rounded-3xl p-8 md:p-12 group hover:border-{{ $svc['color'] }}/30 transition-all duration-300 block hover:no-underline"
+                         data-aos="fade-up" data-aos-delay="{{ $svc['index'] * 50 }}">
+                        <div class="flex flex-col md:flex-row gap-10 {{ $isEven ? '' : 'md:flex-row-reverse' }} items-start">
+                            <div class="shrink-0 flex flex-row md:flex-col items-center md:items-start gap-5">
+                                <div class="w-16 h-16 rounded-2xl bg-{{ $svc['color'] }}/10 border border-{{ $svc['color'] }}/25 flex items-center justify-center group-hover:border-{{ $svc['color'] }}/50 group-hover:scale-105 transition-all text-{{ $svc['color'] }}">
+                                    <span class="material-symbols-outlined text-3xl">{{ $svc['icon'] }}</span>
+                                </div>
+                                <span class="font-mono text-[11px] text-on-surface-variant/50 tracking-widest">
+                                    0{{ $svc['index'] + 1 }} / 07
+                                </span>
                             </div>
-                            <span class="font-mono text-[11px] text-on-surface-variant/50 tracking-widest">
-                                0{{ $svc['index'] + 1 }} / 07
-                            </span>
-                        </div>
-
-                        <!-- Content -->
-                        <div class="flex-1 space-y-5">
-                            <div>
-                                <h3 class="font-display text-2xl md:text-3xl font-extrabold text-white mb-2">
-                                    {{ $svc['title'] }}
-                                </h3>
-                                <p class="font-mono text-xs text-{{ $svc['color'] }} uppercase tracking-wider">
-                                    {{ $svc['summary'] }}
-                                </p>
-                            </div>
-
-                            <p class="font-body text-sm text-on-surface-variant leading-relaxed max-w-3xl">
-                                {{ $svc['desc'] }}
-                            </p>
-
-                            <div class="flex flex-wrap gap-2 pt-2">
-                                @foreach($svc['tags'] as $tag)
-                                    <span class="px-3 py-1 bg-white/5 border border-white/10 rounded-full font-mono text-[10px] text-on-surface-variant uppercase tracking-wide">
-                                        {{ $tag }}
+                            <div class="flex-1 space-y-5">
+                                <div>
+                                    <h3 class="font-display text-2xl md:text-3xl font-extrabold text-white mb-2">{{ $svc['title'] }}</h3>
+                                    <p class="font-mono text-xs text-{{ $svc['color'] }} uppercase tracking-wider">{{ $svc['summary'] }}</p>
+                                </div>
+                                <p class="font-body text-sm text-on-surface-variant leading-relaxed max-w-3xl">{{ $svc['desc'] }}</p>
+                                <div class="flex flex-wrap gap-2 pt-2">
+                                    @foreach($svc['tags'] as $tag)
+                                        <span class="px-3 py-1 bg-white/5 border border-white/10 rounded-full font-mono text-[10px] text-on-surface-variant uppercase tracking-wide">{{ $tag }}</span>
+                                    @endforeach
+                                </div>
+                                <div class="flex flex-col sm:flex-row sm:items-center justify-between pt-4 gap-4 border-t border-white/5">
+                                    @if($svc['stat'])
+                                        <div class="flex items-center gap-2">
+                                            <span class="material-symbols-outlined text-secondary text-base">trending_up</span>
+                                            <span class="font-mono text-xs text-secondary font-bold">{{ $svc['stat'] }}</span>
+                                        </div>
+                                    @else
+                                        <div>
+                                            
+                                        </div>
+                                    @endif
+                                    <span class="inline-flex items-center gap-2 text-{{ $svc['color'] }} font-body text-sm font-bold group-hover:text-white transition-colors">
+                                        Discuss this service
+                                        <span class="material-symbols-outlined text-base">arrow_forward</span>
                                     </span>
-                                @endforeach
-                            </div>
-
-                            <div class="flex flex-col sm:flex-row sm:items-center justify-between pt-4 gap-4 border-t border-white/5">
-                                @if($svc['stat'])
-                                    <div class="flex items-center gap-2">
-                                        <span class="material-symbols-outlined text-secondary text-base">trending_up</span>
-                                        <span class="font-mono text-xs text-secondary font-bold">{{ $svc['stat'] }}</span>
-                                    </div>
-                                @else
-                                    <div></div>
-                                @endif
-                                <a href="/contact" class="inline-flex items-center gap-2 text-{{ $svc['color'] }} font-body text-sm font-bold hover:text-white transition-colors">
-                                    Discuss this service
-                                    <span class="material-symbols-outlined text-base">arrow_forward</span>
-                                </a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            @endforeach
+                    </a>
+                @endforeach
+            @else
+                {{-- Render dynamic services from DB --}}
+                @foreach($dbCoreServices as $index => $svc)
+                    @php
+                        $isEven = $index % 2 === 0;
+                        $color = $isEven ? 'secondary' : 'accent';
+                        $tags = $svc->tags ? array_map('trim', explode(',', $svc->tags)) : [];
+                    @endphp
+                    <a href="/service-details?id={{ $svc->id }}" class="glass-card rounded-3xl p-8 md:p-12 group hover:border-{{ $color }}/30 transition-all duration-300 block hover:no-underline"
+                         data-aos="fade-up" data-aos-delay="{{ $index * 50 }}">
+                        <div class="flex flex-col md:flex-row gap-10 {{ $isEven ? '' : 'md:flex-row-reverse' }} items-start">
+                            <div class="shrink-0 flex flex-row md:flex-col items-center md:items-start gap-5">
+                                <div class="w-16 h-16 rounded-2xl bg-{{ $color }}/10 border border-{{ $color }}/25 flex items-center justify-center group-hover:border-{{ $color }}/50 group-hover:scale-105 transition-all text-{{ $color }}">
+                                    <span class="material-symbols-outlined text-3xl">{{ $svc->icon ?? 'settings_applications' }}</span>
+                                </div>
+                                <span class="font-mono text-[11px] text-on-surface-variant/50 tracking-widest">
+                                    0{{ $index + 1 }} / {{ str_pad($dbCoreServices->count(), 2, '0', STR_PAD_LEFT) }}
+                                </span>
+                            </div>
+                            <div class="flex-1 space-y-5">
+                                <div>
+                                    <h3 class="font-display text-2xl md:text-3xl font-extrabold text-white mb-2">{{ $svc->title }}</h3>
+                                    <p class="font-mono text-xs text-{{ $color }} uppercase tracking-wider">{{ $svc->metric_subtitle ?? $svc->category }}</p>
+                                </div>
+                                <div class="font-body text-sm text-on-surface-variant leading-relaxed max-w-3xl">{!! strip_tags($svc->description) !!}</div>
+                                @if(count($tags))
+                                    <div class="flex flex-wrap gap-2 pt-2">
+                                        @foreach($tags as $tag)
+                                            <span class="px-3 py-1 bg-white/5 border border-white/10 rounded-full font-mono text-[10px] text-on-surface-variant uppercase tracking-wide">{{ $tag }}</span>
+                                        @endforeach
+                                    </div>
+                                @endif
+                                <div class="flex flex-col sm:flex-row sm:items-center justify-between pt-4 gap-4 border-t border-white/5">
+                                    @if($svc->is_featured)
+                                        <div class="flex items-center gap-2">
+                                            <span class="material-symbols-outlined text-secondary text-base">star</span>
+                                            <span class="font-mono text-xs text-secondary font-bold">Featured Service</span>
+                                        </div>
+                                    @else
+                                        <div></div>
+                                    @endif
+                                    <span class="inline-flex items-center gap-2 text-{{ $color }} font-body text-sm font-bold group-hover:text-white transition-colors">
+                                        View Details
+                                        <span class="material-symbols-outlined text-base">arrow_forward</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                @endforeach
+            @endif
         </div>
     </div>
 </section>
@@ -375,7 +389,7 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6" id="sector-grid">
             @foreach($sectorCards as $card)
-                <div class="sector-card glass-card rounded-3xl p-8 flex flex-col justify-between group hover:border-secondary/40 transition-all duration-300 opacity-100"
+                <a href="/contact" class="sector-card glass-card rounded-3xl p-8 flex flex-col justify-between group hover:border-secondary/40 transition-all duration-300 opacity-100 hover:no-underline"
                      data-sector="{{ $card['sector'] }}">
 
                     <!-- Card header -->
@@ -418,12 +432,12 @@
                         @else
                             <div></div>
                         @endif
-                        <a href="/contact" class="inline-flex items-center gap-1 text-on-surface-variant hover:text-white transition-colors font-mono text-[10px] uppercase tracking-wider group/btn shrink-0">
+                        <span class="inline-flex items-center gap-1 text-on-surface-variant group-hover:text-white transition-colors font-mono text-[10px] uppercase tracking-wider group/btn shrink-0">
                             Learn more
                             <span class="material-symbols-outlined text-sm group-hover/btn:translate-x-0.5 transition-transform">arrow_forward</span>
-                        </a>
+                        </span>
                     </div>
-                </div>
+                </a>
             @endforeach
         </div>
 
