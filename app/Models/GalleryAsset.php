@@ -21,3 +21,6 @@ class GalleryAsset extends Model
         'is_featured' => 'boolean',
     ];
 }
+
+
+
