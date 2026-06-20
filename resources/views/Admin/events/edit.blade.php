@@ -36,8 +36,8 @@
             </div>
 
             <div>
-                <label class="block text-xs font-label-mono uppercase tracking-widest text-on-surface-variant mb-2">Date (Text)</label>
-                <input type="text" name="date_text" value="{{ $event->date_text }}" required placeholder="e.g. Nov 18 - 20, 2026" class="w-full bg-surface-container border border-white/10 rounded-xl px-4 py-2.5 text-sm text-on-surface focus:ring-primary focus:border-primary focus:ring-1">
+                <label class="block text-xs font-label-mono uppercase tracking-widest text-on-surface-variant mb-2">Date</label>
+                <input type="date" name="date_text" value="{{ $event->date_text }}" required class="w-full bg-surface-container border border-white/10 rounded-xl px-4 py-2.5 text-sm text-on-surface focus:ring-primary focus:border-primary focus:ring-1">
             </div>
 
             <div>

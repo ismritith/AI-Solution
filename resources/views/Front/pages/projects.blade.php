@@ -61,8 +61,8 @@ $pastProjects = $legacyProjects ?? collect();
 $upcomingProjects = $horizonProjects ?? collect();
 
 $tabs = [
-    ['id' => 'past',     'label' => 'Past Projects',    'icon' => 'history',          'count' => count($pastProjects),     'accent' => 'accent'],
     ['id' => 'present',  'label' => 'Active Projects',  'icon' => 'radio_button_checked', 'count' => count($presentProjects),  'accent' => 'secondary'],
+    ['id' => 'past',     'label' => 'Past Projects',    'icon' => 'history',          'count' => count($pastProjects),     'accent' => 'accent'],
     ['id' => 'upcoming', 'label' => 'Upcoming',         'icon' => 'rocket_launch',    'count' => count($upcomingProjects), 'accent' => 'accent'],
 ];
 
@@ -107,10 +107,10 @@ $defaultStyle = ['bg' => 'bg-white/10', 'border' => 'border-white/20', 'text' =>
     </div>
 
     {{-- ── PAST PROJECTS PANEL ── --}}
-    <div id="panel-past" role="tabpanel" aria-labelledby="tab-past" class="showcase-panel">
+    <div id="panel-past" role="tabpanel" aria-labelledby="tab-past" class="showcase-panel hidden">
 
         {{-- Featured past (horizontal hero card) --}}
-        @php $feat = collect($pastProjects)->first(); @endphp
+        @php $feat = $pastProjects->first(); @endphp
         @if($feat)
         <div class="glass-card rounded-3xl overflow-hidden mb-8">
             <div class="grid grid-cols-1 lg:grid-cols-2">
@@ -224,9 +224,9 @@ $defaultStyle = ['bg' => 'bg-white/10', 'border' => 'border-white/20', 'text' =>
     </div>
 
     {{-- ── PRESENT / ACTIVE PANEL ── --}}
-    <div id="panel-present" role="tabpanel" aria-labelledby="tab-present" class="showcase-panel hidden">
+    <div id="panel-present" role="tabpanel" aria-labelledby="tab-present" class="showcase-panel">
 
-        @php $feat = collect($presentProjects)->first(); @endphp
+        @php $feat = $presentProjects->first(); @endphp
         @if($feat)
         <div class="glass-card rounded-3xl overflow-hidden mb-8 border border-secondary/20">
             <div class="grid grid-cols-1 lg:grid-cols-2">
@@ -348,7 +348,7 @@ $defaultStyle = ['bg' => 'bg-white/10', 'border' => 'border-white/20', 'text' =>
     {{-- ── UPCOMING PANEL ── --}}
     <div id="panel-upcoming" role="tabpanel" aria-labelledby="tab-upcoming" class="showcase-panel hidden">
 
-        @php $feat = collect($upcomingProjects)->first(); @endphp
+        @php $feat = $upcomingProjects->first(); @endphp
         @if($feat)
         <div class="glass-card rounded-3xl overflow-hidden mb-8 border border-accent/20">
             <div class="grid grid-cols-1 lg:grid-cols-2">

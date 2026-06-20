@@ -37,6 +37,11 @@
         <!-- Hero Section -->
         <section class="relative min-h-[600px] flex flex-col items-center justify-center px-gutter text-center py-section-gap overflow-hidden">
             <!-- Background Elements -->
+            @if($event->main_image)
+            <div class="absolute inset-0 -z-20 opacity-30">
+                <img src="{{ asset($event->main_image) }}" alt="{{ $event->title }}" class="w-full h-full object-cover">
+            </div>
+            @endif
             <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-glow-violet -z-10"></div>
             <div class="absolute top-1/4 right-0 w-[600px] h-[600px] bg-glow-cyan -z-10"></div>
             
@@ -193,10 +198,6 @@
             
             <!-- Modal Body -->
             <div class="glass-card w-full max-w-2xl rounded-3xl p-8 md:p-10 relative z-10 max-h-[90vh] overflow-y-auto border-secondary/20">
-                <button onclick="closeRegistrationModal()" class="absolute top-6 right-6 text-on-surface-variant hover:text-white transition-colors">
-                    <span class="material-symbols-outlined text-2xl">close</span>
-                </button>
-
                 <h3 class="font-display text-2xl md:text-3xl font-extrabold text-white mb-2">Reserve Attendance Pass</h3>
                 <p class="text-on-surface-variant text-sm mb-6">Complete the registration protocol for <span class="text-secondary font-semibold">{{ $event->title }}</span></p>
 

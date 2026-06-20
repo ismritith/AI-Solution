@@ -102,7 +102,7 @@ class PageController extends Controller
                 ->get();
         }
 
-        return view('Front.pages.insights1', compact('post', 'recentPosts'));
+        return view('Front.pages.insight-details', compact('post', 'recentPosts'));
     }
 
     /**
@@ -159,13 +159,12 @@ class PageController extends Controller
 
     public function projects(Request $request)
     {
-        $featuredProjects = Project::where('classification', 'featured')->latest()->paginate(9, ['*'], 'feat_page');
-        $presentProjects  = Project::where('classification', 'present')->latest()->paginate(9, ['*'], 'pres_page');
+        $presentProjects  = Project::whereIn('classification', ['present', 'featured'])->latest()->paginate(9, ['*'], 'pres_page');
         $legacyProjects   = Project::where('classification', 'legacy')->latest()->paginate(9, ['*'], 'leg_page');
         $horizonProjects  = Project::where('classification', 'horizon')->latest()->paginate(9, ['*'], 'hor_page');
         $testimonials     = Testimonial::latest()->get();
 
-        return view('Front.pages.projects', compact('featuredProjects', 'presentProjects', 'legacyProjects', 'horizonProjects', 'testimonials'));
+        return view('Front.pages.projects', compact('presentProjects', 'legacyProjects', 'horizonProjects', 'testimonials'));
     }
 
     /**

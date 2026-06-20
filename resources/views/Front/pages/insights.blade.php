@@ -187,9 +187,9 @@
     <!-- Modal Card Container -->
     <div id="modalContent" class="relative w-full max-w-4xl max-h-[85vh] bg-[#0d071d]/90 border border-white/10 rounded-[32px] overflow-hidden shadow-2xl flex flex-col transform scale-95 opacity-0 transition-all duration-300 z-10">
         <!-- Close Button -->
-        <button id="closeModalBtn" class="absolute top-6 right-6 w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-white/15 hover:border-white/20 transition-all z-20" aria-label="Close modal">
+        <a href="javascript:void(0)" id="closeModalBtn" class="absolute top-6 right-6 w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-white/15 hover:border-white/20 transition-all z-50 cursor-pointer" aria-label="Close modal">
             <span class="material-symbols-outlined text-xl">close</span>
-        </button>
+        </a>
         
         <!-- Scrollable content area -->
         <div id="modalBody" class="flex-1 overflow-y-auto p-6 md:p-12 custom-scrollbar">
@@ -247,16 +247,22 @@ document.addEventListener('DOMContentLoaded', function() {
         // Prevent body scroll
         document.body.style.overflow = 'hidden';
         
-        // Show modal and run entry animations
+        // Reset classes to initial state before showing
+        backdrop.className = 'absolute inset-0 bg-[#05020c]/85 backdrop-blur-xl opacity-0 transition-opacity duration-300';
+        content.className = 'relative w-full max-w-4xl max-h-[85vh] bg-[#0d071d]/90 border border-white/10 rounded-[32px] overflow-hidden shadow-2xl flex flex-col transform scale-95 opacity-0 transition-all duration-300 z-10';
+        
+        // Show modal
         modal.classList.remove('hidden');
         modal.classList.add('flex');
         
         // Trigger reflow for transition
         void modal.offsetWidth;
         
-        backdrop.classList.replace('opacity-0', 'opacity-100');
-        content.classList.replace('scale-95', 'scale-100');
-        content.classList.replace('opacity-0', 'opacity-100');
+        // Animate in
+        backdrop.classList.remove('opacity-0');
+        backdrop.classList.add('opacity-100');
+        content.classList.remove('scale-95', 'opacity-0');
+        content.classList.add('scale-100', 'opacity-100');
         
         // Show skeleton, hide previous content
         skeleton.classList.remove('hidden');
@@ -297,9 +303,11 @@ document.addEventListener('DOMContentLoaded', function() {
     function closeModal() {
         document.body.style.overflow = '';
         
-        backdrop.classList.replace('opacity-100', 'opacity-0');
-        content.classList.replace('scale-100', 'scale-95');
-        content.classList.replace('opacity-100', 'opacity-0');
+        // Animate out
+        backdrop.classList.remove('opacity-100');
+        backdrop.classList.add('opacity-0');
+        content.classList.remove('scale-100', 'opacity-100');
+        content.classList.add('scale-95', 'opacity-0');
         
         setTimeout(() => {
             modal.classList.remove('flex');
@@ -316,10 +324,22 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Close events
-    closeBtn.addEventListener('click', closeModal);
-    backdrop.addEventListener('click', closeModal);
+    // Close button click
+    closeBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        closeModal();
+    });
     
+    // Click on backdrop / outside the modal card to close
+    modal.addEventListener('click', function(e) {
+        // Only close if the click target is the modal overlay itself or the backdrop,
+        // NOT the modal card or any of its children
+        if (e.target === modal || e.target === backdrop) {
+            closeModal();
+        }
+    });
+    
+    // Escape key to close
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
             closeModal();
