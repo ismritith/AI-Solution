@@ -16,10 +16,10 @@
             <div>
                 <label class="block text-xs font-label-mono uppercase tracking-widest text-on-surface-variant mb-2">Category</label>
                 <select name="category" required class="w-full bg-surface-container border border-white/10 rounded-xl px-4 py-2.5 text-sm text-on-surface focus:ring-primary focus:border-primary focus:ring-1">
-                    <option value="Security">Security</option>
-                    <option value="Analytics">Analytics</option>
-                    <option value="Automation">Automation</option>
-                    <option value="Bento">Bento Grid Asset</option>
+                    <option value="Security">All</option>
+                    <option value="Analytics">Projects</option>
+                    <option value="Automation">Events</option>
+                    <option value="Bento">Teams</option>
                 </select>
             </div>
 
@@ -50,6 +50,8 @@
                     </button>
                 </div>
             </div>
+
+        
 
             <div class="flex items-center mt-6">
                 <label class="inline-flex items-center cursor-pointer">
