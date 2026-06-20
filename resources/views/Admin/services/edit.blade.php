@@ -24,6 +24,20 @@
             </div>
 
             <div>
+                <label class="block text-xs font-label-mono uppercase tracking-widest text-on-surface-variant mb-2">Service Category (Filter Tag)</label>
+                <select name="service_category" class="w-full bg-surface-container border border-white/10 rounded-xl px-4 py-2.5 text-sm text-on-surface focus:ring-primary focus:border-primary focus:ring-1">
+                    <option value="" {{ empty($service->service_category) ? 'selected' : '' }}>— None (used for Methodology steps) —</option>
+                    <option value="AI Solutions" {{ $service->service_category === 'AI Solutions' ? 'selected' : '' }}>AI Solutions</option>
+                    <option value="Machine Learning" {{ $service->service_category === 'Machine Learning' ? 'selected' : '' }}>Machine Learning</option>
+                    <option value="Data Analytics" {{ $service->service_category === 'Data Analytics' ? 'selected' : '' }}>Data Analytics</option>
+                    <option value="NLP" {{ $service->service_category === 'NLP' ? 'selected' : '' }}>NLP</option>
+                    <option value="Computer Vision" {{ $service->service_category === 'Computer Vision' ? 'selected' : '' }}>Computer Vision</option>
+                    <option value="Automation" {{ $service->service_category === 'Automation' ? 'selected' : '' }}>Automation</option>
+                    <option value="Consulting" {{ $service->service_category === 'Consulting' ? 'selected' : '' }}>Consulting</option>
+                </select>
+            </div>
+
+            <div>
                 <label class="block text-xs font-label-mono uppercase tracking-widest text-on-surface-variant mb-2">Material Icon Symbol</label>
                 <select name="icon" required class="w-full bg-surface-container border border-white/10 rounded-xl px-4 py-2.5 text-sm text-on-surface focus:ring-primary focus:border-primary focus:ring-1">
                     @php
@@ -66,7 +80,7 @@
 
             <div class="flex items-center mt-6">
                 <label class="inline-flex items-center cursor-pointer">
-                    <input type="checkbox" name="is_featured" class="sr-only peer" {{ $service->is_featured ? 'checked' : '' }}>
+                    <input type="checkbox" value="1" name="is_featured" class="sr-only peer" {{ $service->is_featured ? 'checked' : '' }}>
                     <div class="relative w-11 h-6 bg-surface-container peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary border border-white/10"></div>
                     <span class="ms-3 text-sm font-medium text-on-surface">Featured Capability</span>
                 </label>

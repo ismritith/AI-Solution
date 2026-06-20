@@ -68,18 +68,18 @@
 
 
 <!-- ══════════════════════════════════════════════
-     SERVICE OFFERINGS — 7 CORE SERVICES
+     SERVICE OFFERINGS — CORE SERVICES (FILTERABLE)
 ══════════════════════════════════════════════ -->
 <section id="services" class="py-24 md:py-32">
     <div class="max-w-container-max mx-auto px-gutter">
 
-        <div class="text-center mb-20" data-aos="fade-up">
+        <div class="text-center mb-14" data-aos="fade-up">
             <div class="inline-flex items-center gap-2 px-3 py-1 bg-secondary/15 border border-secondary/30 rounded-full mb-6">
                 <span class="font-mono text-xs text-on-surface uppercase tracking-widest">What We Offer</span>
             </div>
             <h2 class="font-display text-4xl md:text-5xl font-extrabold text-white mb-4">Our Core Services</h2>
             <p class="text-on-surface-variant max-w-2xl mx-auto text-base leading-relaxed">
-                Seven specialised practices. One integrated platform. Built to take AI from proof-of-concept to production at enterprise scale.
+                Specialised practices. One integrated platform. Built to take AI from proof-of-concept to production at enterprise scale.
             </p>
         </div>
 
@@ -88,59 +88,95 @@
             $dbCoreServices = collect()->merge($infrastructureServices)->merge($verticalServices);
             $useStatic = $dbCoreServices->isEmpty();
 
+            // Simple slugger so we don't need a Str:: import in the view
+            $slugify = function ($value) {
+                $value = strtolower(trim($value ?? ''));
+                $value = preg_replace('/[^a-z0-9]+/', '-', $value);
+                return trim($value, '-');
+            };
+
             // Static fallback data matching the current UI fields
             $staticCoreServices = [
-                ['index' => 0, 'icon' => 'psychology', 'color' => 'secondary',
+                ['index' => 0, 'icon' => 'psychology', 'color' => 'secondary', 'category' => 'infrastructure',
                  'title' => 'Artificial Intelligence Solutions',
                  'summary' => 'End-to-end AI systems engineered for production environments.',
                  'desc' => 'We design, develop, and deploy bespoke AI systems tailored to your operational context. From autonomous decision engines and intelligent recommendation systems to multi-agent orchestration frameworks — our solutions integrate directly into your existing infrastructure without disrupting live workflows.',
                  'tags' => ['Deep Learning', 'Reinforcement Learning', 'Multi-Agent Systems', 'AutoML', 'Model Governance'],
                  'stat' => '+84% average efficiency gain'],
-                ['index' => 1, 'icon' => 'model_training', 'color' => 'accent',
+                ['index' => 1, 'icon' => 'model_training', 'color' => 'accent', 'category' => 'vertical',
                  'title' => 'Machine Learning Model Development',
                  'summary' => 'Custom ML models built on your data, validated against your business goals.',
                  'desc' => 'We build supervised, unsupervised, and semi-supervised models across regression, classification, clustering, and ranking tasks. Our process starts with a rigorous data audit and ends with a production-ready model packaged with benchmarks and a monitoring plan.',
                  'tags' => ['XGBoost', 'PyTorch', 'TensorFlow', 'Feature Engineering', 'Drift Detection'],
                  'stat' => 'Avg. 4× faster time-to-production'],
-                ['index' => 2, 'icon' => 'bar_chart', 'color' => 'secondary',
+                ['index' => 2, 'icon' => 'bar_chart', 'color' => 'secondary', 'category' => 'infrastructure',
                  'title' => 'Data Analytics & Business Intelligence',
                  'summary' => 'Turn raw operational data into decisions your leadership can act on.',
                  'desc' => 'We build modern data stacks — ingestion, transformation, and visualisation — that give your teams a single source of truth. From real-time dashboards and KPI reporting to cohort analysis and attribution modelling.',
                  'tags' => ['dbt', 'Snowflake', 'BigQuery', 'Looker', 'Power BI', 'Airflow'],
                  'stat' => null],
-                ['index' => 3, 'icon' => 'chat', 'color' => 'accent',
+                ['index' => 3, 'icon' => 'chat', 'color' => 'accent', 'category' => 'vertical',
                  'title' => 'Natural Language Processing (NLP) Solutions',
                  'summary' => 'Extract meaning, automate language tasks, and deploy LLM-powered applications at scale.',
                  'desc' => 'Our NLP practice covers the full spectrum — from classical text classification and named entity recognition to retrieval-augmented generation (RAG) systems and domain-specific LLM fine-tuning.',
                  'tags' => ['LLM Fine-Tuning', 'RAG', 'LangChain', 'Transformers', 'Named Entity Recognition', 'Vector DBs'],
                  'stat' => null],
-                ['index' => 4, 'icon' => 'image_search', 'color' => 'secondary',
+                ['index' => 4, 'icon' => 'image_search', 'color' => 'secondary', 'category' => 'vertical',
                  'title' => 'Computer Vision Applications',
                  'summary' => 'Real-time visual intelligence for manufacturing, logistics, and document processing.',
                  'desc' => 'We develop and deploy computer vision systems for object detection, defect classification, image segmentation, and optical character recognition — at the edge or in the cloud.',
                  'tags' => ['YOLO', 'OpenCV', 'Edge Inference', 'OCR', 'Image Segmentation', 'TensorRT'],
                  'stat' => null],
-                ['index' => 5, 'icon' => 'account_tree', 'color' => 'accent',
+                ['index' => 5, 'icon' => 'account_tree', 'color' => 'accent', 'category' => 'infrastructure',
                  'title' => 'AI Automation & Workflow Optimisation',
                  'summary' => 'Replace manual, rule-based processes with intelligent, self-improving pipelines.',
                  'desc' => 'We map your operational workflows, identify automation candidates, and build AI-powered systems that reduce manual effort, eliminate bottlenecks, and flag exceptions that require human review.',
                  'tags' => ['RPA Integration', 'IDP', 'Predictive Scheduling', 'Event-Driven Architecture', 'Kafka'],
                  'stat' => 'Up to 70% reduction in manual processing'],
-                ['index' => 6, 'icon' => 'lightbulb', 'color' => 'secondary',
+                ['index' => 6, 'icon' => 'lightbulb', 'color' => 'secondary', 'category' => 'vertical',
                  'title' => 'AI Consulting & Digital Transformation',
                  'summary' => 'Strategic guidance to build your AI capability from the ground up.',
                  'desc' => 'Our consulting practice helps leadership teams assess AI readiness, prioritise use cases by ROI and feasibility, and design a phased transformation roadmap they can actually execute.',
                  'tags' => ['AI Readiness Assessment', 'Use Case Prioritisation', 'Roadmapping', 'Change Management', 'AI Ethics'],
                  'stat' => null],
             ];
+
+            // Build the list of categories actually present, so pills never show an empty bucket
+            $coreServiceCategories = $useStatic
+                ? collect($staticCoreServices)->pluck('category')->filter()->unique()->values()
+                : $dbCoreServices->pluck('category')->filter()->unique()->values();
         @endphp
 
-        <div class="space-y-6">
+        {{-- Core Service Category Filter Pills --}}
+        @if($coreServiceCategories->isNotEmpty())
+            <div class="flex flex-wrap justify-center gap-3 mb-14" id="core-service-filters" data-aos="fade-up" data-aos-delay="100">
+                <button type="button" data-filter="all"
+                    class="core-filter-btn flex items-center gap-2 px-4 py-2 rounded-xl font-mono text-xs uppercase tracking-wider border transition-all duration-200 bg-secondary text-white border-secondary shadow-lg shadow-secondary/20 active">
+                    <span class="material-symbols-outlined text-sm">apps</span>
+                    All Services
+                </button>
+                @foreach($coreServiceCategories as $cat)
+                    <button type="button" data-filter="{{ $slugify($cat) }}"
+                        class="core-filter-btn flex items-center gap-2 px-4 py-2 rounded-xl font-mono text-xs uppercase tracking-wider border transition-all duration-200 glass-card text-on-surface-variant border-white/10 hover:border-secondary/40 hover:text-white">
+                        <span class="material-symbols-outlined text-sm">{{ strtolower($cat) === 'infrastructure' ? 'dns' : 'domain' }}</span>
+                        {{ ucfirst($cat) }}
+                    </button>
+                @endforeach
+            </div>
+
+            <div class="text-center mb-8">
+                <span id="core-service-count" class="font-mono text-xs text-on-surface-variant/60 uppercase tracking-widest"></span>
+            </div>
+        @endif
+
+        <div class="space-y-6" id="core-service-grid">
             @if($useStatic)
                 {{-- Render static fallback --}}
                 @foreach($staticCoreServices as $svc)
                     @php $isEven = $svc['index'] % 2 === 0; @endphp
-                    <a href="/contact" class="glass-card rounded-3xl p-8 md:p-12 group hover:border-{{ $svc['color'] }}/30 transition-all duration-300 block hover:no-underline"
+                    <a href="/contact"
+                         data-category="{{ $slugify($svc['category']) }}"
+                         class="core-service-card glass-card rounded-3xl p-8 md:p-12 group hover:border-{{ $svc['color'] }}/30 transition-all duration-300 block hover:no-underline"
                          data-aos="fade-up" data-aos-delay="{{ $svc['index'] * 50 }}">
                         <div class="flex flex-col md:flex-row gap-10 {{ $isEven ? '' : 'md:flex-row-reverse' }} items-start">
                             <div class="shrink-0 flex flex-row md:flex-col items-center md:items-start gap-5">
@@ -148,11 +184,17 @@
                                     <span class="material-symbols-outlined text-3xl">{{ $svc['icon'] }}</span>
                                 </div>
                                 <span class="font-mono text-[11px] text-on-surface-variant/50 tracking-widest">
-                                    0{{ $svc['index'] + 1 }} / 07
+                                    0{{ $svc['index'] + 1 }} / {{ str_pad(count($staticCoreServices), 2, '0', STR_PAD_LEFT) }}
                                 </span>
                             </div>
                             <div class="flex-1 space-y-5">
                                 <div>
+                                    @if(isset($svc['category']) && $svc['category'] !== 'step')
+                                        <span class="inline-flex items-center gap-1.5 mb-2 px-2.5 py-1 rounded-full bg-{{ $svc['color'] }}/10 border border-{{ $svc['color'] }}/20 font-mono text-[9px] text-{{ $svc['color'] }} uppercase tracking-widest">
+                                            <span class="material-symbols-outlined text-[12px]">{{ $svc['category'] === 'infrastructure' ? 'dns' : 'domain' }}</span>
+                                            {{ $svc['category'] }}
+                                        </span>
+                                    @endif
                                     <h3 class="font-display text-2xl md:text-3xl font-extrabold text-white mb-2">{{ $svc['title'] }}</h3>
                                     <p class="font-mono text-xs text-{{ $svc['color'] }} uppercase tracking-wider">{{ $svc['summary'] }}</p>
                                 </div>
@@ -169,9 +211,7 @@
                                             <span class="font-mono text-xs text-secondary font-bold">{{ $svc['stat'] }}</span>
                                         </div>
                                     @else
-                                        <div>
-                                            
-                                        </div>
+                                        <div></div>
                                     @endif
                                     <span class="inline-flex items-center gap-2 text-{{ $svc['color'] }} font-body text-sm font-bold group-hover:text-white transition-colors">
                                         Discuss this service
@@ -190,7 +230,9 @@
                         $color = $isEven ? 'secondary' : 'accent';
                         $tags = $svc->tags ? array_map('trim', explode(',', $svc->tags)) : [];
                     @endphp
-                    <a href="/service-details?id={{ $svc->id }}" class="glass-card rounded-3xl p-8 md:p-12 group hover:border-{{ $color }}/30 transition-all duration-300 block hover:no-underline"
+                    <a href="/service-details?id={{ $svc->id }}"
+                         data-category="{{ $slugify($svc->category) }}"
+                         class="core-service-card glass-card rounded-3xl p-8 md:p-12 group hover:border-{{ $color }}/30 transition-all duration-300 block hover:no-underline"
                          data-aos="fade-up" data-aos-delay="{{ $index * 50 }}">
                         <div class="flex flex-col md:flex-row gap-10 {{ $isEven ? '' : 'md:flex-row-reverse' }} items-start">
                             <div class="shrink-0 flex flex-row md:flex-col items-center md:items-start gap-5">
@@ -203,6 +245,12 @@
                             </div>
                             <div class="flex-1 space-y-5">
                                 <div>
+                                    @if($svc->category && $svc->category !== 'step')
+                                        <span class="inline-flex items-center gap-1.5 mb-2 px-2.5 py-1 rounded-full bg-{{ $color }}/10 border border-{{ $color }}/20 font-mono text-[9px] text-{{ $color }} uppercase tracking-widest">
+                                            <span class="material-symbols-outlined text-[12px]">{{ $svc->category === 'infrastructure' ? 'dns' : 'domain' }}</span>
+                                            {{ $svc->category }}
+                                        </span>
+                                    @endif
                                     <h3 class="font-display text-2xl md:text-3xl font-extrabold text-white mb-2">{{ $svc->title }}</h3>
                                     <p class="font-mono text-xs text-{{ $color }} uppercase tracking-wider">{{ $svc->metric_subtitle ?? $svc->category }}</p>
                                 </div>
@@ -234,8 +282,71 @@
                 @endforeach
             @endif
         </div>
+
+        <!-- Empty state for core services filter -->
+        <div id="core-service-empty" class="hidden text-center py-20">
+            <span class="material-symbols-outlined text-5xl text-on-surface-variant/30 mb-4 block">search_off</span>
+            <p class="font-mono text-sm text-on-surface-variant/50 uppercase tracking-widest">No services match the selected filter.</p>
+        </div>
     </div>
 </section>
+
+<script>
+(function () {
+    const filterBtns = document.querySelectorAll('.core-filter-btn');
+    const cards       = document.querySelectorAll('.core-service-card');
+    const countEl     = document.getElementById('core-service-count');
+    const emptyEl     = document.getElementById('core-service-empty');
+
+    if (!filterBtns.length || !cards.length) return;
+
+    function updateCount(visible) {
+        if (!countEl) return;
+        countEl.textContent = visible === cards.length
+            ? `Showing all ${visible} services`
+            : `Showing ${visible} of ${cards.length} services`;
+    }
+
+    function filterCards(active) {
+        let visible = 0;
+        cards.forEach(card => {
+            const match = active === 'all' || card.dataset.category === active;
+            if (match) {
+                card.style.display = '';
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, visible * 40);
+                visible++;
+            } else {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(12px)';
+                setTimeout(() => { card.style.display = 'none'; }, 200);
+            }
+        });
+        if (emptyEl) emptyEl.classList.toggle('hidden', visible > 0);
+        updateCount(visible);
+    }
+
+    cards.forEach(c => {
+        c.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
+    });
+
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            filterBtns.forEach(b => {
+                b.classList.remove('bg-secondary', 'text-white', 'border-secondary', 'shadow-lg', 'shadow-secondary/20', 'active');
+                b.classList.add('glass-card', 'text-on-surface-variant', 'border-white/10');
+            });
+            btn.classList.add('bg-secondary', 'text-white', 'border-secondary', 'shadow-lg', 'shadow-secondary/20', 'active');
+            btn.classList.remove('glass-card', 'text-on-surface-variant', 'border-white/10');
+            filterCards(btn.dataset.filter);
+        });
+    });
+
+    updateCount(cards.length);
+})();
+</script>
 
 
 <!-- ══════════════════════════════════════════════

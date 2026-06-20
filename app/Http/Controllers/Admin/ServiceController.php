@@ -24,6 +24,7 @@ class ServiceController extends Controller
     {
         $validated = $request->validate([
             'category' => 'required|in:infrastructure,vertical,step',
+            'service_category' => 'nullable|string|max:255',
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'icon' => 'nullable|string|max:255',
@@ -54,6 +55,7 @@ class ServiceController extends Controller
     {
         $validated = $request->validate([
             'category' => 'required|in:infrastructure,vertical,step',
+            'service_category' => 'nullable|string|max:255',
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'icon' => 'nullable|string|max:255',
