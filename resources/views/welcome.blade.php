@@ -466,7 +466,6 @@
                         Subscribe Now
                     </button>
                 </form>
-                <div class="font-mono text-xs text-on-surface-variant/60">SOC2 compliant. Zero spam.</div>
             </div>
         </div>
     </div>
