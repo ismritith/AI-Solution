@@ -51,7 +51,7 @@
 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 <div class="space-y-2">
 <label class="font-label-caps text-on-surface-variant">Team Name</label>
-<input class="w-full bg-black/20 border border-white/10 rounded-lg p-4 font-body-md text-on-surface focus:ring-1 focus:ring-tertiary transition-all" placeholder="e.g. Neural Nexus" type="text"/>
+<input class="w-full bg-black/20 border border-white/10 rounded-lg p-4 font-body-md text-on-surface focus:ring-1 focus:ring-tertiary transition-all" placeholder="e.g. Neural Nexus" type="text" oninput="this.value = this.value.replace(/[^A-Za-z0-9\s\-&]/g, '')" />
 </div>
 <div class="space-y-2">
 <label class="font-label-caps text-on-surface-variant">Lead Developer Email</label>
@@ -59,7 +59,7 @@
 </div>
 <div class="md:col-span-2 space-y-2">
 <label class="font-label-caps text-on-surface-variant">Primary Organization (Optional)</label>
-<input class="w-full bg-black/20 border border-white/10 rounded-lg p-4 font-body-md text-on-surface focus:ring-1 focus:ring-tertiary transition-all" placeholder="University, Startup, or Research Lab" type="text"/>
+<input class="w-full bg-black/20 border border-white/10 rounded-lg p-4 font-body-md text-on-surface focus:ring-1 focus:ring-tertiary transition-all" placeholder="University, Startup, or Research Lab" type="text" oninput="this.value = this.value.replace(/[^A-Za-z0-9\s\-&]/g, '')" />
 </div>
 </div>
 <div class="mt-12 flex justify-end">
@@ -74,7 +74,7 @@
 <div class="space-y-4" id="member-container">
 <!-- Member Row 1 -->
 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 rounded-lg bg-white/5 border border-white/5">
-<input class="bg-black/20 border border-white/10 rounded-lg p-3 font-body-md text-on-surface" placeholder="Full Name" type="text"/>
+<input class="bg-black/20 border border-white/10 rounded-lg p-3 font-body-md text-on-surface" placeholder="Full Name" type="text" pattern="^[A-Za-z\s]+$" title="Only letters and spaces are allowed" oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" />
 <select class="bg-black/20 border border-white/10 rounded-lg p-3 font-body-md text-on-surface">
 <option>Lead Engineer</option>
 <option>AI Researcher</option>
@@ -212,7 +212,7 @@
                 const row = document.createElement('div');
                 row.className = 'grid grid-cols-1 md:grid-cols-3 gap-4 p-4 rounded-lg bg-white/5 border border-white/5 mt-4 opacity-0 transition-opacity duration-300';
                 row.innerHTML = `
-                    <input type="text" placeholder="Full Name" class="bg-black/20 border border-white/10 rounded-lg p-3 font-body-md text-on-surface">
+                    <input type="text" placeholder="Full Name" class="bg-black/20 border border-white/10 rounded-lg p-3 font-body-md text-on-surface" pattern="^[A-Za-z\\s]+$" title="Only letters and spaces are allowed" oninput="this.value = this.value.replace(/[^A-Za-z\\s]/g, '')">
                     <select class="bg-black/20 border border-white/10 rounded-lg p-3 font-body-md text-on-surface">
                         <option>Contributor</option>
                         <option>Designer</option>

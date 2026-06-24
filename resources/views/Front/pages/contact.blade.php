@@ -48,7 +48,7 @@
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div class="space-y-2">
             <label class="font-mono text-xs text-on-surface-variant uppercase tracking-wider block">Identity</label>
-            <input name="name" class="w-full bg-[#05020c] border border-white/5 focus:border-secondary px-4 py-3 text-body text-sm outline-none transition-all rounded-xl text-white placeholder-on-surface-variant/40" placeholder="Your Name" type="text" value="{{ old('name') }}" required/>
+            <input name="name" class="w-full bg-[#05020c] border border-white/5 focus:border-secondary px-4 py-3 text-body text-sm outline-none transition-all rounded-xl text-white placeholder-on-surface-variant/40" placeholder="Your Name" type="text" value="{{ old('name') }}" pattern="^[A-Za-z\s]+$" title="Only letters and spaces are allowed" oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" required/>
         </div>
         <div class="space-y-2">
             <label class="font-mono text-xs text-on-surface-variant uppercase tracking-wider block">Interface (Email)</label>
@@ -60,11 +60,11 @@
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div class="space-y-2">
             <label class="font-mono text-xs text-on-surface-variant uppercase tracking-wider block">Phone Number</label>
-            <input name="phone" class="w-full bg-[#05020c] border border-white/5 focus:border-secondary px-4 py-3 text-body text-sm outline-none transition-all rounded-xl text-white placeholder-on-surface-variant/40" placeholder="+1 (555) 000-0000" type="tel" value="{{ old('phone') }}" required/>
+            <input name="phone" class="w-full bg-[#05020c] border border-white/5 focus:border-secondary px-4 py-3 text-body text-sm outline-none transition-all rounded-xl text-white placeholder-on-surface-variant/40" placeholder="+1 (555) 000-0000" type="tel" value="{{ old('phone') }}" pattern="^[\+\d\s\-\(\)]+$" title="Only phone numbers allowed" oninput="this.value = this.value.replace(/[^\+\d\s\-\(\)]/g, '')" required/>
         </div>
         <div class="space-y-2">
             <label class="font-mono text-xs text-on-surface-variant uppercase tracking-wider block">Company Name</label>
-            <input name="company" class="w-full bg-[#05020c] border border-white/5 focus:border-secondary px-4 py-3 text-body text-sm outline-none transition-all rounded-xl text-white placeholder-on-surface-variant/40" placeholder="Your Company" type="text" value="{{ old('company') }}" required/>
+            <input name="company" class="w-full bg-[#05020c] border border-white/5 focus:border-secondary px-4 py-3 text-body text-sm outline-none transition-all rounded-xl text-white placeholder-on-surface-variant/40" placeholder="Your Company" type="text" value="{{ old('company') }}" oninput="this.value = this.value.replace(/[^A-Za-z0-9\s\-&]/g, '')" required/>
         </div>
     </div>
 
@@ -72,7 +72,7 @@
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div class="space-y-2">
             <label class="font-mono text-xs text-on-surface-variant uppercase tracking-wider block">Job Title</label>
-            <input name="job_title" class="w-full bg-[#05020c] border border-white/5 focus:border-secondary px-4 py-3 text-body text-sm outline-none transition-all rounded-xl text-white placeholder-on-surface-variant/40" placeholder="e.g. CTO, Software Engineer" type="text" value="{{ old('job_title') }}" required/>
+            <input name="job_title" class="w-full bg-[#05020c] border border-white/5 focus:border-secondary px-4 py-3 text-body text-sm outline-none transition-all rounded-xl text-white placeholder-on-surface-variant/40" placeholder="e.g. CTO, Software Engineer" type="text" value="{{ old('job_title') }}" oninput="this.value = this.value.replace(/[^A-Za-z0-9\s\-&,]/g, '')" required/>
         </div>
         <div class="space-y-2">
             <label class="font-mono text-xs text-on-surface-variant uppercase tracking-wider block">Country</label>
@@ -100,9 +100,13 @@
     </div>
 
     {{-- Job Details --}}
-    <div class="space-y-2">
-        <label class="font-mono text-xs text-on-surface-variant uppercase tracking-wider block">Job Details / Message Payload</label>
-        <textarea name="message" class="w-full bg-[#05020c] border border-white/5 focus:border-secondary px-4 py-3 text-body text-sm outline-none transition-all rounded-xl text-white placeholder-on-surface-variant/40" placeholder="Describe your requirements, project scope, or message in detail..." rows="5" required>{{ old('message') }}</textarea>
+    <div class="space-y-2 relative">
+        <div class="flex justify-between items-end mb-1">
+            <label class="font-mono text-xs text-on-surface-variant uppercase tracking-wider block">Job Details / Message Payload</label>
+            <span id="word-count-display" class="font-mono text-[10px] text-on-surface-variant"><span id="word-count">0</span> / 250 words</span>
+        </div>
+        <textarea id="message-textarea" name="message" class="w-full bg-[#05020c] border border-white/5 focus:border-secondary px-4 py-3 text-body text-sm outline-none transition-all rounded-xl text-white placeholder-on-surface-variant/40" placeholder="Describe your requirements, project scope, or message in detail..." rows="5" required>{{ old('message') }}</textarea>
+        <div id="word-limit-warning" class="text-error text-xs hidden mt-1">Maximum word limit (250) reached.</div>
     </div>
 
     <button class="w-full btn-gradient py-4 rounded-xl font-display text-sm text-white font-bold shadow-lg shadow-secondary/15 transform active:scale-98" type="submit">
@@ -177,5 +181,34 @@
             </div>
         </div>
     </div>
-</section>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const textarea = document.getElementById('message-textarea');
+        const wordCountDisplay = document.getElementById('word-count');
+        const warningDisplay = document.getElementById('word-limit-warning');
+        
+        if(textarea) {
+            textarea.addEventListener('input', function() {
+                const words = this.value.match(/\S+/g);
+                const wordCount = words ? words.length : 0;
+                
+                wordCountDisplay.textContent = wordCount;
+                
+                if (wordCount > 250) {
+                    warningDisplay.classList.remove('hidden');
+                    wordCountDisplay.parentElement.classList.add('text-error');
+                    wordCountDisplay.parentElement.classList.remove('text-on-surface-variant');
+                    this.value = words.slice(0, 250).join(' ') + ' ';
+                    wordCountDisplay.textContent = 250;
+                } else {
+                    warningDisplay.classList.add('hidden');
+                    wordCountDisplay.parentElement.classList.remove('text-error');
+                    wordCountDisplay.parentElement.classList.add('text-on-surface-variant');
+                }
+            });
+            // trigger on load in case of old value
+            textarea.dispatchEvent(new Event('input'));
+        }
+    });
+</script>
 @endsection

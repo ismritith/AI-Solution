@@ -55,7 +55,11 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin.timeout'])->g
     Route::resource('events', EventController::class);
     Route::resource('projects', ProjectController::class);
     Route::resource('testimonials', TestimonialController::class);
-    Route::resource('registrations', RegistrationController::class);
+    // Event Bookings
+    Route::get('/registrations', [RegistrationController::class, 'index'])->name('registrations.index');
+    Route::get('/registrations/{registration}', [RegistrationController::class, 'show'])->name('registrations.show');
+    Route::delete('/registrations/{registration}', [RegistrationController::class, 'destroy'])->name('registrations.destroy');
+    Route::resource('reviews', RegistrationController::class);
 
     // Project Reviews
     Route::get('/project-reviews', [ProjectReviewController::class, 'index'])->name('project-reviews.index');

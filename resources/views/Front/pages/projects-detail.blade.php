@@ -242,11 +242,11 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="space-y-2">
                         <label class="font-mono text-[10px] text-on-surface-variant uppercase tracking-wider block font-bold">Identity (Name) <span class="text-error">*</span></label>
-                        <input type="text" name="client_name" required maxlength="255" placeholder="Sarah Connor" class="w-full bg-[#05020c] border border-white/10 focus:border-secondary px-4 py-3 text-sm rounded-xl text-white placeholder-on-surface-variant/40 outline-none transition-all">
+                        <input type="text" name="client_name" required maxlength="255" placeholder="Sarah Connor" class="w-full bg-[#05020c] border border-white/10 focus:border-secondary px-4 py-3 text-sm rounded-xl text-white placeholder-on-surface-variant/40 outline-none transition-all" pattern="^[A-Za-z\s]+$" title="Only letters and spaces are allowed" oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')">
                     </div>
                     <div class="space-y-2">
                         <label class="font-mono text-[10px] text-on-surface-variant uppercase tracking-wider block font-bold">Professional Role <span class="text-error">*</span></label>
-                        <input type="text" name="client_role" required maxlength="255" placeholder="Lead Architect, Cyberdyne" class="w-full bg-[#05020c] border border-white/10 focus:border-secondary px-4 py-3 text-sm rounded-xl text-white placeholder-on-surface-variant/40 outline-none transition-all">
+                        <input type="text" name="client_role" required maxlength="255" placeholder="Lead Architect, Cyberdyne" class="w-full bg-[#05020c] border border-white/10 focus:border-secondary px-4 py-3 text-sm rounded-xl text-white placeholder-on-surface-variant/40 outline-none transition-all" oninput="this.value = this.value.replace(/[^A-Za-z0-9\s\-&,]/g, '')">
                     </div>
                     <div class="space-y-2">
                         <label class="font-mono text-[10px] text-on-surface-variant uppercase tracking-wider block font-bold">Email Address <span class="text-error">*</span></label>
@@ -254,7 +254,7 @@
                     </div>
                     <div class="space-y-2">
                         <label class="font-mono text-[10px] text-on-surface-variant uppercase tracking-wider block font-bold">Phone Number (Optional)</label>
-                        <input type="text" name="phone" maxlength="20" placeholder="+1 (555) 012-3456" class="w-full bg-[#05020c] border border-white/10 focus:border-secondary px-4 py-3 text-sm rounded-xl text-white placeholder-on-surface-variant/40 outline-none transition-all">
+                        <input type="text" name="phone" maxlength="20" placeholder="+1 (555) 012-3456" class="w-full bg-[#05020c] border border-white/10 focus:border-secondary px-4 py-3 text-sm rounded-xl text-white placeholder-on-surface-variant/40 outline-none transition-all" pattern="^[\+\d\s\-\(\)]+$" title="Only phone numbers allowed" oninput="this.value = this.value.replace(/[^\+\d\s\-\(\)]/g, '')">
                     </div>
                 </div>
 
@@ -273,10 +273,10 @@
                 <div class="space-y-2 relative">
                     <div class="flex justify-between items-end mb-1">
                         <label class="font-mono text-[10px] text-on-surface-variant uppercase tracking-wider block font-bold">Detailed Review <span class="text-error">*</span></label>
-                        <span id="word-count-display" class="font-mono text-[10px] text-on-surface-variant"><span id="word-count">0</span> / 200 words</span>
+                        <span id="word-count-display" class="font-mono text-[10px] text-on-surface-variant"><span id="word-count">0</span> / 250 words</span>
                     </div>
                     <textarea id="quote-textarea" name="quote_text" rows="4" required placeholder="Describe the performance, reliability, and deployment outcome..." class="w-full bg-[#05020c] border border-white/10 focus:border-secondary px-4 py-3 text-sm rounded-xl text-white placeholder-on-surface-variant/40 outline-none transition-all"></textarea>
-                    <div id="word-limit-warning" class="text-error text-xs hidden mt-1">Maximum word limit (200) reached.</div>
+                    <div id="word-limit-warning" class="text-error text-xs hidden mt-1">Maximum word limit (250) reached.</div>
                 </div>
 
                 <div class="pt-4 flex justify-end gap-4 border-t border-white/5">
@@ -318,12 +318,12 @@
                     
                     wordCountDisplay.textContent = wordCount;
                     
-                    if (wordCount > 200) {
+                    if (wordCount > 250) {
                         warningDisplay.classList.remove('hidden');
                         wordCountDisplay.parentElement.classList.add('text-error');
                         wordCountDisplay.parentElement.classList.remove('text-on-surface-variant');
-                        this.value = words.slice(0, 200).join(' ') + ' ';
-                        wordCountDisplay.textContent = 200;
+                        this.value = words.slice(0, 250).join(' ') + ' ';
+                        wordCountDisplay.textContent = 250;
                     } else {
                         warningDisplay.classList.add('hidden');
                         wordCountDisplay.parentElement.classList.remove('text-error');

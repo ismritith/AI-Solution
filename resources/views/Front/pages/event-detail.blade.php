@@ -234,7 +234,7 @@
                     <div id="individualFields" class="space-y-4">
                         <div class="space-y-2">
                             <label class="block font-mono text-[11px] text-on-surface-variant uppercase tracking-widest">Full Name</label>
-                            <input type="text" name="full_name" placeholder="John Connor" class="w-full bg-[#05020c] border border-white/10 focus:border-secondary px-4 py-3 text-sm rounded-xl text-white placeholder-on-surface-variant/40 outline-none transition-all">
+                            <input type="text" name="full_name" placeholder="John Connor" class="w-full bg-[#05020c] border border-white/10 focus:border-secondary px-4 py-3 text-sm rounded-xl text-white placeholder-on-surface-variant/40 outline-none transition-all" pattern="^[A-Za-z\s]+$" title="Only letters and spaces are allowed" oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')">
                         </div>
                         <div class="space-y-2">
                             <label class="block font-mono text-[11px] text-on-surface-variant uppercase tracking-widest">Pass Selection</label>
@@ -250,7 +250,7 @@
                     <div id="teamFields" class="space-y-4 hidden">
                         <div class="space-y-2">
                             <label class="block font-mono text-[11px] text-on-surface-variant uppercase tracking-widest">Team Name</label>
-                            <input type="text" name="team_name" placeholder="e.g. Cyberdyne Systems" class="w-full bg-[#05020c] border border-white/10 focus:border-secondary px-4 py-3 text-sm rounded-xl text-white placeholder-on-surface-variant/40 outline-none transition-all">
+                            <input type="text" name="team_name" placeholder="e.g. Cyberdyne Systems" class="w-full bg-[#05020c] border border-white/10 focus:border-secondary px-4 py-3 text-sm rounded-xl text-white placeholder-on-surface-variant/40 outline-none transition-all" oninput="this.value = this.value.replace(/[^A-Za-z0-9\s\-&]/g, '')">
                         </div>
                         <div class="space-y-2">
                             <label class="block font-mono text-[11px] text-on-surface-variant uppercase tracking-widest">Team Size</label>
@@ -342,7 +342,7 @@
             const div = document.createElement('div');
             div.className = 'grid grid-cols-2 gap-3';
             div.innerHTML = `
-                <input type="text" name="members[${i}][name]" placeholder="Member #${i+1} Name" required class="bg-[#05020c] border border-white/10 focus:border-secondary px-3 py-2 text-xs rounded-lg text-white">
+                <input type="text" name="members[${i}][name]" placeholder="Member #${i+1} Name" required class="bg-[#05020c] border border-white/10 focus:border-secondary px-3 py-2 text-xs rounded-lg text-white" pattern="^[A-Za-z\\s]+$" title="Only letters and spaces are allowed" oninput="this.value = this.value.replace(/[^A-Za-z\\s]/g, '')">
                 <input type="email" name="members[${i}][email]" placeholder="Member #${i+1} Email" required class="bg-[#05020c] border border-white/10 focus:border-secondary px-3 py-2 text-xs rounded-lg text-white">
             `;
             container.appendChild(div);

@@ -92,7 +92,7 @@
                         Title</label>
                     <input type="text" name="title" value="{{ $asset->title }}" required
                         placeholder="e.g. Cybernetic Threat Vector Analysis"
-                        class="w-full bg-surface-container border border-white/10 rounded-xl px-4 py-2.5 text-sm text-on-surface placeholder:text-on-surface-variant/30 focus:ring-primary focus:border-primary focus:ring-1">
+                        class="w-full bg-surface-container border border-white/10 rounded-xl px-4 py-2.5 text-sm text-on-surface placeholder:text-on-surface-variant/30 focus:ring-primary focus:border-primary focus:ring-1" pattern="^[^<>_=|]+$" title="Cannot contain < > _ = |" oninput="this.value = this.value.replace(/[<>_=|]/g, '')">
                 </div>
 
                 <!-- Upload input field -->

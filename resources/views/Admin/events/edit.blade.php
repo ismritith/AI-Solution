@@ -16,7 +16,7 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div class="md:col-span-2">
                 <label class="block text-xs font-label-mono uppercase tracking-widest text-on-surface-variant mb-2">Event Title</label>
-                <input type="text" name="title" value="{{ $event->title }}" required placeholder="e.g. Global AI Summit 2026" class="w-full bg-surface-container border border-white/10 rounded-xl px-4 py-2.5 text-sm text-on-surface placeholder:text-on-surface-variant/30 focus:ring-primary focus:border-primary focus:ring-1">
+                <input type="text" name="title" value="{{ $event->title }}" required placeholder="e.g. Global AI Summit 2026" class="w-full bg-surface-container border border-white/10 rounded-xl px-4 py-2.5 text-sm text-on-surface placeholder:text-on-surface-variant/30 focus:ring-primary focus:border-primary focus:ring-1" pattern="^[^<>_=|]+$" title="Cannot contain < > _ = |" oninput="this.value = this.value.replace(/[<>_=|]/g, '')">
             </div>
 
             <div>
@@ -32,7 +32,7 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div>
                 <label class="block text-xs font-label-mono uppercase tracking-widest text-on-surface-variant mb-2">Status Badge Text</label>
-                <input type="text" name="status_badge" value="{{ $event->status_badge }}" required placeholder="e.g. Registrations Open" class="w-full bg-surface-container border border-white/10 rounded-xl px-4 py-2.5 text-sm text-on-surface focus:ring-primary focus:border-primary focus:ring-1">
+                <input type="text" name="status_badge" value="{{ $event->status_badge }}" required placeholder="e.g. Registrations Open" class="w-full bg-surface-container border border-white/10 rounded-xl px-4 py-2.5 text-sm text-on-surface focus:ring-primary focus:border-primary focus:ring-1" pattern="^[^<>_=|]+$" title="Cannot contain < > _ = |" oninput="this.value = this.value.replace(/[<>_=|]/g, '')">
             </div>
 
             <div>
@@ -49,7 +49,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
                 <label class="block text-xs font-label-mono uppercase tracking-widest text-on-surface-variant mb-2">Location Node / Platform</label>
-                <input type="text" name="location" value="{{ $event->location }}" required placeholder="e.g. San Francisco Tech Center / Zoom" class="w-full bg-surface-container border border-white/10 rounded-xl px-4 py-2.5 text-sm text-on-surface placeholder:text-on-surface-variant/30 focus:ring-primary focus:border-primary focus:ring-1">
+                <input type="text" name="location" value="{{ $event->location }}" required placeholder="e.g. San Francisco Tech Center / Zoom" class="w-full bg-surface-container border border-white/10 rounded-xl px-4 py-2.5 text-sm text-on-surface placeholder:text-on-surface-variant/30 focus:ring-primary focus:border-primary focus:ring-1" pattern="^[^<>_=|]+$" title="Cannot contain < > _ = |" oninput="this.value = this.value.replace(/[<>_=|]/g, '')">
             </div>
 
             <div>

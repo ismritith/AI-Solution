@@ -75,7 +75,7 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div class="md:col-span-2">
                 <label class="block text-xs font-label-mono uppercase tracking-widest text-on-surface-variant mb-2">Service Title</label>
-                <input type="text" name="title" value="{{ $service->title }}" required placeholder="e.g. Distributed Neural Engine" class="w-full bg-surface-container border border-white/10 rounded-xl px-4 py-2.5 text-sm text-on-surface placeholder:text-on-surface-variant/30 focus:ring-primary focus:border-primary focus:ring-1">
+                <input type="text" name="title" value="{{ $service->title }}" required placeholder="e.g. Distributed Neural Engine" class="w-full bg-surface-container border border-white/10 rounded-xl px-4 py-2.5 text-sm text-on-surface placeholder:text-on-surface-variant/30 focus:ring-primary focus:border-primary focus:ring-1" pattern="^[^<>_=|]+$" title="Cannot contain < > _ = |" oninput="this.value = this.value.replace(/[<>_=|]/g, '')">
             </div>
 
             <div class="flex items-center mt-6">
@@ -90,17 +90,17 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div>
                 <label class="block text-xs font-label-mono uppercase tracking-widest text-on-surface-variant mb-2">Metric / Subtitle</label>
-                <input type="text" name="metric_subtitle" value="{{ $service->metric_subtitle }}" placeholder="e.g. Boost speed by 40%" class="w-full bg-surface-container border border-white/10 rounded-xl px-4 py-2.5 text-sm text-on-surface placeholder:text-on-surface-variant/30 focus:ring-primary focus:border-primary focus:ring-1">
+                <input type="text" name="metric_subtitle" value="{{ $service->metric_subtitle }}" placeholder="e.g. Boost speed by 40%" class="w-full bg-surface-container border border-white/10 rounded-xl px-4 py-2.5 text-sm text-on-surface placeholder:text-on-surface-variant/30 focus:ring-primary focus:border-primary focus:ring-1" pattern="^[^<>_=|]+$" title="Cannot contain < > _ = |" oninput="this.value = this.value.replace(/[<>_=|]/g, '')">
             </div>
 
             <div>
                 <label class="block text-xs font-label-mono uppercase tracking-widest text-on-surface-variant mb-2">Step Number (Methodology Only)</label>
-                <input type="text" name="step_number" value="{{ $service->step_number }}" placeholder="e.g. 01" class="w-full bg-surface-container border border-white/10 rounded-xl px-4 py-2.5 text-sm text-on-surface placeholder:text-on-surface-variant/30 focus:ring-primary focus:border-primary focus:ring-1">
+                <input type="text" name="step_number" value="{{ $service->step_number }}" placeholder="e.g. 01" class="w-full bg-surface-container border border-white/10 rounded-xl px-4 py-2.5 text-sm text-on-surface placeholder:text-on-surface-variant/30 focus:ring-primary focus:border-primary focus:ring-1" pattern="^[^<>_=|]+$" title="Cannot contain < > _ = |" oninput="this.value = this.value.replace(/[<>_=|]/g, '')">
             </div>
 
             <div>
                 <label class="block text-xs font-label-mono uppercase tracking-widest text-on-surface-variant mb-2">Telemetry Tags (Comma-separated)</label>
-                <input type="text" name="tags" value="{{ $service->tags }}" placeholder="e.g. LLM, CUDA, GPU" class="w-full bg-surface-container border border-white/10 rounded-xl px-4 py-2.5 text-sm text-on-surface placeholder:text-on-surface-variant/30 focus:ring-primary focus:border-primary focus:ring-1">
+                <input type="text" name="tags" value="{{ $service->tags }}" placeholder="e.g. LLM, CUDA, GPU" class="w-full bg-surface-container border border-white/10 rounded-xl px-4 py-2.5 text-sm text-on-surface placeholder:text-on-surface-variant/30 focus:ring-primary focus:border-primary focus:ring-1" pattern="^[^<>_=|]+$" title="Cannot contain < > _ = |" oninput="this.value = this.value.replace(/[<>_=|]/g, '')">
             </div>
         </div>
 

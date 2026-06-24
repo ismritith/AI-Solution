@@ -16,7 +16,7 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div class="md:col-span-2">
                 <label class="block text-xs font-label-mono uppercase tracking-widest text-on-surface-variant mb-2">Article Title</label>
-                <input type="text" name="title" value="{{ $post->title }}" required placeholder="e.g. Cognitive Systems scaling parameters" class="w-full bg-surface-container border border-white/10 rounded-xl px-4 py-2.5 text-sm text-on-surface placeholder:text-on-surface-variant/30 focus:ring-primary focus:border-primary focus:ring-1">
+                <input type="text" name="title" value="{{ $post->title }}" required placeholder="e.g. Cognitive Systems scaling parameters" class="w-full bg-surface-container border border-white/10 rounded-xl px-4 py-2.5 text-sm text-on-surface placeholder:text-on-surface-variant/30 focus:ring-primary focus:border-primary focus:ring-1" pattern="^[^<>_=|]+$" title="Cannot contain < > _ = |" oninput="this.value = this.value.replace(/[<>_=|]/g, '')">
             </div>
 
             <div>
@@ -38,12 +38,12 @@
 
             <div>
                 <label class="block text-xs font-label-mono uppercase tracking-widest text-on-surface-variant mb-2">Author Name</label>
-                <input type="text" name="author_name" value="{{ $post->author_name }}" placeholder="Administrator" class="w-full bg-surface-container border border-white/10 rounded-xl px-4 py-2.5 text-sm text-on-surface placeholder:text-on-surface-variant/30 focus:ring-primary focus:border-primary focus:ring-1">
+                <input type="text" name="author_name" value="{{ $post->author_name }}" placeholder="Administrator" class="w-full bg-surface-container border border-white/10 rounded-xl px-4 py-2.5 text-sm text-on-surface placeholder:text-on-surface-variant/30 focus:ring-primary focus:border-primary focus:ring-1" pattern="^[A-Za-z\s]+$" title="Only letters and spaces are allowed" oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')">
             </div>
 
             <div>
                 <label class="block text-xs font-label-mono uppercase tracking-widest text-on-surface-variant mb-2">Author Role</label>
-                <input type="text" name="author_role" value="{{ $post->author_role }}" placeholder="Systems Architect" class="w-full bg-surface-container border border-white/10 rounded-xl px-4 py-2.5 text-sm text-on-surface placeholder:text-on-surface-variant/30 focus:ring-primary focus:border-primary focus:ring-1">
+                <input type="text" name="author_role" value="{{ $post->author_role }}" placeholder="Systems Architect" class="w-full bg-surface-container border border-white/10 rounded-xl px-4 py-2.5 text-sm text-on-surface placeholder:text-on-surface-variant/30 focus:ring-primary focus:border-primary focus:ring-1" oninput="this.value = this.value.replace(/[^A-Za-z0-9\s\-&,]/g, '')">
             </div>
         </div>
 
@@ -87,7 +87,7 @@
             </div>
             <div>
                 <label class="block text-xs font-label-mono uppercase tracking-widest text-on-surface-variant mb-2">Quote Source</label>
-                <input type="text" name="blockquote_source" value="{{ $post->blockquote_source }}" placeholder="e.g. Dr. Jennifer Vance, AI Research Institute" class="w-full bg-surface-container border border-white/10 rounded-xl px-4 py-2.5 text-sm text-on-surface placeholder:text-on-surface-variant/30 focus:ring-primary focus:border-primary focus:ring-1">
+                <input type="text" name="blockquote_source" value="{{ $post->blockquote_source }}" placeholder="e.g. Dr. Jennifer Vance, AI Research Institute" class="w-full bg-surface-container border border-white/10 rounded-xl px-4 py-2.5 text-sm text-on-surface placeholder:text-on-surface-variant/30 focus:ring-primary focus:border-primary focus:ring-1" oninput="this.value = this.value.replace(/[^A-Za-z0-9\s\-\.,&]/g, '')">
             </div>
         </div>
 

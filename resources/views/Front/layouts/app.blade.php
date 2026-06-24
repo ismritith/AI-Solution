@@ -278,7 +278,10 @@
                     <li><a href="/about" class="hover:text-secondary transition-colors">Privacy Policy</a></li>
                     <li><a href="/about" class="hover:text-secondary transition-colors">Terms of Use</a></li>
                     <li><a href="/contact" class="hover:text-secondary transition-colors">Platform Support</a></li>
+
                 </ul>
+
+                
             </div>
         </div>
 
