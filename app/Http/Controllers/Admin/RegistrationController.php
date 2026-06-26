@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Registration;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\EventRegistrationMail;
 
 class RegistrationController extends Controller
 {
@@ -57,7 +60,36 @@ class RegistrationController extends Controller
             'members' => 'nullable|array',
         ]);
 
-        Registration::create($validated);
+        DB::beginTransaction();
+        try {
+            $registration = Registration::create($validated);
+
+            // 1. Send confirmation email to user
+            Mail::to($registration->email)->send(new EventRegistrationMail($registration, false));
+
+            // 2. Send alert email to admin
+            $adminEmail = env('ADMIN_EMAIL', 'admin@ai-solutions.tech');
+            Mail::to($adminEmail)->send(new EventRegistrationMail($registration, true));
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'message' => 'Registration aborted: We were unable to send confirmation to your email. Check your email or try again. Details: ' . $e->getMessage()
+                ], 422);
+            }
+            return redirect()->back()->withInput()->withErrors([
+                'email' => 'Registration aborted: We were unable to send confirmation to your email. Check your email or try again. Details: ' . $e->getMessage()
+            ]);
+        }
+
+        if ($request->expectsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Your registration has been successfully submitted.'
+            ]);
+        }
 
         return redirect()->route('events')->with('success', 'Your registration has been successfully submitted.');
     }

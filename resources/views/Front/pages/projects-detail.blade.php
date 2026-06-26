@@ -235,7 +235,21 @@
             <h3 class="font-display text-2xl md:text-3xl font-extrabold text-white mb-2">Share Your Feedback</h3>
             <p class="text-on-surface-variant text-sm mb-6">Deploy your experience regarding <span class="text-secondary font-semibold">{{ $project->title }}</span></p>
 
-            <form action="{{ route('project.review') }}" method="POST" class="space-y-6">
+            @if($errors->any())
+                <div class="bg-error/10 border border-error/30 rounded-xl p-4 flex flex-col gap-2 text-error text-sm mb-6">
+                    <div class="flex items-center gap-3 font-bold text-white">
+                        <span class="material-symbols-outlined text-error">error</span>
+                        Transmission Blocked
+                    </div>
+                    <ul class="list-disc pl-5 space-y-1 text-on-surface-variant">
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            <form action="{{ route('project.review') }}" method="POST" class="space-y-6" data-ajax="true">
                 @csrf
                 <input type="hidden" name="project_id" value="{{ $project->id }}">
                 
@@ -306,6 +320,10 @@
         }
 
         document.addEventListener('DOMContentLoaded', function() {
+            @if($errors->any())
+                openReviewModal();
+            @endif
+
             // Word counter
             const textarea = document.getElementById('quote-textarea');
             const wordCountDisplay = document.getElementById('word-count');

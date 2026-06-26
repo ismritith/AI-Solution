@@ -31,6 +31,7 @@
                         "primary": "#080313",      // Deep space black-purple background
                         "secondary": "#a510b4",    // Brand purple
                         "accent": "#ff2e93",       // Vibrant hot-pink/magenta (matches second screenshot glow)
+                        "error": "#ef4444",        // Standard error color
                         "surface-dark": "#0c061a", // Deep card base
                         "on-background": "#f1eaff",
                         "on-surface": "#eadaff",
@@ -310,5 +311,108 @@
     </script>
     @include('Front.partials.chatbot')
     @yield('scripts')
+
+    <!-- Global Loading Overlay -->
+    <div id="loadingOverlay" class="fixed inset-0 z-[9999] hidden flex-col items-center justify-center bg-black/80 backdrop-blur-md pointer-events-auto">
+        <div class="flex flex-col items-center gap-4 p-8 glass-card border-secondary/20 rounded-3xl max-w-sm text-center">
+            <div class="w-16 h-16 border-4 border-secondary/20 border-t-secondary rounded-full animate-spin"></div>
+            <p class="font-display text-lg font-bold text-white tracking-wide mt-2">Processing Transmission...</p>
+            <p class="font-body text-xs text-on-surface-variant leading-relaxed">Securing nodes and sending mail confirmations. Please do not close this window.</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('submit', function(e) {
+            const form = e.target;
+            if (form && form.getAttribute('data-ajax') === 'true') {
+                if (!form.checkValidity()) {
+                    return;
+                }
+
+                    // Prevent page refresh submit
+                    e.preventDefault();
+
+                    // Show loading overlay
+                    const overlay = document.getElementById('loadingOverlay');
+                    if (overlay) {
+                        overlay.classList.remove('hidden');
+                        overlay.classList.add('flex');
+                    }
+
+                    // Clear any previous alerts in this container
+                    const prevAlerts = form.parentElement.querySelectorAll('.alert-box');
+                    prevAlerts.forEach(alert => alert.remove());
+
+                    const formData = new FormData(form);
+
+                    fetch(form.action, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'Accept': 'application/json',
+                            'X-Requested-With': 'XMLHttpRequest'
+                        }
+                    })
+                    .then(response => {
+                        return response.json().then(data => {
+                            if (!response.ok) {
+                                throw new Error(data.message || (data.errors ? Object.values(data.errors).flat().join('\n') : 'An error occurred.'));
+                            }
+                            return data;
+                        });
+                    })
+                    .then(data => {
+                        // Success!
+                        if (overlay) {
+                            overlay.classList.add('hidden');
+                            overlay.classList.remove('flex');
+                        }
+
+                        // Create success notification alert
+                        const successAlert = document.createElement('div');
+                        successAlert.className = 'alert-box bg-emerald-500/10 border border-emerald-500/30 rounded-xl p-4 flex items-center gap-3 text-emerald-400 text-sm mb-6';
+                        successAlert.innerHTML = `
+                            <span class="material-symbols-outlined">check_circle</span>
+                            <span>${data.message || 'Transmission successful.'}</span>
+                        `;
+                        form.insertAdjacentElement('beforebegin', successAlert);
+
+                        // Reset form fields
+                        form.reset();
+
+                        // Reset word count display if it exists in the form
+                        const wordCount = form.querySelector('#word-count');
+                        if (wordCount) {
+                            wordCount.textContent = '0';
+                        }
+
+                        // Reset star rating to 5 if star rating button container exists
+                        const starBtn5 = form.querySelector('.star-btn[data-rating="5"]');
+                        if (starBtn5) {
+                            starBtn5.click();
+                        }
+                    })
+                    .catch(error => {
+                        // Error!
+                        if (overlay) {
+                            overlay.classList.add('hidden');
+                            overlay.classList.remove('flex');
+                        }
+
+                        // Create error notification alert
+                        const errorAlert = document.createElement('div');
+                        errorAlert.className = 'alert-box bg-error/10 border border-error/30 rounded-xl p-4 flex flex-col gap-2 text-error text-sm mb-6';
+                        errorAlert.innerHTML = `
+                            <div class="flex items-center gap-3 font-bold text-white">
+                                <span class="material-symbols-outlined text-error">error</span>
+                                Transmission Blocked
+                            </div>
+                            <div class="text-on-surface-variant whitespace-pre-line pl-8">${error.message}</div>
+                        `;
+                        form.insertAdjacentElement('beforebegin', errorAlert);
+                    });
+            }
+        });
+    </script>
 </body>
 </html>

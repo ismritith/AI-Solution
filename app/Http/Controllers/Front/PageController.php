@@ -13,6 +13,9 @@ use App\Models\Service;
 use App\Models\Testimonial;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ProjectReviewMail;
 
 class PageController extends Controller
 {
@@ -268,7 +271,38 @@ class PageController extends Controller
 
         $validated['status'] = 'pending';
 
-        ProjectReview::create($validated);
+        DB::beginTransaction();
+        try {
+            $review = ProjectReview::create($validated);
+            // Load project relationship so email template can reference title
+            $review->load('project');
+
+            // 1. Send confirmation email to user
+            Mail::to($review->email)->send(new ProjectReviewMail($review, false));
+
+            // 2. Send alert email to admin
+            $adminEmail = env('ADMIN_EMAIL', 'admin@ai-solutions.tech');
+            Mail::to($adminEmail)->send(new ProjectReviewMail($review, true));
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'message' => 'Feedback submission aborted: We were unable to send confirmation to your email. Check your email or try again. Details: ' . $e->getMessage()
+                ], 422);
+            }
+            return redirect()->back()->withInput()->withErrors([
+                'email' => 'Feedback submission aborted: We were unable to send confirmation to your email. Check your email or try again. Details: ' . $e->getMessage()
+            ]);
+        }
+
+        if ($request->expectsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Your review was successfully submitted and is pending administrator moderation.'
+            ]);
+        }
 
         return redirect()->back()->with('success', 'Your review was successfully submitted and is pending administrator moderation.');
     }

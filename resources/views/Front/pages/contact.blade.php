@@ -34,14 +34,28 @@
         <!-- Contact Form (Left) -->
         <div class="lg:col-span-7 glass-card rounded-3xl p-8 md:p-12" data-aos="fade-right">
             @if(session('success'))
-            <div class="bg-emerald-500/10 border border-emerald-500/30 rounded-xl p-4 flex items-center gap-3 text-emerald-400 text-sm mb-6">
-                <span class="material-symbols-outlined">check_circle</span>
-                {{ session('success') }}
-            </div>
-        @endif
+                <div class="bg-emerald-500/10 border border-emerald-500/30 rounded-xl p-4 flex items-center gap-3 text-emerald-400 text-sm mb-6">
+                    <span class="material-symbols-outlined">check_circle</span>
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            @if($errors->any())
+                <div class="bg-error/10 border border-error/30 rounded-xl p-4 flex flex-col gap-2 text-error text-sm mb-6">
+                    <div class="flex items-center gap-3 font-bold text-white">
+                        <span class="material-symbols-outlined text-error">error</span>
+                        Transmission Blocked
+                    </div>
+                    <ul class="list-disc pl-5 space-y-1 text-on-surface-variant">
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
 
             <h2 class="font-display text-3xl font-extrabold text-white mb-8">Send a Transmission</h2>
-<form action="{{ route('contact.submit') }}" method="POST" class="space-y-6">
+<form action="{{ route('contact.submit') }}" method="POST" class="space-y-6" data-ajax="true">
     @csrf
 
     {{-- Row 1: Name + Email --}}

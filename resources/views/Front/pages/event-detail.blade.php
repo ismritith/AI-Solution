@@ -202,15 +202,19 @@
                 <p class="text-on-surface-variant text-sm mb-6">Complete the registration protocol for <span class="text-secondary font-semibold">{{ $event->title }}</span></p>
 
                                 @if($errors->any())
-                    <div class="bg-error/10 border border-error/30 rounded-xl p-4 mb-6 text-error text-sm">
-                        <ul class="list-disc pl-5 space-y-1">
+                    <div class="bg-error/10 border border-error/30 rounded-xl p-4 flex flex-col gap-2 text-error text-sm mb-6">
+                        <div class="flex items-center gap-3 font-bold text-white">
+                            <span class="material-symbols-outlined text-error">error</span>
+                            Registration Blocked
+                        </div>
+                        <ul class="list-disc pl-5 space-y-1 text-on-surface-variant">
                             @foreach($errors->all() as $error)
                                 <li>{{ $error }}</li>
                             @endforeach
                         </ul>
                     </div>
                 @endif
-                <form action="{{ route('event.register') }}" method="POST" class="space-y-6">
+                <form action="{{ route('event.register') }}" method="POST" class="space-y-6" data-ajax="true">
                     @csrf
                     <input type="hidden" name="event_id" value="{{ $event->id }}">
                     <input type="hidden" name="event_name" value="{{ $event->title }}">
