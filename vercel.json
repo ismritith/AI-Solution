@@ -1,0 +1,59 @@
+{
+  "version": 2,
+  "functions": {
+    "api/index.php": {
+      "runtime": "vercel-php@0.7.4"
+    }
+  },
+  "routes": [
+    {
+      "src": "/build/(.*)",
+      "dest": "/public/build/$1"
+    },
+    {
+      "src": "/admin_cms_ai_solutions/(.*)",
+      "dest": "/public/admin_cms_ai_solutions/$1"
+    },
+    {
+      "src": "/admin_dashboard_ai_solutions/(.*)",
+      "dest": "/public/admin_dashboard_ai_solutions/$1"
+    },
+    {
+      "src": "/admin_inquires_ai_solutions/(.*)",
+      "dest": "/public/admin_inquires_ai_solutions/$1"
+    },
+    {
+      "src": "/restructured_dashboard_UI/(.*)",
+      "dest": "/public/restructured_dashboard_UI/$1"
+    },
+    {
+      "src": "/stitch_ai_solutions_modern_interface_design/(.*)",
+      "dest": "/public/stitch_ai_solutions_modern_interface_design/$1"
+    },
+    {
+      "src": "/storage/(.*)",
+      "dest": "/public/storage/$1"
+    },
+    {
+      "src": "/favicon.ico",
+      "dest": "/public/favicon.ico"
+    },
+    {
+      "src": "/robots.txt",
+      "dest": "/public/robots.txt"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/api/index.php"
+    }
+  ],
+  "env": {
+    "APP_ENV": "production",
+    "APP_DEBUG": "false",
+    "VIEW_COMPILED_PATH": "/tmp",
+    "CACHE_DRIVER": "array",
+    "SESSION_DRIVER": "cookie",
+    "QUEUE_CONNECTION": "sync",
+    "LOG_CHANNEL": "stderr"
+  }
+}
